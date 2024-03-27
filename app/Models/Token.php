@@ -10,9 +10,8 @@ class Token extends Model
 {
     use HasFactory;
 
-    const PENDING = 0;
-    const CONFIRMED = 1;
-    const EXPIRED = 2;
+    const EFFECT = 0;
+    const EXPIRE = 1;
 
     protected $table = 'tokens';
 

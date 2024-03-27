@@ -1,0 +1,22 @@
+@mixin flex-center($justify: center, $align: center) {
+    display: flex;
+    justify-content: $justify;
+    align-items: $align;
+}
+
+@mixin font-text ($font-size: 16px, $font-weight: 400) {
+    font-size: $font-size;
+    font-weight: $font-weight;
+}
+
+@mixin mobile {
+    @media (min-width: 320px) and (max-width: 768px) {
+        @content;
+    }
+}
+
+@mixin mobile-min {
+    @media (min-width: 320px) and (max-width: 479px) {
+        @content;
+    }
+}
