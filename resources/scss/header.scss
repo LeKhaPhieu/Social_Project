@@ -1,0 +1,101 @@
+.header-form {
+    width: 100%;
+    height: 122px;
+    display: flex;
+    background-color: var(--main-white);
+
+    @include mobile {
+        height: auto;
+        position: fixed;
+        z-index: 3;
+    }
+
+    .header-navbar {
+        @include flex-center(space-between, center);
+        width: 100%;
+        padding: 0 10%;
+
+        @include mobile {
+            display: none;
+        }
+
+        .header-navbar-right {
+            @include flex-center(flex-start, center);
+
+            .header-logo {
+                width: 61px;
+                height: auto;
+            }
+
+            .header-logo-name {
+                @include font-text(20px, 700);
+            }
+        }
+
+        .header-navbar-left {
+            @include flex-center(space-between, center);
+            width: 30%;
+            margin: 0 0 0 100px;
+
+            .header-custom-page {
+
+                .header-btn-top {
+                    margin: 0 20px 0 0;
+                    padding: 5px 10px;
+                    font-size: 15px;
+                    background-color: var(--btn-header);
+                    color: var(--main-white);
+                    border-radius: 3px;
+                }
+            }
+
+            .header-user {
+                @include flex-center(space-between, center);
+                margin: 0 0 0 15px;
+
+                .header-btn-create {
+                    @include font-text(15px, 500);
+                }
+
+                .header-user-name {
+                    @include font-text(15px, 500);
+                    margin: 0 0 0 30px;
+                }
+
+                .header-user-avatar {
+                    width: 26px;
+                    height: auto;
+                }
+            }
+        }
+    }
+
+    .header-mobile {
+        display: none;
+
+        @include mobile {
+            width: 100%;
+            height: 70px;
+            display: block;
+            @include flex-center(flex-start, center);
+            padding: 0 20px;
+
+            .header-navbar-mobile {
+                width: 35px;
+            }
+
+            .header-logo-mobile {
+                @include flex-center(flex-start, center);
+                margin-left: 23%;
+
+                .header-logo-image {
+                    width: 47.09px;
+                }
+
+                .header-logo-name {
+                    @include font-text(20px, 700);
+                }
+            }
+        }
+    }
+}
