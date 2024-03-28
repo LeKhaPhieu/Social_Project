@@ -1,4 +1,4 @@
-<h3>Hello you!!</h3>
-<p>Your authentication code is: </p>
-<p>Please click the link below to verify your account!</p>
-<a href="">Click to here.</a>
+<h3>hello you!!</h3>
+<p>Your authentication code is: {{ $data['token_verify_email'] }}</p>
+<p>Your authentication code will expire within 1 minute!!</p>
+

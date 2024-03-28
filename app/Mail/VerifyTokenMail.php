@@ -3,31 +3,54 @@
 namespace App\Mail;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
+use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
 class VerifyTokenMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $token;
+    public $data;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($token)
+    public function __construct($data)
     {
-        $this->token = $token;
+        $this->data = $data;
     }
 
     /**
-     * Build the message.
+     * Get the message envelope.
      */
-    public function build()
+    public function envelope(): Envelope
     {
-        return $this->subject('Verify Token Mail')
-                    ->view('auth.text_verify_account')
-                    ->with(['token' => $this->token]);
+        return new Envelope(
+            subject: 'Verify Token Mail',
+            to: $this->data['email'],
+        );
+    }
+
+    /**
+     * Get the message content definition.
+     */
+    public function content(): Content
+    {
+        return new Content(
+            view: 'auth.text_verify_account',
+            with: ['token' => $this->data['token_verify_email']],
+        );
+    }
+
+    /**
+     * Get the attachments for the message.
+     *
+     * @return array<int, \Illuminate\Mail\Mailables\Attachment>
+     */
+    public function attachments(): array
+    {
+        return [];
     }
 }

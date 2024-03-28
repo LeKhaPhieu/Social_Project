@@ -34,7 +34,7 @@
 
         .header-navbar-left {
             @include flex-center(space-between, center);
-            width: 30%;
+            width: 40%;
             margin: 0 0 0 100px;
 
             .header-custom-page {
@@ -53,17 +53,22 @@
                 @include flex-center(space-between, center);
                 margin: 0 0 0 15px;
 
-                .header-btn-create {
+                .header-btn {
                     @include font-text(15px, 500);
+
+                    &.register {
+                        margin: 0 0 0 30px;
+                    }
                 }
 
                 .header-user-name {
                     @include font-text(15px, 500);
-                    margin: 0 0 0 30px;
+                    margin: 0 0 0 70px;
                 }
 
                 .header-user-avatar {
                     width: 26px;
+                    margin: 0 0 0 7px;
                     height: auto;
                 }
             }

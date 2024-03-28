@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign up</title>
     @vite(['resources/scss/main.scss'])
+    @vite(['resources/js/auth.js'])
 </head>
 
 <body>
@@ -17,7 +18,7 @@
                 <p class="auth-head-name">RT-Blogs</p>
             </div>
             <div class="auth-body">
-                <p class="auth-body-title">Sign up</p>
+                <p class="auth-body-title">{{ __('auth.register_title') }}</p>
                 <div class="auth-body-item">
                     <p>Username<span>*</span></p>
                     <input type="text" name="user_name">
@@ -57,26 +58,29 @@
                     <p>Gender<span>*</span></p>
                     <div class="gender-from">
                         <div class="gender-item">
-                            <input type="checkbox" name="gender" value="0">
+                            <input class="gender-choose" type="checkbox" name="gender" value="0">
                             <span>Male</span>
                         </div>
                         <div class="gender-item">
-                            <input type="checkbox" name="gender" value="1">
+                            <input class="gender-choose" type="checkbox" name="gender" value="1">
                             <span>Female</span>
                         </div>
                         <div class="gender-item">
-                            <input type="checkbox" name="gender" value="2">
+                            <input class="gender-choose" type="checkbox" name="gender" value="2">
                             <span>Other</span>
                         </div>
                     </div>
                     @error('gender')
                         <p class="notify-error">{{ $message }}</p>
                     @enderror
+                    @if (session('error'))
+                        <span class='notify-error'>{{ session('error') }}</span>
+                    @endif
                 </div>
             </div>
             <div class="auth-tail">
-                <button class="btn-submit">Sign up</button>
-                <a class="link-sign-in" href="{{ route('view.login') }}">Already have an account? Login</a>
+                <button class="btn-submit">{{ __('auth.text_btn_register') }}</button>
+                <a class="link-sign-in" href="{{ route('view.login') }}">{{ __('auth.text_link_login') }}</a>
             </div>
         </form>
     </div>
