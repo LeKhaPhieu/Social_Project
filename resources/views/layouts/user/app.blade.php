@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="{{ Vite::asset('resources/images/logo.png') }}" />
     <title>Home page</title>
     @vite(['resources/scss/main.scss'])
     @vite(['resources/js/home.js'])
@@ -23,16 +24,23 @@
                     </div>
                     <div class="header-user">
                         @if (!Auth::user())
-                            <a class="header-btn login" href="{{ route('view.login') }}">Login</a>
-                            <a class="header-btn register" href="{{ route('view.register') }}">Sign up</a>
+                            <a class="header-btn login" href="{{ route('login') }}">Login</a>
+                            <a class="header-btn register" href="{{ route('register') }}">Sign up</a>
                         @else
                             <a class="header-btn create" href="">Create</a>
-                            <a class="header-user-name">{{ Auth::user()->user_name }}</a>
+                            <div class="dropdown">
+                                <a class="header-user-name">{{ Auth::user()->user_name }}</a>
+                                <div class="dropdown-content">
+                                    <a href="#">My blogs</a>
+                                    <a href="#">My profile</a>
+                                    <a href="{{ route('user.password.edit') }}">Change password</a>
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button>Log out</button>
+                                    </form>
+                                </div>
+                            </div>
                             <img class="header-user-avatar" src="{{ Vite::asset('resources/images/user_avatar.png') }}">
-                            <form action="{{ route('logout') }}" method="POST">
-                                @csrf
-                                <button>Log out</button>
-                            </form>
                         @endif
                     </div>
                 </div>
@@ -47,6 +55,9 @@
             </div>
         </div>
     </header>
+    <div class="notification">
+        @include('layouts.components.notification')
+    </div>
 
     @yield('content')
 

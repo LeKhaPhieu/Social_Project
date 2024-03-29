@@ -118,3 +118,34 @@
         }
     }
 }
+
+.notification {
+    position: absolute;
+    top: 130px;
+    right: 5%;
+    animation: fadeOut linear 6s 2s forwards;
+
+    .alert {
+        padding: 5px 10px;
+        border-radius: 10px;
+        color: var(--main-white);
+
+        &.alert-success {
+            background-color: rgb(11, 201, 11);
+        }
+
+        &.alert-error {
+            background-color: red;
+        }
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}

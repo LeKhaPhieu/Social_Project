@@ -61,9 +61,45 @@
                     }
                 }
 
-                .header-user-name {
-                    @include font-text(15px, 500);
+                .dropdown {
+                    position: relative;
+                    display: inline-block;
                     margin: 0 0 0 70px;
+                    cursor: pointer;
+
+                    .header-user-name {
+                        @include font-text(15px, 500);
+                    }
+
+                    .dropdown-content {
+                        display: none;
+                        width: max-content;
+                        position: absolute;
+                        background-color: #f1f1f1;
+                        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+                        z-index: 1;
+                        text-align: center;
+                        top: 25px;
+                        left: -35%;
+
+                        a {
+                            @include font-text(14px, 400);
+                            color: var(--main-black);
+                            padding: 12px 16px;
+                            display: block;
+                        }
+
+                        button {
+                            @include font-text(14px, 400);
+                            width: 100%;
+                            padding: 12px 16px;
+                            border: none;
+                            background-color: none;
+                            color: var(--main-black);
+                            display: block;
+                            cursor: pointer;
+                        }
+                    }
                 }
 
                 .header-user-avatar {

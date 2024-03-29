@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="{{ Vite::asset('resources/images/logo.png') }}"/>
     <title>Sign up</title>
     @vite(['resources/scss/main.scss'])
     @vite(['resources/js/auth.js'])
@@ -43,9 +44,6 @@
                 <div class="auth-body-item">
                     <p>Password confirm<span>*</span></p>
                     <input type="password" name="password_confirmation">
-                    @error('password_confirmation')
-                        <p class="notify-error">{{ $message }}</p>
-                    @enderror
                 </div>
                 <div class="auth-body-item">
                     <p>Tel<span>*</span></p>
@@ -80,7 +78,7 @@
             </div>
             <div class="auth-tail">
                 <button class="btn-submit">{{ __('auth.text_btn_register') }}</button>
-                <a class="link-sign-in" href="{{ route('view.login') }}">{{ __('auth.text_link_login') }}</a>
+                <a class="link-sign-in" href="{{ route('login') }}">{{ __('auth.text_link_login') }}</a>
             </div>
         </form>
     </div>

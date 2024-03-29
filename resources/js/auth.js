@@ -1,8 +1,8 @@
-const genderCheckboxes = document.querySelectorAll('.gender-choose');
-genderCheckboxes.forEach(function (checkbox) {
+const chooseGender = document.querySelectorAll('.gender-choose');
+chooseGender.forEach(function (checkbox) {
     checkbox.addEventListener('change', function () {
         if (this.checked) {
-            genderCheckboxes.forEach(function (otherCheckbox) {
+            chooseGender.forEach(function (otherCheckbox) {
                 if (otherCheckbox !== checkbox) {
                     otherCheckbox.checked = false;
                 }
