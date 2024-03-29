@@ -102,7 +102,7 @@
                                 hulanjfh bf ueodap li num amataki hulanjfh bf ueodap...</p>
                         </div>
                         <a class="text-detail" href="">
-                            Read more
+                            {{ __('auth.text_button_detail') }}
                             <img src="{{ Vite::asset('resources/images/icon_detail.png') }}" alt="">
                         </a>
                     </div>
@@ -135,7 +135,7 @@
                                 hulanjfh bf ueodap li num amataki hulanjfh bf ueodap...</p>
                         </div>
                         <a class="text-detail" href="">
-                            Read more
+                            {{ __('auth.text_button_detail') }}
                             <img src="{{ Vite::asset('resources/images/icon_detail.png') }}" alt="">
                         </a>
                     </div>
@@ -168,7 +168,7 @@
                                 hulanjfh bf ueodap li num amataki hulanjfh bf ueodap...</p>
                         </div>
                         <a class="text-detail" href="">
-                            Read more
+                            {{ __('auth.text_button_detail') }}
                             <img src="{{ Vite::asset('resources/images/icon_detail.png') }}" alt="">
                         </a>
                     </div>

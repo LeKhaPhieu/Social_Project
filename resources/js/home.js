@@ -17,3 +17,11 @@ window.onclick = function (event) {
         modal.style.display = "none";
     }
 }
+
+const dropdown = document.querySelector('.dropdown');
+const dropdownContent = document.querySelector('.dropdown-content');
+
+dropdown.addEventListener('click', function () {
+    dropdownContent.style.display = 'block';
+})
+

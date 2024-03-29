@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TokenVerifyEmailRequest extends FormRequest
+class TokenPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,7 +22,7 @@ class TokenVerifyEmailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'token_verify_email'=> 'required',
+            'token_reset_password' => 'required',
         ];
     }
 
@@ -37,7 +37,7 @@ class TokenVerifyEmailRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'token_verify_email' => __('validation.token_verify_email'),
+            'token_reset_password' => __('validation.token_reset_password'),
         ];
     }
 }
