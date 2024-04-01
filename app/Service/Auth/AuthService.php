@@ -162,28 +162,21 @@ class AuthService
 
     public function postTokenForgot(string $token): bool
     {
-        DB::beginTransaction();
-        try {
-            $tokenPassword = Token::where('token_reset_password', $token)->first();
-            if (!$tokenPassword) {
-                return false;
-            }
-
-            if ($tokenPassword) {
-                $user = User::where('id', $tokenPassword->user_id)->first();
-                $passwordNew = Str::random(6);
-                $user->update(['password' => Hash::make($passwordNew)]);
-                $dataSendMail = ['password' => $passwordNew];
-                Mail::to($user->email)->send(new SendNewPassword($dataSendMail));
-                DB::commit();
-
-                return true;
-            }
-
-        } catch (Exception $e) {
-            DB::rollBack();
-
+        $tokenPassword = Token::where('token_reset_password', $token)->first();
+        if (!$tokenPassword) {
             return false;
         }
+
+        if ($tokenPassword) {
+            $user = User::where('id', $tokenPassword->user_id)->first();
+            $passwordNew = Str::random(6);
+            $user->update(['password' => Hash::make($passwordNew)]);
+            $dataSendMail = ['password' => $passwordNew];
+            Mail::to($user->email)->send(new SendNewPassword($dataSendMail));
+
+            return true;
+        }
+
+        return false;
     }
 }
