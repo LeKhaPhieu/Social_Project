@@ -28,11 +28,6 @@ class AuthController extends Controller
         return view('auth.register');
     }
 
-    public function viewDashboard(): View
-    {
-        return view('admin.dashboard');
-    }
-
     public function viewLogin(): View
     {
         return view('auth.login');
@@ -85,10 +80,10 @@ class AuthController extends Controller
 
         if ($loginResult['notify']) {
             if (Auth::user()->role === User::ROLE_ADMIN) {
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('admin.dashboard')->with('success', __('auth.notify_login_success'));
             }
 
-            return redirect()->route('blogs.home');
+            return redirect()->route('blogs.home')->with('success', __('auth.notify_login_success'));
         }
 
         return redirect()->route('login')->with('error', $loginResult['message']);

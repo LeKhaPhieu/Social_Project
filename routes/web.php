@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\User\UserController;
@@ -34,7 +36,11 @@ Route::prefix('auth')->middleware('guest')->group(function () {
 
 
 Route::group(['as' => 'admin.', 'prefix' => 'admin'],function () {
-    Route::get('/', [AuthController::class, 'viewDashboard'])->name('dashboard');
+    Route::get('/', [HomeController::class, 'viewDashboard'])->name('dashboard');
+    Route::get('/category', [CategoryController::class, 'viewCategory'])->name('category');
+    Route::post('/category/create', [CategoryController::class, 'createCategory'])->name('post.category');
+    Route::get('/category', [CategoryController::class, 'getCategory'])->name('getCategory');
+    Route::post('/category/update', [CategoryController::class, 'updateCategory'])->name('update.category');
 });
 
 Route::group(['as' => 'user.', 'prefix' => 'users'],function () {

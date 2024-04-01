@@ -24,6 +24,7 @@ return [
     'notify_token_success' => 'Successful account authentication, you can log in!!',
     'notify_token_error' => 'Authentication code is incorrect!!',
     'notify_login_error' => 'Unable to log in, please check your email or password again',
+    'notify_login_success' => 'Logged in successfully',
     'notify_email_exist' => 'Email already exists, please use another email!',
     'notify_password_duplicate' => 'The new password matches the old password!',
     'error_password_current' => 'The current password you entered is incorrect!',
