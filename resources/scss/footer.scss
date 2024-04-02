@@ -1,0 +1,12 @@
+.footer-form {
+    width: 100%;
+    @include flex-center();
+    height: 94px;
+    background-color: var(--background-footer);
+
+    .footer-content {
+        font-size: 15px;
+        color: var(--main-white);
+        text-align: center;
+    }
+}

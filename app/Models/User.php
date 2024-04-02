@@ -19,6 +19,10 @@ class User extends Authenticatable
     const INACTIVATED = 0;
     const ACTIVATED = 1;
     const BLOCKED = 2;
+    
+    const MALE = 0;
+    const FEMALE = 1;
+    const OTHER = 2;
 
     /**
      * The attributes that are mass assignable.
@@ -28,7 +32,7 @@ class User extends Authenticatable
     protected $table = 'users';
 
     protected $fillable = [
-        'name',
+        'user_name',
         'email',
         'password',
         'phone_number',
@@ -56,6 +60,15 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    public static function getGenders(): array
+    {
+        return [
+            self::MALE,
+            self::FEMALE,
+            self::OTHER,
+        ];
+    }
 
     public function posts(): HasMany
     {
