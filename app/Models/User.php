@@ -24,6 +24,8 @@ class User extends Authenticatable
     const FEMALE = 1;
     const OTHER = 2;
 
+    const LIMIT_ADMIN_PAGE = 11;
+
     /**
      * The attributes that are mass assignable.
      *

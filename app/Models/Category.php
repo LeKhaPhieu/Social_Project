@@ -9,6 +9,8 @@ class Category extends Model
 {
     use HasFactory;
 
+    const LIMIT_ADMIN_PAGE = 5;
+
     protected $table = 'categories';
 
     protected $fillable = [

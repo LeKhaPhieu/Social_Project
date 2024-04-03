@@ -11,7 +11,7 @@
 
 <body>
     <div class="auth-main">
-        <form class="auth-form" action="{{ route('user.password.update') }}" method="POST">
+        <form class="auth-form" action="{{ route('password.update') }}" method="POST">
             @csrf
             @method('PUT')
             <div class="auth-head">

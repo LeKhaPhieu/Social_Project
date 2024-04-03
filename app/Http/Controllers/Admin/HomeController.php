@@ -7,8 +7,8 @@ use Illuminate\View\View;
 
 class HomeController extends Controller
 {
-    public function viewDashboard(): View
+    public function dashboard(): View
     {   
-        return view('admin.index');
+        return view('admin.dashboard');
     }
 }

@@ -33,7 +33,7 @@
                                 <div class="dropdown-content">
                                     <a href="#">My blogs</a>
                                     <a href="#">My profile</a>
-                                    <a href="{{ route('user.password.edit') }}">Change password</a>
+                                    <a href="{{ route('password.edit') }}">Change password</a>
                                     <form action="{{ route('logout') }}" method="POST">
                                         @csrf
                                         <button>Log out</button>
