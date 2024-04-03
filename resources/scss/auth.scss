@@ -1,0 +1,120 @@
+.auth-main {
+    width: 100%;
+    height: auto;
+    display: flex;
+    padding: 5% 0 0 0;
+
+    @include mobile {
+        padding: 15% 0;
+    }
+
+    .auth-form {
+        width: 35%;
+        margin: auto;
+
+        @include mobile {
+            width: 70%;
+            padding: 0 15%;
+        }
+
+        .auth-head {
+            @include flex-center;
+            margin: 0 0 10% 0;
+
+            .auth-head-image {
+                width: 61px;
+            }
+
+            .auth-head-name {
+                @include font-text(20px, 700);
+            }
+        }
+
+        .auth-body {
+            .auth-body-title {
+                @include font-text(20px, 700);
+            }
+
+            .auth-body-item {
+                margin: 0 0 25px 0;
+
+                p {
+                    @include font-text(15px, 400);
+                    margin: 0 0 5px 0;
+
+                    span {
+                        color: red;
+                    }
+                }
+
+                input {
+                    width: -webkit-fill-available;
+                    margin: 0 0 5px 0;
+                    padding: 7px 15px;
+                    border: 1px solid rgba(222, 222, 222, 1);
+                    border-radius: 4px;
+                }
+
+                .gender-from {
+                    display: flex;
+
+                    .gender-item {
+                        @include flex-center(flex-start, center);
+                        margin: 0 15% 0 0;
+
+                        input {
+                            margin: 0 7px 0 0;
+                        }
+                    }
+                }
+
+                .remember-form {
+                    @include flex-center(space-between, center);
+                    width: 100%;
+
+                    .remember-item {
+                        display: flex;
+
+                        input {
+                            width: auto;
+                            margin: 0 5px 0 0;
+                        }
+
+                        span {
+                            @include font-text(15px, 400);
+                        }
+                    }
+
+                    .link-forgot {
+                        color: var(--text-link);
+                        @include font-text(15px, 400);
+                    }
+                }
+            }
+        }
+
+        .auth-tail {
+            text-align: center;
+            margin: 30px 0 0 0;
+            display: grid;
+            justify-items: center;
+
+            .btn-submit {
+                @include font-text(16px, 400);
+                width: 40%;
+                margin: 0 0 10px 0;
+                padding: 5px 0;
+                background-color: var(--text-link);
+                color: var(--main-white);
+                border: none;
+                border-radius: 4px;
+                cursor: pointer;
+            }
+
+            .link-sign-in {
+                @include font-text(15px, 400);
+                color: var(--text-link);
+            }
+        }
+    }
+}
