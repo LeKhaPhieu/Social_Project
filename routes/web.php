@@ -41,6 +41,7 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 });
 
+
 Route::group(['as' => 'categories.', 'prefix' => 'categories', 'middleware' => ['admin']], function () {
     Route::get('/create', [CategoryController::class, 'create'])->name('create');
     Route::post('/post', [CategoryController::class, 'post'])->name('post');
@@ -54,6 +55,8 @@ Route::group(['as' => 'posts.', 'prefix' => 'posts', 'middleware' => ['admin']],
     Route::get('/posts', [PostControllerAdmin::class, 'store'])->name('store');
     Route::get('/status/{id}', [PostControllerAdmin::class, 'updateStatus'])->name('update.status');
     Route::delete('/destroy/{id}', [PostControllerAdmin::class, 'destroy'])->name('destroy');
+    Route::get('/edit/{post}', [PostControllerAdmin::class, 'edit'])->name('edit');
+    Route::put('/update/{id}', [PostControllerAdmin::class, 'update'])->name('update');
 });
 
 Route::group(['as' => 'users.', 'prefix' => 'users', 'middleware' => ['admin']], function () {
@@ -62,7 +65,7 @@ Route::group(['as' => 'users.', 'prefix' => 'users', 'middleware' => ['admin']],
     Route::delete('/destroy/{id}', [UserControllerAdmin::class, 'destroy'])->name('destroy');
 });
 
-Route::group(['as' => 'password.', 'prefix' => 'users'], function () {
+Route::group(['as' => 'passwords.', 'prefix' => 'users'], function () {
     Route::get('/edit', [UserController::class, 'edit'])->name('edit');
     Route::put('/update', [UserController::class, 'update'])->name('update');
 });

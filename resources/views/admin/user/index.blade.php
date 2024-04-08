@@ -4,18 +4,32 @@
     <div class="table-agile-info">
         <div class="panel panel-default">
             <div class="panel-heading">
-                List Users
+                {{ __('admin.title_list_user') }}
+            </div>
+            <div class="row w3-res-tb">
+                <div class="col-sm-5 m-b-xs">
+                </div>
+                <div class="col-sm-4">
+                </div>
+                <div class="col-sm-3">
+                    <div class="input-group">
+                        <input type="text" class="input-sm form-control" placeholder="Search">
+                        <span class="input-group-btn">
+                            <button class="btn btn-sm btn-default" type="button">Search</button>
+                        </span>
+                    </div>
+                </div>
             </div>
             <div class="table-responsive">
                 <table class="table table-striped b-t b-light" id="myTable">
                     <thead>
                         <tr>
-                            <th>Number</th>
-                            <th>Avatar</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Active</th>
+                            <th>{{ __('admin.number') }}</th>
+                            <th>{{ __('admin.avatar') }}</th>
+                            <th>{{ __('admin.user_name') }}</th>
+                            <th>{{ __('admin.email') }}</th>
+                            <th>{{ __('admin.phone') }}</th>
+                            <th>{{ __('admin.status') }}</th>
                             <th style="width:30px;"></th>
                         </tr>
                     </thead>
@@ -34,15 +48,15 @@
                                     <span class="text-ellipsis">
                                         @if ($user->status === \App\Models\User::ACTIVATED)
                                             <a href="{{ route('users.update.status', ['id' => $user->id]) }}">
-                                                <span class="text-approve approved">Activated</span>
+                                                <span class="text-approve approved">{{ __('admin.status_activated' )}}</span>
                                             </a>
                                         @elseif ($user->status === \App\Models\User::BLOCKED)
                                             <a href="{{ route('users.update.status', ['id' => $user->id]) }}">
-                                                <span class="text-approve not-approved">Blocked</span>
+                                                <span class="text-approve not-approved">{{ __('admin.status_blocked' )}}</span>
                                             </a>
                                         @elseif ($user->status === \App\Models\User::INACTIVATED)
                                             <p>
-                                                <span class="text-approve inactivated">Inactivated</span>
+                                                <span class="text-approve inactivated">{{ __('admin.status_inactivated' )}}</span>
                                             </p>
                                         @endif
                                     </span>
