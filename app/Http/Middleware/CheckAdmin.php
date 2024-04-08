@@ -17,12 +17,9 @@ class CheckAdmin
     public function handle(Request $request, Closure $next): Response
     {
         $user = $request->user();
-
         if ($user && $user->role == User::ROLE_ADMIN) {
-
             return $next($request);
         }
-
-        return response()->json(['error' => 'Unauthorized'], 403);
+        return redirect()->route('blogs.home');
     }
 }

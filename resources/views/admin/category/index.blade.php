@@ -12,12 +12,12 @@
                 <div class="col-sm-4">
                 </div>
                 <div class="col-sm-3">
-                    <div class="input-group">
-                        <input type="text" class="input-sm form-control" placeholder="Search">
+                    <form class="input-group" action="">
+                        <input type="text" class="input-sm form-control" name="key">
                         <span class="input-group-btn">
-                            <button class="btn btn-sm btn-default" type="button">Search</button>
+                            <button class="btn btn-sm btn-default" type="submit">Search</button>
                         </span>
-                    </div>
+                    </form>
                 </div>
             </div>
 
@@ -28,27 +28,27 @@
                             <th>{{ __('admin.number') }}</th>
                             <th>{{ __('admin.category') }}</th>
                             <th>{{ __('admin.create_at') }}</th>
-                            <th style="width:30px;"></th>
+                            <th style="width:75px;"></th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($Categories as $index => $category)
+                        @foreach ($categories as $index => $category)
                             <tr>
-                                <td>{{ $index + 1 }}</td>
+                                <td>{{ ++$index }}</td>
                                 <td>{{ $category->name }}</td>
                                 <td><span class="text-ellipsis">{{ $category->created_at }}</span></td>
-                                <td>
-                                    <a href="{{ route('categories.edit', ['category' => $category]) }}" class="active"
+                                <td class="form-inline">
+                                    <a href="{{ route('categories.edit', ['category' => $category]) }}" class="active styling-edit form-group"
                                         ui-toggle-class="">
-                                        <i class="fa fa-pencil-square-o text-success text-active"></i>
+                                        <i class="fa fa-edit text-success text-active"></i>
                                     </a>
                                     <form onclick="return confirm('Are you sure delete this category?')"
-                                        action="{{ route('categories.destroy', ['id' => $category]) }}" class="active"
+                                        action="{{ route('categories.destroy', ['id' => $category]) }}" class="active form-group pull-right"
                                         method="POST" ui-toggle-class="">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn-category">
-                                            <i class="fa fa-times text-danger text"></i>
+                                            <i class="fa fa-trash-o text-danger text"></i>
                                         </button>
                                     </form>
                                 </td>

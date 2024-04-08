@@ -18,9 +18,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <link href="{{ Vite::asset('resources/admin/css/font-awesome.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{Vite::asset('resources/admin/css/morris.css')}}" type="text/css" />
     <link rel="stylesheet" href="{{Vite::asset('resources/admin/css/monthly.css')}}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="{{ Vite::asset('resources/admin/js/jquery2.0.3.min.js')}}"></script>
     <script src="{{ Vite::asset('resources/admin/js/raphael-min.js')}}"></script>
     <script src="{{ Vite::asset('resources/admin/js/morris.js')}}"></script>
@@ -32,7 +29,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
         <header class="header fixed-top clearfix">
             <div class="brand">
                 <a href="index.html" class="logo">
-                    Regit Blog
+                    {{ __('admin.title_sidebar') }}
                 </a>
                 <div class="sidebar-toggle-box">
                     <div class="fa fa-bars"></div>
@@ -46,15 +43,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <img alt="" src="{{ Vite::asset('resources/admin/images/logo.png') }}">
-                            <span class="username">Admin</span>
+                            <span class="username">{{ __('admin.title_sidebar') }}</span>
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu extended logout">
-                            <li><a href="#"><i class=" fa fa-suitcase"></i>Profile</a></li>
-                            <li><a href="#"><i class="fa fa-cog"></i> Settings</a></li>
+                            <li><a href="#"><i class=" fa fa-suitcase"></i>{{ __('admin.text_btn_profile') }}</a></li>
+                            <li><a href="#"><i class="fa fa-cog"></i>{{ __('admin.text_btn_setting') }}</a></li>
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
-                                <button class="btn-logout" type="submit"><i class="fa fa-key icon-btn-logout"></i>Log out</button>
+                                <button class="btn-logout" type="submit"><i class="fa fa-key icon-btn-logout"></i>{{ __('admin.text_btn_logout') }}</button>
                             </form>
                         </ul>
                     </li>
@@ -69,38 +66,38 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         <li>
                             <a class="active" href="">
                                 <i class="fa fa-dashboard"></i>
-                                <span>Dashboard</span>
+                                <span>{{ __('admin.dashboard') }}</span>
                             </a>
                         </li>
 
                         <li class="sub-menu">
                             <a href="javascript:;">
-                                <i class="fa fa-book"></i>
-                                <span>Categories</span>
+                                <i class="fa fa-tasks"></i>
+                                <span>{{ __('admin.categories') }}</span>
                             </a>
                             <ul class="sub">
                                 <li><a href="{{ route('categories.create') }}">{{ __('admin.title_create_category') }}</a></li>
-                                <li><a href="{{ route('categories.store') }}">{{ __('admin.title_list_category') }}</a></li>
+                                <li><a href="{{ route('categories.index') }}">{{ __('admin.title_list_category') }}</a></li>
                             </ul>
                         </li>
 
                         <li class="sub-menu">
                             <a href="javascript:;">
                                 <i class="fa fa-book"></i>
-                                <span>Posts</span>
+                                <span>{{ __('admin.posts') }}</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{ route('posts.store') }}">{{ __('admin.title_list_post') }}</a></li>
+                                <li><a href="{{ route('posts.index') }}">{{ __('admin.title_list_post') }}</a></li>
                             </ul>
                         </li>
 
                         <li class="sub-menu">
                             <a href="javascript:;">
-                                <i class="fa fa-book"></i>
-                                <span>Users</span>
+                                <i class="fa fa-users"></i>
+                                <span>{{ __('admin.users') }}</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{ route('users.store') }}">{{ __('admin.title_list_user') }}</a></li>
+                                <li><a href="{{ route('users.index') }}">{{ __('admin.title_list_user') }}</a></li>
                             </ul>
                         </li>
                     </ul>

@@ -10,7 +10,7 @@
                 </header>
                 <div class="panel-body">
                     <div class="position-center">
-                        <form role="form" action="{{ route('categories.post') }}" method="POST">
+                        <form role="form" action="{{ route('categories.store') }}" method="POST">
                             @csrf
                             <div class="form-group">
                                 <label for="exampleInputEmail1">{{ __('admin.category') }}</label>

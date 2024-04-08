@@ -19,6 +19,10 @@ p {margin: 0;}
     margin: 0 12px 0 0;
 }
 
+i.fa.fa-edit.text-success.text-active {
+    font-size: 20px;
+}
+
 .btn-category {
     background-color: snow;
     border: none;
@@ -51,6 +55,10 @@ span.text-approve.inactivated {
     background-color: gray;
     padding: 5px;
     border-radius: 10px;
+}
+
+a.active.styling-edit.form-group {
+    margin: 3px 0 0 0;
 }
 
 html, body{

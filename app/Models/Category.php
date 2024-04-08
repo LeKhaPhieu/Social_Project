@@ -4,16 +4,20 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Category extends Model
 {
     use HasFactory;
-
-    const LIMIT_ADMIN_PAGE = 5;
 
     protected $table = 'categories';
 
     protected $fillable = [
         'name',
     ];
+
+    public function posts(): BelongsToMany
+    {
+        return $this->belongsToMany(Post::class, 'category_post', 'category_id', 'post_id');
+    }
 }

@@ -91,5 +91,4 @@ $(function(){
 
         return (bytes / 1000).toFixed(2) + ' KB';
     }
-
 });

@@ -9,27 +9,31 @@
             class="form-blog update">
             @csrf
             @method('PUT')
-            <h2>Update Post</h2>
-            <label>Category <span>*</span></label>
-            <select name="category_id" class="form-blog-categories update">
-                <option value="0">Categories</option>
-                <option value="1">Kinh tế</option>
-                <option value="2">Chính trị</option>
-                <option value="3">Xã hội</option>
-                <option value="4">Giáo dục</option>
-            </select>
-            <label>Title <span>*</span></label>
-            <input name="title" type="text" value="{{ $post->title }}"
-                class="form-blog-title update">
-            <label>Upload image <span>*</span></label>
-            <p id="btnImage" class="form-blog-image update">Upload image</p>
+            <h2>{{ __('admin.title_update_post') }}</h2>
+            <label>{{ __('admin.label_category') }}<span>*</span></label>
+            <div id="list1" class="dropdown-check-list" tabindex="100">
+                <span class="anchor">Categories</span>
+                <ul class="items">
+                    @foreach ($categories as $category)
+                        <li>
+                            <input type="checkbox" name="category[]" value="{{ $category->id }}"
+                                {{ in_array($category->id, $post->categories->pluck('id')->toArray()) ? 'checked' : '' }}>
+                            {{ $category->name }}
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+            <label>{{ __('admin.label_title') }}<span>*</span></label>
+            <input name="title" type="text" value="{{ $post->title }}" class="form-blog-title update">
+            <label>{{ __('admin.label_upload_img') }}<span>*</span></label>
+            <p id="btnImage" class="form-blog-image update">{{ __('admin.label_upload_img') }}</p>
             <input type="file" name="image" id="inputImage" class="input-image-blog update">
             <div id="imagePreview" class="image-preview update">
                 <img src="{{ Storage::url($post->image) }}" alt="">
             </div>
-            <label>Description <span>*</span></label>
+            <label>{{ __('admin.label_description') }}<span>*</span></label>
             <textarea name="content" rows="8" cols="70" class="form-blog-content update">{{ $post->content }}</textarea>
-            <button class="form-blog-submit">Update blog</button>
+            <button class="form-blog-submit">{{ __('admin.text_btn_update') }}</button>
         </form>
     </div>
 @endsection

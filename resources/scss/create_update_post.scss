@@ -108,3 +108,55 @@
         }
     }
 }
+
+.dropdown-check-list {
+    display: inline-block;
+
+    .anchor {
+        width: 35%;
+        position: relative;
+        cursor: pointer;
+        display: inline-block;
+        padding: 5px 50px 5px 10px;
+        border: 1px solid var(--main-gray);
+        background-color: var(--main-white);
+        border-radius: 4px 4px 0 0;
+
+        &:after {
+            position: absolute;
+            content: "";
+            border-left: 2px solid var(--main-black);
+            border-top: 2px solid var(--main-black);
+            padding: 5px;
+            right: 10px;
+            top: 20%;
+            transform: rotate(-135deg);
+        }
+    }
+
+    .items {
+        width: 35%;
+        padding: 2px;
+        display: none;
+        margin: 0;
+        border: 1px solid var(--main-gray);
+        border-radius: 0 0 4px 4px;
+        border-top: none;
+        background-color: var(--main-white);
+
+        li {
+            list-style: none;
+
+            input {
+                margin: 5px;
+            }
+        }
+    }
+
+    &.visible {
+
+        .items {
+            display: block;
+        }
+    }
+}

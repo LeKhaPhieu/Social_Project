@@ -12,12 +12,12 @@
                 <div class="col-sm-4">
                 </div>
                 <div class="col-sm-3">
-                    <div class="input-group">
-                        <input type="text" class="input-sm form-control" placeholder="Search">
+                    <form class="input-group" action="">
+                        <input type="text" class="input-sm form-control" name="key">
                         <span class="input-group-btn">
-                            <button class="btn btn-sm btn-default" type="button">Search</button>
+                            <button class="btn btn-sm btn-default" type="submit">Search</button>
                         </span>
-                    </div>
+                    </form>
                 </div>
             </div>
             <div class="table-responsive">
@@ -30,40 +30,45 @@
                             <th>{{ __('admin.content') }}</th>
                             <th>{{ __('admin.category') }}</th>
                             <th>{{ __('admin.status') }}</th>
-                            <th style="width:30px;"></th>
+                            <th style="width:75px;"></th>
                         </tr>
                     </thead>
 
                     <tbody>
-                        @foreach ($Posts as $index => $post)
+                        @foreach ($posts as $index => $post)
                             <tr>
-                                <td>{{ $index++ }}</td>
+                                <td>{{ ++$index }}</td>
                                 <td><img src="{{ Storage::url($post->image) }}" height="100" width="100"></td>
                                 <td>
                                     <h4>{{ $post->title }}</h4>
                                 </td>
                                 <td>{!! nl2br(e(Str::limit($post->content, 100))) !!}</td>
-                                <td>{{ $post->name }}</td>
                                 <td>
-                                    <span class="text-ellipsis">
-                                        @if ($post->status === \App\Models\Post::APPROVED)
-                                            <a href="{{ route('posts.update.status', ['id' => $post->id]) }}"><span class="text-approve approved">{{ __('admin.status_approved') }}</span></a>
-                                        @else
-                                            <a href="{{ route('posts.update.status', ['id' => $post->id]) }}"><span class="text-approve not-approved">{{ __('admin.status_unapproved') }}</span></a>
-                                        @endif
-                                    </span>
+                                    @foreach ($post->categories as $category)
+                                        {{ $category->name }},
+                                        <br>
+                                    @endforeach
                                 </td>
                                 <td>
-                                    <a href="{{ route('posts.edit', ['post' => $post]) }}" class="active styling-edit" ui-toggle-class="">
-                                        <i class="fa fa-pencil-square-o text-success text-active"></i>
+                                    <span class="text-ellipsis">
+                                        <a href="{{ route('posts.update.status', ['id' => $post->id]) }}">
+                                            <span class="text-approve {{$post->status === \App\Models\Post::APPROVED ? 'approved' : 'not-approved'}}"
+                                            >
+                                            {{ $post->status_name }}</span>
+                                        </a>
+                                    </span>
+                                </td>
+                                <td class="form-inline">
+                                    <a href="{{ route('posts.edit', ['post' => $post]) }}" class="active styling-edit form-group" ui-toggle-class="">
+                                        <i class="fa fa-edit text-success text-active"></i>
                                     </a>
                                     <form onclick="return confirm('Are you sure delete this category?')"
-                                        action="{{ route('posts.destroy', ['id' => $post]) }}" class="active"
+                                        action="{{ route('posts.destroy', ['id' => $post]) }}" class="active form-group pull-right"
                                         method="POST" ui-toggle-class="">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn-category">
-                                            <i class="fa fa-times text-danger text"></i>
+                                            <i class="fa fa-trash-o text-danger text"></i>
                                         </button>
                                     </form>
                                 </td>

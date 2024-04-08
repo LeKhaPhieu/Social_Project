@@ -2,8 +2,11 @@
     --main-white: #FFFFFF;
     --main-black: #212121;
     --main-red: red;
+    --main-green: rgb(11, 201, 11);
     --main-gray: gray;
     --btn-header: #770303;
+    --background-white-1: #E5E5E5;
+    --background-white-2: #FFE4E4;
     --background-footer: #000000;
     --border-input: #202E33;
     --border-input-mobile: rgba(32, 46, 51, 1);
@@ -25,11 +28,11 @@ a {
 }
 
 .notify-error {
-    color: red;
+    color: var(--main-red);
 }
 
 .notify-success {
-    color: green;
+    color: var(--main-green);
 }
 
 .notification {
@@ -44,11 +47,11 @@ a {
         color: var(--main-white);
 
         &.alert-success {
-            background-color: rgb(11, 201, 11);
+            background-color: var(--main-green);
         }
 
         &.alert-error {
-            background-color: red;
+            background-color: var(--main-red);
         }
     }
 }
@@ -83,17 +86,17 @@ a {
             font-style: normal;
             font-size: 20px;
             line-height: 28px;
-            color: #211E3B;
+            color: var(--border-input);
         }
     }
 
     li:hover,
     .paginate-active {
         border-radius: 50%;
-        background-color: #FFE4E4;
+        background-color: var(--background-white-2);
 
         a {
-            color: #C40000;
+            color: var(--text-hover);
         }
     }
 
@@ -103,7 +106,7 @@ a {
         height: 40px;
 
         a {
-            color: white;
+            color: var(--main-white);
         }
     }
 
@@ -111,16 +114,16 @@ a {
         opacity: 0.8;
 
         a {
-            color: white;
+            color: var(--main-white);
         }
     }
 
     li:first-child {
-        background-color: #C40000;
+        background-color: var(--text-hover);
     }
 
     li:last-child {
-        background: #E5E5E5;
+        background: var(--background-white-1);
     }
 
     li+li {

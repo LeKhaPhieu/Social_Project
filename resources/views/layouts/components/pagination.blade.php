@@ -1,42 +1,42 @@
 @vite(['resources/scss/base.scss'])
 <ul class="paginate">
-    @if ($items->lastPage() > 1)
+    @if ($posts->lastPage() > 1)
         <li class="arrow-paginate">
-            <a href="{{ $items->previousPageUrl() }}" rel="prev">
-                <i class="fa-solid fa-angle-left"></i>
+            <a href="{{ $posts->previousPageUrl() }}" rel="prev">
+                <i class="fa fa-angle-left"></i>
             </a>
         </li>
-        <li class="{{ $items->currentPage() == 1 ? ' paginate-active' : '' }}">
-            <a href="{{ $items->url($items->onFirstPage()) }}">1</a>
+        <li class="{{ $posts->currentPage() == 1 ? ' paginate-active' : '' }}">
+            <a href="{{ $posts->url($posts->onFirstPage()) }}">1</a>
         </li>
         <?php
-        $start = $items->currentPage() - 2;
-        $end = $items->currentPage() + 2;
+        $start = $posts->currentPage() - 2;
+        $end = $posts->currentPage() + 2;
         if ($start < 1) {
             $start = 1;
             $end += 1;
         }
-        if ($end >= $items->lastPage()) {
-            $end = $items->lastPage();
+        if ($end >= $posts->lastPage()) {
+            $end = $posts->lastPage();
         }
         ?>
-        @if ($items->currentPage() > 3)
+        @if ($posts->currentPage() > 3)
             <li><span>...</span></li>
         @endif
         @for ($i = $start + 1; $i < $end; $i++)
-            <li class="{{ $items->currentPage() == $i ? ' paginate-active' : '' }}">
-                <a href="{{ $items->url($i) }}">{{ $i }}</a>
+            <li class="{{ $posts->currentPage() == $i ? ' paginate-active' : '' }}">
+                <a href="{{ $posts->url($i) }}">{{ $i }}</a>
             </li>
         @endfor
-        @if ($items->currentPage() + 2 < $items->lastPage())
+        @if ($posts->currentPage() + 2 < $posts->lastPage())
             <li><span>...</span></li>
         @endif
-        <li class="{{ $items->currentPage() == $items->lastPage() ? ' paginate-active' : '' }}">
-            <a href="{{ $items->url($items->lastPage()) }}">{{ $items->lastPage() }}</a>
+        <li class="{{ $posts->currentPage() == $posts->lastPage() ? ' paginate-active' : '' }}">
+            <a href="{{ $posts->url($posts->lastPage()) }}">{{ $posts->lastPage() }}</a>
         </li>
         <li class="arrow-paginate">
-            <a href="{{ $items->nextPageUrl() }}" rel="next">
-                <i class="fa-solid fa-angle-right"></i>
+            <a href="{{ $posts->nextPageUrl() }}" rel="next">
+                <i class="fa fa-angle-right"></i>
             </a>
         </li>
     @endif

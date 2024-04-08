@@ -12,12 +12,12 @@
                 <div class="col-sm-4">
                 </div>
                 <div class="col-sm-3">
-                    <div class="input-group">
-                        <input type="text" class="input-sm form-control" placeholder="Search">
+                    <form class="input-group" action="">
+                        <input type="text" class="input-sm form-control" name="key">
                         <span class="input-group-btn">
-                            <button class="btn btn-sm btn-default" type="button">Search</button>
+                            <button class="btn btn-sm btn-default" type="submit">Search</button>
                         </span>
-                    </div>
+                    </form>
                 </div>
             </div>
             <div class="table-responsive">
@@ -35,9 +35,9 @@
                     </thead>
 
                     <tbody>
-                        @foreach ($Users as $index => $user)
+                        @foreach ($users as $index => $user)
                             <tr>
-                                <td>{{ $index++ }}</td>
+                                <td>{{ ++$index }}</td>
                                 <td><img src="{{ Vite::asset('resources/images/user_avatar.png') }}" height="40" width="40"></td>
                                 <td>
                                     <h4>{{ $user->user_name }}</h4>
@@ -46,19 +46,12 @@
                                 <td>{{ $user->phone_number }}</td>
                                 <td>
                                     <span class="text-ellipsis">
-                                        @if ($user->status === \App\Models\User::ACTIVATED)
-                                            <a href="{{ route('users.update.status', ['id' => $user->id]) }}">
-                                                <span class="text-approve approved">{{ __('admin.status_activated' )}}</span>
-                                            </a>
-                                        @elseif ($user->status === \App\Models\User::BLOCKED)
-                                            <a href="{{ route('users.update.status', ['id' => $user->id]) }}">
-                                                <span class="text-approve not-approved">{{ __('admin.status_blocked' )}}</span>
-                                            </a>
-                                        @elseif ($user->status === \App\Models\User::INACTIVATED)
-                                            <p>
-                                                <span class="text-approve inactivated">{{ __('admin.status_inactivated' )}}</span>
-                                            </p>
-                                        @endif
+                                        <a href="{{ route('users.update.status', ['id' => $user->id]) }}">
+                                            <span class="text-approve {{ $user->status === \App\Models\User::ACTIVATED ? 'approved' 
+                                                : ($user->status === \App\Models\User::BLOCKED ? 'not-approved' : 'inactivated') }}"
+                                            >
+                                                {{ $user->status_name }}</span>
+                                        </a>
                                     </span>
                                 </td>
                                 <td>
@@ -68,7 +61,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn-category">
-                                            <i class="fa fa-times text-danger text"></i>
+                                            <i class="fa fa-trash-o text-danger text"></i>
                                         </button>
                                     </form>
                                 </td>

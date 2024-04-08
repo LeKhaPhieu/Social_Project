@@ -19,12 +19,10 @@ class User extends Authenticatable
     const INACTIVATED = 0;
     const ACTIVATED = 1;
     const BLOCKED = 2;
-    
+
     const MALE = 0;
     const FEMALE = 1;
     const OTHER = 2;
-
-    const LIMIT_ADMIN_PAGE = 11;
 
     /**
      * The attributes that are mass assignable.
@@ -70,6 +68,17 @@ class User extends Authenticatable
             self::FEMALE,
             self::OTHER,
         ];
+    }
+
+    public function getStatusNameAttribute(): string
+    {
+        if ($this->status === self::ACTIVATED) {
+            return __('admin.status_activated');
+        }
+        if ($this->status === self::BLOCKED) {
+            return __('admin.status_blocked');
+        }
+        return __('admin.status_inactivated');
     }
 
     public function posts(): HasMany

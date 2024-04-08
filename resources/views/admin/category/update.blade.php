@@ -14,8 +14,8 @@
                             @csrf
                             @method('PUT')
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Update category '' {{ $category->name }} '': </label>
-                                <input type="text" class="form-control" id="exampleInputEmail1" name="category_name">
+                                <label for="exampleInputEmail1">Update category: </label>
+                                <input type="text" class="form-control" id="exampleInputEmail1" name="category_name" value="{{ $category->name }}">
                                 @error('category_name')
                                     <p class="notify-error">{{ $message }}</p>
                                 @enderror

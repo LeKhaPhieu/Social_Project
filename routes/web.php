@@ -37,30 +37,30 @@ Route::prefix('auth')->middleware('guest')->group(function () {
 });
 
 
-Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
+Route::group(['as' => 'admin.', 'prefix' => 'isAdmin'], function () {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 });
 
 
-Route::group(['as' => 'categories.', 'prefix' => 'categories', 'middleware' => ['admin']], function () {
+Route::group(['as' => 'categories.', 'prefix' => 'categories', 'middleware' => ['isAdmin']], function () {
+    Route::get('/index', [CategoryController::class, 'index'])->name('index');
     Route::get('/create', [CategoryController::class, 'create'])->name('create');
-    Route::post('/post', [CategoryController::class, 'post'])->name('post');
-    Route::get('/categories', [CategoryController::class, 'store'])->name('store');
+    Route::post('/store', [CategoryController::class, 'store'])->name('store');
     Route::get('/edit/{category}', [CategoryController::class, 'edit'])->name('edit');
     Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
     Route::delete('/destroy/{id}', [CategoryController::class, 'destroy'])->name('destroy');
 });
 
-Route::group(['as' => 'posts.', 'prefix' => 'posts', 'middleware' => ['admin']], function () {
-    Route::get('/posts', [PostControllerAdmin::class, 'store'])->name('store');
-    Route::get('/status/{id}', [PostControllerAdmin::class, 'updateStatus'])->name('update.status');
-    Route::delete('/destroy/{id}', [PostControllerAdmin::class, 'destroy'])->name('destroy');
+Route::group(['as' => 'posts.', 'prefix' => 'posts', 'middleware' => ['isAdmin']], function () {
+    Route::get('/index', [PostControllerAdmin::class, 'index'])->name('index');
     Route::get('/edit/{post}', [PostControllerAdmin::class, 'edit'])->name('edit');
     Route::put('/update/{id}', [PostControllerAdmin::class, 'update'])->name('update');
+    Route::get('/status/{id}', [PostControllerAdmin::class, 'updateStatus'])->name('update.status');
+    Route::delete('/destroy/{id}', [PostControllerAdmin::class, 'destroy'])->name('destroy');
 });
 
-Route::group(['as' => 'users.', 'prefix' => 'users', 'middleware' => ['admin']], function () {
-    Route::get('/users', [UserControllerAdmin::class, 'store'])->name('store');
+Route::group(['as' => 'users.', 'prefix' => 'users', 'middleware' => ['isAdmin']], function () {
+    Route::get('/index', [UserControllerAdmin::class, 'index'])->name('index');
     Route::get('/status/{id}', [UserControllerAdmin::class, 'updateStatus'])->name('update.status');
     Route::delete('/destroy/{id}', [UserControllerAdmin::class, 'destroy'])->name('destroy');
 });
