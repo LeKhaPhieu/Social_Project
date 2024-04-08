@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 
 <head>
-    <title>Admin home page</title>
+    <title>{{ __('admin.title_admin_home') }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="keywords"
@@ -79,8 +79,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <span>Categories</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{ route('categories.create') }}">Create category</a></li>
-                                <li><a href="{{ route('categories.store') }}">List category</a></li>
+                                <li><a href="{{ route('categories.create') }}">{{ __('admin.title_create_category') }}</a></li>
+                                <li><a href="{{ route('categories.store') }}">{{ __('admin.title_list_category') }}</a></li>
                             </ul>
                         </li>
 
@@ -90,10 +90,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <span>Posts</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{ route('posts.store') }}">List posts</a></li>
-                            </ul>
-                            <ul class="sub">
-                                <li><a href="">List unapproved posts</a></li>
+                                <li><a href="{{ route('posts.store') }}">{{ __('admin.title_list_post') }}</a></li>
                             </ul>
                         </li>
 
@@ -103,7 +100,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                                 <span>Users</span>
                             </a>
                             <ul class="sub">
-                                <li><a href="{{ route('users.store') }}">List users</a></li>
+                                <li><a href="{{ route('users.store') }}">{{ __('admin.title_list_user') }}</a></li>
                             </ul>
                         </li>
                     </ul>

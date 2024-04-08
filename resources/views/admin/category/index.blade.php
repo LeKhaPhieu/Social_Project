@@ -4,7 +4,7 @@
     <div class="table-agile-info">
         <div class="panel panel-default">
             <div class="panel-heading">
-                List Category
+                {{ __('admin.title_list_category') }}
             </div>
             <div class="row w3-res-tb">
                 <div class="col-sm-5 m-b-xs">
@@ -25,9 +25,9 @@
                 <table class="table table-striped b-t b-light">
                     <thead>
                         <tr>
-                            <th>Number</th>
-                            <th>Category name</th>
-                            <th>Create at</th>
+                            <th>{{ __('admin.number') }}</th>
+                            <th>{{ __('admin.category') }}</th>
+                            <th>{{ __('admin.create_at') }}</th>
                             <th style="width:30px;"></th>
                         </tr>
                     </thead>

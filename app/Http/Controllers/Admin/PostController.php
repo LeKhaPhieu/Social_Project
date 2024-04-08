@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Service\Admin\CategoryService;
 use App\Service\Admin\PostService as PostServiceAdmin;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class PostController extends Controller
@@ -21,16 +22,20 @@ class PostController extends Controller
 
     public function store(): View
     {
-        $posts = Post::orderBy('created_at', 'desc')->paginate(Post::LIMIT_ADMIN_PAGE);
+        $posts = Post::orderBy('created_at', 'desc')
+            ->paginate(Post::LIMIT_ADMIN_PAGE);
+
         return view('admin.post.index')->with([
             'Posts' => $posts,
             'items' => $posts
         ]);
     }
 
-    public function edit(): View
+    public function edit(Post $post): View
     {
-        return view('admin.post.update');
+        return view('admin.post.update', [
+            'post' => $post,
+        ]);
     }
 
     public function updateStatus(int $id)
@@ -56,5 +61,18 @@ class PostController extends Controller
         }
 
         return redirect()->back()->with('error', __('admin.delete_category_error'));
+    }
+
+    public function update(Request $request, int $id)
+    {
+        $data = $request->only('title', 'image', 'content', 'category_id');
+        $result = $this->postServiceAdmin->update($data, $id);
+
+        if ($result) {
+
+            return redirect()->back()->with('success', __('admin.update_category_success'));
+        }
+
+        return redirect()->back()->with('error', __('admin.update_category_error'));
     }
 }

@@ -7,24 +7,18 @@ use Exception;
 
 class CategoryService
 {
-    public function post(array $data): array
+    public function post(array $data): bool
     {
         try {
             Category::create([
                 'name' => $data['category_name'],
             ]);
     
-            return [
-                'status' => true,
-                'message' => __('admin.create_category_success'),
-            ];
+            return true;
 
         } catch (Exception $e) {
 
-            return [
-                'status' => false,
-                'message' => __('admin.create_category_error'),
-            ];
+            return false;
         }
     }
 

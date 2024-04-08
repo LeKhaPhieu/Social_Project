@@ -46,7 +46,7 @@ class CategoryController extends Controller
             return redirect()->back()->with('success', __('admin.create_category_success'));
         }
 
-        return redirect()->back()->with('error', $result['message']);
+        return redirect()->back()->with('error', __('admin.create_category_error'));
     }
 
     public function update(CategoryRequest $request, int $id): RedirectResponse

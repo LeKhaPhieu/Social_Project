@@ -13,7 +13,7 @@
                         <form role="form" action="{{ route('categories.post') }}" method="POST">
                             @csrf
                             <div class="form-group">
-                                <label for="exampleInputEmail1">Category name: </label>
+                                <label for="exampleInputEmail1">{{ __('admin.category') }}</label>
                                 <input type="text" class="form-control" id="exampleInputEmail1" name="category_name">
                                 @error('category_name')
                                     <p class="notify-error">{{ $message }}</p>
