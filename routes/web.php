@@ -39,7 +39,36 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
     Route::get('/', [HomeController::class, 'viewDashboard'])->name('dashboard');
 });
 
+<<<<<<< Updated upstream
 Route::group(['as' => 'user.', 'prefix' => 'users'], function () {
     Route::get('/password/edit', [UserController::class, 'editChangePassword'])->name('password.edit');
     Route::put('/password/update', [UserController::class, 'updatePassword'])->name('password.update');
+=======
+Route::group(['as' => 'categories.', 'prefix' => 'categories', 'middleware' => ['admin']], function () {
+    Route::get('/create', [CategoryController::class, 'create'])->name('create');
+    Route::post('/post', [CategoryController::class, 'post'])->name('post');
+    Route::get('/categories', [CategoryController::class, 'store'])->name('store');
+    Route::get('/edit/{category}', [CategoryController::class, 'edit'])->name('edit');
+    Route::put('/update/{id}', [CategoryController::class, 'update'])->name('update');
+    Route::delete('/destroy/{id}', [CategoryController::class, 'destroy'])->name('destroy');
+});
+
+Route::group(['as' => 'posts.', 'prefix' => 'posts', 'middleware' => ['admin']], function () {
+    Route::get('/posts', [PostControllerAdmin::class, 'store'])->name('store');
+    Route::get('/status/{id}', [PostControllerAdmin::class, 'updateStatus'])->name('update.status');
+    Route::delete('/destroy/{id}', [PostControllerAdmin::class, 'destroy'])->name('destroy');
+    Route::get('/edit/{post}', [PostControllerAdmin::class, 'edit'])->name('edit');
+    Route::put('/update/{id}', [PostControllerAdmin::class, 'update'])->name('update');
+});
+
+Route::group(['as' => 'users.', 'prefix' => 'users', 'middleware' => ['admin']], function () {
+    Route::get('/users', [UserControllerAdmin::class, 'store'])->name('store');
+    Route::get('/status/{id}', [UserControllerAdmin::class, 'updateStatus'])->name('update.status');
+    Route::delete('/destroy/{id}', [UserControllerAdmin::class, 'destroy'])->name('destroy');
+});
+
+Route::group(['as' => 'password.', 'prefix' => 'users'], function () {
+    Route::get('/edit', [UserController::class, 'edit'])->name('edit');
+    Route::put('/update', [UserController::class, 'update'])->name('update');
+>>>>>>> Stashed changes
 });
