@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserService
 {
-    public function updatePassword(array $data): int|array
+    public function update(array $data): int|array
     {
         $user = Auth::user();
 

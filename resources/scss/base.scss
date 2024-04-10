@@ -1,12 +1,15 @@
 :root {
     --main-white: #FFFFFF;
     --main-black: #212121;
+    --main-red: red;
+    --main-gray: gray;
     --btn-header: #770303;
     --background-footer: #000000;
     --border-input: #202E33;
     --border-input-mobile: rgba(32, 46, 51, 1);
     --text-black-mobile: rgba(0, 0, 0, 1);
     --text-link: rgba(0, 123, 255, 1);
+    --text-hover: #C40000;
 }
 
 body {
@@ -57,5 +60,70 @@ a {
 
     to {
         opacity: 0;
+    }
+}
+
+.paginate {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+
+        a {
+            height: 28px;
+            font-family: "SVN-Gilroy-Bold";
+            font-style: normal;
+            font-size: 20px;
+            line-height: 28px;
+            color: #211E3B;
+        }
+    }
+
+    li:hover,
+    .paginate-active {
+        border-radius: 50%;
+        background-color: #FFE4E4;
+
+        a {
+            color: #C40000;
+        }
+    }
+
+    .arrow-paginate {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+
+        a {
+            color: white;
+        }
+    }
+
+    .arrow-paginate:hover {
+        opacity: 0.8;
+
+        a {
+            color: white;
+        }
+    }
+
+    li:first-child {
+        background-color: #C40000;
+    }
+
+    li:last-child {
+        background: #E5E5E5;
+    }
+
+    li+li {
+        margin-left: 10px;
     }
 }

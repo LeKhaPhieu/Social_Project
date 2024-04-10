@@ -15,6 +15,8 @@ class Post extends Model
     const NOT_APPROVED = 0;
     const APPROVED = 1;
 
+    const LIMIT_ADMIN_PAGE = 11;
+
     protected $table = 'posts';
 
     protected $fillable = [
