@@ -1,4 +1,4 @@
-@vite(['resources/scss/create_update_post.scss'])
+@vite(['resources/scss/update_post_admin.scss'])
 @vite(['resources/js/post.js'])
 @extends('layouts.admin.base')
 

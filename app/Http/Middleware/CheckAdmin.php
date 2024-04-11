@@ -20,6 +20,6 @@ class CheckAdmin
         if ($user && $user->role == User::ROLE_ADMIN) {
             return $next($request);
         }
-        return redirect()->route('blogs.home');
+        return redirect()->route('home');
     }
 }

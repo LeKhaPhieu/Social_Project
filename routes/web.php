@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [PostController::class, 'homePage'])->name('blogs.home');
+Route::get('/', [PostController::class, 'index'])->name('home');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('auth')->middleware('guest')->group(function () {
