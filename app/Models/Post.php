@@ -19,7 +19,6 @@ class Post extends Model
 
     protected $fillable = [
         'user_id',
-        'category_id',
         'title',
         'content',
         'image',
@@ -39,5 +38,18 @@ class Post extends Model
     public function comments(): HasMany
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function categories(): BelongsToMany
+    {
+        return $this->belongsToMany(Category::class, 'category_post', 'post_id', 'category_id');
+    }
+
+    public function getStatusNameAttribute(): string
+    {
+        if ($this->status === self::APPROVED) {
+            return __('admin.status_approved');
+        }
+        return __('admin.status_unapproved');
     }
 }

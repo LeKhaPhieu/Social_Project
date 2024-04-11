@@ -1,12 +1,18 @@
 :root {
     --main-white: #FFFFFF;
     --main-black: #212121;
+    --main-red: red;
+    --main-green: rgb(11, 201, 11);
+    --main-gray: gray;
     --btn-header: #770303;
+    --background-white-1: #E5E5E5;
+    --background-white-2: #FFE4E4;
     --background-footer: #000000;
     --border-input: #202E33;
     --border-input-mobile: rgba(32, 46, 51, 1);
     --text-black-mobile: rgba(0, 0, 0, 1);
     --text-link: rgba(0, 123, 255, 1);
+    --text-hover: #C40000;
 }
 
 body {
@@ -22,11 +28,11 @@ a {
 }
 
 .notify-error {
-    color: red;
+    color: var(--main-red);
 }
 
 .notify-success {
-    color: green;
+    color: var(--main-green);
 }
 
 .notification {
@@ -41,11 +47,11 @@ a {
         color: var(--main-white);
 
         &.alert-success {
-            background-color: rgb(11, 201, 11);
+            background-color: var(--main-green);
         }
 
         &.alert-error {
-            background-color: red;
+            background-color: var(--main-red);
         }
     }
 }
@@ -57,5 +63,70 @@ a {
 
     to {
         opacity: 0;
+    }
+}
+
+.paginate {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    li {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+
+        a {
+            height: 28px;
+            font-family: "SVN-Gilroy-Bold";
+            font-style: normal;
+            font-size: 20px;
+            line-height: 28px;
+            color: var(--border-input);
+        }
+    }
+
+    li:hover,
+    .paginate-active {
+        border-radius: 50%;
+        background-color: var(--background-white-2);
+
+        a {
+            color: var(--text-hover);
+        }
+    }
+
+    .arrow-paginate {
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+
+        a {
+            color: var(--main-white);
+        }
+    }
+
+    .arrow-paginate:hover {
+        opacity: 0.8;
+
+        a {
+            color: var(--main-white);
+        }
+    }
+
+    li:first-child {
+        background-color: var(--text-hover);
+    }
+
+    li:last-child {
+        background: var(--background-white-1);
+    }
+
+    li+li {
+        margin-left: 10px;
     }
 }

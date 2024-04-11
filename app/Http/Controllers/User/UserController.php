@@ -17,15 +17,15 @@ class UserController extends Controller
         $this->userService = $userService;
     }
 
-    public function editChangePassword(): View
+    public function edit(): View
     {
         return view('auth.change_password_form');
     }
 
-    public function updatePassword(ChangePasswordRequest $request): RedirectResponse
+    public function update(ChangePasswordRequest $request): RedirectResponse
     {
         $data = $request->all();
-        $result = $this->userService->updatePassword($data);
+        $result = $this->userService->update($data);
 
         if ($result['status']) {
             return redirect()->route('blogs.home')->with('success', __('auth.success_password_change'));
