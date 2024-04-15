@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Guest;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use App\Service\Admin\CategoryService;
-use App\Service\Guest\PostService;
+use App\Service\User\PostService;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -22,13 +22,10 @@ class PostController extends Controller
         $this->categoryService = $categoryService;
     }
 
-    public function index(Request $request): View
+    public function create(): View
     {
-        $data = $request->all();
-        $posts = $this->postService->index($data);
         $categories = $this->categoryService->getAll();
-        return view('guest.home')->with([
-            'posts' => $posts,
+        return view('user.post.create')->with([
             'categories' => $categories,
         ]);
     }

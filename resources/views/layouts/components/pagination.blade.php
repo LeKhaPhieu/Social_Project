@@ -1,4 +1,5 @@
 @vite(['resources/scss/base.scss'])
+@vite(['resources/admin/css/font-awesome.css'])
 <ul class="paginate">
     @if ($posts->lastPage() > 1)
         <li class="arrow-paginate">

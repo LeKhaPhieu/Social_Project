@@ -6,7 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" type="image/png" href="{{ Vite::asset('resources/images/logo.png') }}" />
     <title>Home page</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     @vite(['resources/scss/main.scss'])
+    @vite(['resources/js/header.js'])
     @vite(['resources/js/home.js'])
 </head>
 
@@ -16,33 +20,38 @@
             <div class="header-navbar">
                 <div class="header-navbar-right">
                     <img class="header-logo" src="{{ Vite::asset('resources/images/logo.png') }}">
-                    <a href="" class="header-logo-name">RT-Blogs</a>
+                    <a href="{{ route('home') }}" class="header-logo-name">{{ __('home.logo_name') }}</a>
                 </div>
                 <div class="header-navbar-left">
                     <div class="header-custom-page">
-                        <a class="header-btn-top" href="">Top</a>
+                        <a class="header-btn-top" href="{{ route('home') }}">{{ __('home.text_btn_top') }}</a>
+                    </div>
+                    <div class="header-auth">
+                        @if (!Auth::user())
+                            <a class="header-btn login" href="{{ route('login') }}">{{ __('home.text_btn_login') }}</a>
+                            <a class="header-btn register"
+                                href="{{ route('register') }}">{{ __('home.text_btn_register') }}</a>
+                        @else
                     </div>
                     <div class="header-user">
-                        @if (!Auth::user())
-                            <a class="header-btn login" href="{{ route('login') }}">Login</a>
-                            <a class="header-btn register" href="{{ route('register') }}">Sign up</a>
-                        @else
-                            <a class="header-btn create" href="">Create</a>
-                            <div class="dropdown">
-                                <a class="header-user-name">{{ Auth::user()->user_name }}</a>
-                                <div class="dropdown-content">
-                                    <a href="#">My blogs</a>
-                                    <a href="#">My profile</a>
-                                    <a href="{{ route('passwords.edit') }}">Change password</a>
-                                    <form action="{{ route('logout') }}" method="POST">
-                                        @csrf
-                                        <button>Log out</button>
-                                    </form>
-                                </div>
+                        <a class="header-btn create" href="{{ route('posts.create') }}">{{ __('home.text_btn_create') }}</a>
+                        <div class="dropdown">
+                            <a class="header-user-name">{{ Auth::user()->user_name }}</a>
+                            <img class="header-user-avatar"
+                                src="{{ Vite::asset('resources/images/user_avatar.png') }}">
+                            <div class="dropdown-content">
+                                <div class="connect-menu"></div>
+                                <a href="#">{{ __('home.text_btn_my_blog') }}</a>
+                                <a href="#">{{ __('home.text_btn_my_profile') }}</a>
+                                <a href="{{ route('passwords.edit') }}">{{ __('home.text_btn_change_password') }}</a>
+                                <form action="{{ route('logout') }}" method="POST">
+                                    @csrf
+                                    <button>{{ __('home.text_btn_logout') }}</button>
+                                </form>
                             </div>
-                            <img class="header-user-avatar" src="{{ Vite::asset('resources/images/user_avatar.png') }}">
-                        @endif
+                        </div>
                     </div>
+                    @endif
                 </div>
             </div>
             <div class="header-mobile">
@@ -50,7 +59,7 @@
                     alt="">
                 <div class="header-logo-mobile">
                     <img class="header-logo-image" src="{{ Vite::asset('resources/images/logo.png') }}">
-                    <a href="" class="header-logo-name">RT-Blogs</a>
+                    <a href="" class="header-logo-name">{{ __('home.logo_name') }}</a>
                 </div>
             </div>
         </div>
@@ -63,7 +72,7 @@
 
     <footer>
         <div class="footer-form">
-            <p class="footer-content">Copyright © 2024. Made by Regit JSC. All rights reserved.</p>
+            <p class="footer-content">{{ __('home.text_footer') }}</p>
         </div>
     </footer>
 </body>

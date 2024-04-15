@@ -7,6 +7,7 @@ use App\Http\Controllers\Guest\PostController;
 use App\Http\Controllers\Admin\PostController as PostControllerAdmin;
 use App\Http\Controllers\Admin\UserController as UserControllerAdmin;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\User\PostController as PostControllerUser;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,7 +21,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [PostController::class, 'homePage'])->name('blogs.home');
+Route::get('/', [PostController::class, 'index'])->name('home');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix('auth')->middleware('guest')->group(function () {
@@ -68,4 +69,9 @@ Route::group(['as' => 'users.', 'prefix' => 'users', 'middleware' => ['isAdmin']
 Route::group(['as' => 'passwords.', 'prefix' => 'users'], function () {
     Route::get('/edit', [UserController::class, 'edit'])->name('edit');
     Route::put('/update', [UserController::class, 'update'])->name('update');
+});
+
+Route::group(['as' => 'posts.', 'prefix' => 'users'], function () {
+    Route::get('/create', [PostControllerUser::class, 'create'])->name('create');
+    Route::post('/store', [PostControllerUser::class, 'store'])->name('store');
 });

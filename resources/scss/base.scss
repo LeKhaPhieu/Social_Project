@@ -11,8 +11,10 @@
     --border-input: #202E33;
     --border-input-mobile: rgba(32, 46, 51, 1);
     --text-black-mobile: rgba(0, 0, 0, 1);
+    --box-shadow-header: rgba(0, 0, 0, 0.1);
     --text-link: rgba(0, 123, 255, 1);
     --text-hover: #C40000;
+    --placeholder-input: rgba(137, 137, 137, 1);
 }
 
 body {
@@ -71,6 +73,7 @@ a {
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0;
 
     li {
         display: flex;
@@ -82,9 +85,8 @@ a {
 
         a {
             height: 28px;
-            font-family: "SVN-Gilroy-Bold";
-            font-style: normal;
             font-size: 20px;
+            font-weight: 700;
             line-height: 28px;
             color: var(--border-input);
         }
@@ -127,6 +129,6 @@ a {
     }
 
     li+li {
-        margin-left: 10px;
+        margin: 0 0 0 10px;
     }
 }
