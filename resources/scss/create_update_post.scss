@@ -1,0 +1,171 @@
+.layout-form-post {
+    padding: 14% 10% 0 10%;
+
+    @include mobile {
+        padding: 30% 5% 0 5%;
+    }
+
+    .form-create-blog {
+        padding: 3%;
+        border-radius: 4px;
+        display: grid;
+        background-color: var(--main-white);
+        box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25),
+            0 3px 6px 0 rgba(0, 0, 0, 0.25);
+
+        @include mobile {
+            padding: 8%;
+        }
+
+        label {
+            padding: 8px 0;
+
+            span {
+                color: var(--main-red);
+            }
+        }
+
+        .form-head-create {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            h2 {
+                font-size: 20px;
+                margin: 0 0 20px 0;
+            }
+
+            .btn-submit {
+                width: 137px;
+                height: 40px;
+                font-size: 18px;
+                margin: 0 0 20px 0;
+                border-radius: 4px;
+                border: none;
+                background-color: var(--text-link);
+                color: var(--main-white);
+
+                &:hover {
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .form-create-title {
+            height: 40px;
+            margin: 0 0 10px 0;
+            padding: 0 10px;
+            font-size: 15px;
+            border-radius: 4px;
+            color: var(--main-black);
+            border: 1px solid var(--main-black);
+        }
+
+
+        .form-create-image {
+            @include font-text (15px, 700);
+            width: 133px;
+            margin: 5px 0 0 0;
+            padding: 12px 10px;
+            text-align: center;
+            border-radius: 4px;
+            box-sizing: border-box;
+            border: 1px solid rgba(0, 123, 255, 1);
+            background-color: var(--main-white);
+            color: rgba(135, 182, 231, 1);
+
+            &:hover {
+                cursor: pointer;
+                color: var(--main-white);
+                background-color: rgba(0, 123, 255, 1);
+            }
+        }
+
+        .input-create-image {
+            display: none;
+        }
+
+
+        .image-create-preview {
+            width: 269px;
+            height: 170px;
+            overflow: hidden;
+            margin: 10px 0 27px 0;
+            display: none;
+            box-sizing: border-box;
+
+            &.update {
+                display: block;
+                margin: 15px 0 27px 0;
+            }
+
+            img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                display: block;
+                margin: 0 auto;
+            }
+        }
+
+        .form-blog-content {
+            padding: 20px 0 0 20px;
+            margin: 0 0 10px 0;
+            border-radius: 4px;
+            resize: none;
+            border: 1px solid var(--main-black);
+        }
+    }
+}
+
+.dropdown-categories {
+    width: 30%;
+    margin: 0 0 15px 0;
+    display: inline-block;
+
+    @include mobile {
+        width: 100%;
+    }
+
+    .anchor {
+        width: -webkit-fill-available;
+        padding: 10px;
+        font-size: 15px;
+        position: relative;
+        cursor: pointer;
+        display: inline-block;
+        border-radius: 4px;
+        color: var(--placeholder-input);
+        border: 1px solid var(--main-black);
+        background-color: var(--main-white);
+
+        &:hover {
+            color: var(--main-black);
+        }
+    }
+
+    .items {
+        display: none;
+        padding: 2px;
+        margin: 0 0 20px 0;
+        border-radius: 0 0 4px 4px;
+        border-top: none;
+        border: 1px solid var(--main-gray);
+        background-color: var(--main-white);
+
+        li {
+            list-style: none;
+
+            input {
+                margin: 5px;
+            }
+        }
+    }
+
+    &.visible {
+
+        .items {
+            display: block;
+        }
+    }
+}

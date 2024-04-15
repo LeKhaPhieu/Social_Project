@@ -34,7 +34,7 @@
                         @else
                     </div>
                     <div class="header-user">
-                        <a class="header-btn create" href="">{{ __('home.text_btn_create') }}</a>
+                        <a class="header-btn create" href="{{ route('posts.create') }}">{{ __('home.text_btn_create') }}</a>
                         <div class="dropdown">
                             <a class="header-user-name">{{ Auth::user()->user_name }}</a>
                             <img class="header-user-avatar"
