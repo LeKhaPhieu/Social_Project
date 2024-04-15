@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -51,5 +52,10 @@ class Post extends Model
             return __('admin.status_approved');
         }
         return __('admin.status_unapproved');
+    }
+
+    public function scopeApproved(Builder $query): Builder
+    {
+        return $query->where('status', self::APPROVED);
     }
 }

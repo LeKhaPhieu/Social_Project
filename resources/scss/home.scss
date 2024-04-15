@@ -2,6 +2,7 @@
 
     .home-background {
         width: 100%;
+        margin: 120px 0 0 0;
 
         @include mobile {
             display: none;
@@ -68,11 +69,14 @@
 
                 .sidebar-mobile-item {
 
-                    .icon-search-mobile {
-                        width: 19px;
+                    .btn-search-mobile {
                         position: absolute;
-                        margin: 10px 0 0 0;
-                        right: 45px;
+                        margin: 2px 0 0 0;
+                        right: 32px;
+                        background-color: var(--main-white);
+                        border: none;
+                        padding: 7px 7px 6px 7px;
+                        border-radius: 0 7px 7px 0;
                     }
 
                     .search-mobile {
@@ -102,12 +106,14 @@
                     }
 
                     .sidebar-btn {
+                        display: flex;
                         margin: 50px 0 0 0;
 
                         .sidebar-btn-box {
                             width: 135px;
                             padding: 10px 0;
                             border: none;
+                            text-align: center;
                             color: rgba(255, 255, 255, 1);
                             border-radius: 4px;
                             font-size: 18px;
@@ -151,15 +157,20 @@
                 display: none;
             }
 
-            .icon-search {
-                width: 19px;
+            .btn-search-desktop {
                 position: absolute;
-                margin: 10px 0 0 165px;
+                margin: 1.5px 0 0 166.5px;
+                background-color: var(--main-white);
+                border: none;
+                z-index: 1;
+                padding: 6.5px 6.5px 5.5px 6.5px;
+                border-radius: 0 7px 7px 0;
+                border: 1px solid var(--main-white);
+                cursor: pointer;
 
-                &:hover {
-                    cursor: pointer;
+                &.author {
+                    margin: 2px 0 0 166.5px;
                 }
-
             }
 
             .search-input {
@@ -171,6 +182,7 @@
                 border-radius: 8px;
                 border: 1px solid var(--border-input);
                 color: var(--background-footer);
+                color-scheme: white;
 
                 &.author {
                     margin: 0;
@@ -202,6 +214,7 @@
         }
 
         .home-content-blog {
+            width: 100%;
             margin: 0 0 0 15%;
 
             @include mobile {
@@ -215,6 +228,7 @@
                     padding: 0 0 35px 0;
                     box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25),
                         0 3px 6px 0 rgba(0, 0, 0, 0.25);
+                    overflow: hidden;
 
                     @include mobile {
                         margin: 80px 0 0 0;
@@ -224,6 +238,12 @@
                         width: 100%;
                         height: 360px;
                         object-fit: cover;
+                        transition: transform 0.3s;
+                        cursor: pointer;
+
+                        &:hover {
+                            transform: scale(1.05);
+                        }
                     }
 
                     .home-blog-list-info {
@@ -261,9 +281,9 @@
                         }
 
                         .blog-description {
+                            @include font-text;
                             margin: 0 0 25px 0;
                             padding: 0 30px;
-                            @include font-text;
                             line-height: 18.75px;
 
                             @include mobile {
@@ -274,58 +294,23 @@
                     }
 
                     .text-detail {
+                        @include flex-center(flex-start, center);
+                        width: fit-content;
                         margin: 0 0 0 30px;
                         padding: 10px 14px;
                         border: 1px solid var(--border-input);
                         border-radius: 4px;
                         color: rgba(196, 0, 0, 1);
 
-                        img {
-                            margin: 0 0 0 7px;
+                        i {
+                            margin: 0 0 0 10px;
+                        }
+
+                        &:hover {
+                            background-color: var(--text-hover);
+                            color: var(--main-white);
                         }
                     }
-                }
-            }
-
-            .home-move-tag {
-                @include flex-center;
-                margin: 80px 0 150px 0;
-
-                @include mobile {
-                    margin: 80px 0 250px 0;
-                }
-
-                .move-left {
-                    width: 20px;
-                    height: 20px;
-                    margin: 0 10px 0 0;
-                    padding: 10px;
-                    border-radius: 50%;
-                    background-color: rgba(196, 0, 0, 1);
-                }
-
-                .page-number {
-                    @include font-text(20px, 700);
-                    color: rgba(33, 30, 59, 1);
-                    margin: 0 10px;
-
-                    &.active {
-                        width: 24px;
-                        text-align: center;
-                        padding: 5px;
-                        border-radius: 50%;
-                        color: rgba(196, 0, 0, 1);
-                        background-color: rgba(255, 228, 228, 1);
-                    }
-                }
-
-                .move-right {
-                    width: 20px;
-                    height: 20px;
-                    margin: 0 0 0 10px;
-                    padding: 10px;
-                    border-radius: 50%;
-                    background-color: rgba(229, 229, 229, 1);
                 }
             }
         }

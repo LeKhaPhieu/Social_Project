@@ -90,7 +90,7 @@ class AuthController extends Controller
                 return redirect()->route('admin.dashboard')->with('success', __('auth.notify_login_success'));
             }
 
-            return redirect()->route('blogs.home')->with('success', __('auth.notify_login_success'));
+            return redirect()->route('home')->with('success', __('auth.notify_login_success'));
         }
 
         return redirect()->route('login')->with('error', $loginResult['message']);
@@ -100,7 +100,7 @@ class AuthController extends Controller
     {
         Auth::logout();
 
-        return redirect()->route('blogs.home');
+        return redirect()->route('home');
     }
 
     public function forgotPassword(ForgotPasswordRequest $request): RedirectResponse

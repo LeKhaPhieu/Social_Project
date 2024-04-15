@@ -3,6 +3,13 @@
     height: 122px;
     display: flex;
     background-color: var(--main-white);
+    position: fixed;
+    z-index: 2;
+    box-shadow: 0px 1px 1px 0px var(--box-shadow-header),
+        0px 2px 2px 0px var(--box-shadow-header),
+        0px 4px 4px 0px var(--box-shadow-header),
+        0px 8px 8px 0px var(--box-shadow-header),
+        0px 16px 16px 0px var(--box-shadow-header);
 
     @include mobile {
         height: auto;
@@ -34,8 +41,7 @@
 
         .header-navbar-left {
             @include flex-center(space-between, center);
-            width: 40%;
-            margin: 0 0 0 100px;
+            width: 31%;
 
             .header-custom-page {
 
@@ -49,7 +55,7 @@
                 }
             }
 
-            .header-user {
+            .header-auth {
                 @include flex-center(space-between, center);
                 margin: 0 0 0 15px;
 
@@ -60,33 +66,60 @@
                         margin: 0 0 0 30px;
                     }
                 }
+            }
+
+            .header-user {
+                @include flex-center(space-between, center);
+                @include font-text(15px, 500);
+                width: 80%;
+
 
                 .dropdown {
                     position: relative;
-                    display: inline-block;
-                    margin: 0 0 0 70px;
-                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
 
                     .header-user-name {
                         @include font-text(15px, 500);
+                        margin: 0 0 0 20px;
+                    }
+
+                    .header-user-avatar {
+                        width: 26px;
+                        margin: 0 0 0 15px;
+                        height: auto;
+                        cursor: pointer;
                     }
 
                     .dropdown-content {
                         display: none;
                         width: max-content;
                         position: absolute;
-                        background-color: #f1f1f1;
-                        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-                        z-index: 1;
                         text-align: center;
-                        top: 25px;
-                        left: -35%;
+                        background-color: var(--background-white-1);
+                        box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+                        border-radius: 4px;
+                        z-index: 1;
+                        top: 35px;
+                        right: 0;
+
+                        .connect-menu {
+                            position: absolute;
+                            bottom: 157px;
+                            right: 0;
+                            border: 14px solid;
+                            border-color: transparent transparent var(--background-white-1) transparent;
+                        }
 
                         a {
                             @include font-text(14px, 400);
                             color: var(--main-black);
                             padding: 12px 16px;
                             display: block;
+
+                            &:hover {
+                                color: var(--text-hover);
+                            }
                         }
 
                         button {
@@ -94,18 +127,17 @@
                             width: 100%;
                             padding: 12px 16px;
                             border: none;
-                            background-color: none;
+                            background-color: var(--background-white-1);
                             color: var(--main-black);
+                            border-radius: 0 0 4px 4px;
                             display: block;
                             cursor: pointer;
+
+                            &:hover {
+                                color: var(--text-hover);
+                            }
                         }
                     }
-                }
-
-                .header-user-avatar {
-                    width: 26px;
-                    margin: 0 0 0 7px;
-                    height: auto;
                 }
             }
         }

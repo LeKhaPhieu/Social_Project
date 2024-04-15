@@ -18,10 +18,19 @@ window.onclick = function (event) {
     }
 }
 
-const dropdown = document.querySelector('.dropdown');
-const dropdownContent = document.querySelector('.dropdown-content');
+document.addEventListener('DOMContentLoaded', function() {
+    const checkboxes = document.querySelectorAll('.category-box');
+    const checkboxesMobile = document.querySelectorAll('.category-box-mobile');
 
-dropdown.addEventListener('click', function () {
-    dropdownContent.style.display = 'block';
-})
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            document.getElementById('categoryForm').submit();
+        });
+    });
 
+    checkboxesMobile.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            document.getElementById('categoryFormMobile').submit();
+        });
+    });
+});
