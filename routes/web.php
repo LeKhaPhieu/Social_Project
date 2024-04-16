@@ -6,6 +6,7 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Guest\PostController;
 use App\Http\Controllers\Admin\PostController as PostControllerAdmin;
 use App\Http\Controllers\Admin\UserController as UserControllerAdmin;
+use App\Http\Controllers\User\PostController as PostControllerUser;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -68,4 +69,9 @@ Route::group(['as' => 'users.', 'prefix' => 'users', 'middleware' => ['isAdmin']
 Route::group(['as' => 'passwords.', 'prefix' => 'users'], function () {
     Route::get('/edit', [UserController::class, 'edit'])->name('edit');
     Route::put('/update', [UserController::class, 'update'])->name('update');
+});
+
+Route::group(['as' => 'posts.', 'prefix' => 'users', 'middleware' => 'auth'], function () {
+    Route::get('/create', [PostControllerUser::class, 'create'])->name('create');
+    Route::post('/store', [PostControllerUser::class, 'store'])->name('store');
 });
