@@ -117,7 +117,7 @@
                                 <h2 class="blog-title">{{ $post->title }}</h2>
                                 <p class="blog-description">{!! nl2br(e(Str::limit($post->content, 180))) !!}</p>
                             </div>
-                            <a class="text-detail" href="">
+                            <a class="text-detail" href="{{ route('detail', ['post' => $post]) }}">
                                 {{ __('auth.text_button_detail') }}
                                 <i class="fa-solid fa-arrow-right-long"></i>
                             </a>

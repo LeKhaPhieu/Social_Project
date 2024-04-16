@@ -6,6 +6,8 @@ use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Guest\PostController;
 use App\Http\Controllers\Admin\PostController as PostControllerAdmin;
 use App\Http\Controllers\Admin\UserController as UserControllerAdmin;
+use App\Http\Controllers\User\CommentController;
+use App\Http\Controllers\User\LikeController;
 use App\Http\Controllers\User\PostController as PostControllerUser;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +25,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [PostController::class, 'index'])->name('home');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/detail/{post}', [PostController::class, 'detail'])->name('detail');
 
 Route::prefix('auth')->middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'viewRegister'])->name('register');
@@ -71,7 +74,19 @@ Route::group(['as' => 'passwords.', 'prefix' => 'users'], function () {
     Route::put('/update', [UserController::class, 'update'])->name('update');
 });
 
-Route::group(['as' => 'posts.', 'prefix' => 'users', 'middleware' => 'auth'], function () {
-    Route::get('/create', [PostControllerUser::class, 'create'])->name('create');
-    Route::post('/store', [PostControllerUser::class, 'store'])->name('store');
+Route::group(['as' => 'users.', 'prefix' => 'users', 'middleware' => 'auth'], function () {
+    Route::get('/create', [PostControllerUser::class, 'create'])->name('post.create');
+    Route::post('/store', [PostControllerUser::class, 'store'])->name('post.store');
+    Route::get('/edit/{post}', [PostControllerUser::class, 'edit'])->name('post.edit');
+    Route::put('/update/{id}', [PostControllerUser::class, 'update'])->name('post.update');
+    Route::delete('/destroy/{id}', [PostControllerUser::class, 'destroy'])->name('post.destroy');
+    Route::post('/like/{post}', [LikeController::class, 'likePost'])->name('post.like');
+    Route::post('/like/comment/{id}', [LikeController::class, 'likeComment'])->name('comment.like');
+});
+
+Route::group(['as' => 'comments.', 'prefix' => 'comments', 'middleware' => 'auth'], function () {
+    Route::get('/', [CommentController::class, 'index'])->name('index');
+    Route::post('/store/{postId}', [CommentController::class, 'store'])->name('store');
+    Route::put('update/{id}', [CommentController::class, 'update'])->name('update');
+    Route::delete('destroy/{id}', [CommentController::class, 'destroy'])->name('destroy');
 });

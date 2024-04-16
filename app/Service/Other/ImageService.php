@@ -19,4 +19,20 @@ class ImageService
             return config('image.image_fail');
         }
     }
+
+    public function updateImage($data, $post, $fileImageOld)
+    {
+        if (isset($data['image'])) {
+            $fileImage = Storage::disk('public')->put('images', $data['image']);
+            $post->update(['image' => $fileImage]);
+            $this->deleteOldImage($fileImageOld);
+        }
+    }
+
+    public function deleteOldImage($fileImageOld)
+    {
+        if ($fileImageOld) {
+            unlink(storage_path('app/public/' . $fileImageOld));
+        }
+    }
 }

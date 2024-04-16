@@ -153,6 +153,10 @@
         border: 1px solid var(--main-gray);
         background-color: var(--main-white);
 
+        &.update {
+            display: block;
+        }
+
         li {
             list-style: none;
 

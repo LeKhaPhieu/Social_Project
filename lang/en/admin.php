@@ -8,6 +8,8 @@ return [
     'delete_category_error' => 'Delete category failed!!',
     'update_category_success' => 'Update category successfully',
     'update_category_error' => 'Update category failed!!',
+    'update_post_success' => 'Update post successfully',
+    'update_post_error' => 'Update post failed!!',
     'approved_post_success' => 'Update post status successful',
     'approved_post_error' => 'Update post status failed!',
     'blocked_post_success' => 'Blocked user successfully',
