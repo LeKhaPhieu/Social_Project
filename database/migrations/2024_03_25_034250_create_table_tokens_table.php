@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('token_verify_email', 255)->nullable();
             $table->string('token_reset_password', 255)->nullable();
             $table->bigInteger('user_id');
-            $table->boolean('status')->default(Token::PENDING);
+            $table->boolean('status')->default(Token::EFFECT);
             $table->timestamps();
         });
     }

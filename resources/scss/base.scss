@@ -14,6 +14,7 @@
     --box-shadow-header: rgba(0, 0, 0, 0.1);
     --text-link: rgba(0, 123, 255, 1);
     --text-hover: #C40000;
+    --text-gray: rgba(98, 96, 96, 1);
     --placeholder-input: rgba(137, 137, 137, 1);
 }
 
@@ -42,6 +43,7 @@ a {
     top: 130px;
     right: 5%;
     animation: fadeOut linear 6s 2s forwards;
+    position: fixed;
 
     .alert {
         padding: 5px 10px;
@@ -52,7 +54,7 @@ a {
             background-color: var(--main-green);
         }
 
-        &.alert-error {
+        &.alert-danger {
             background-color: var(--main-red);
         }
     }

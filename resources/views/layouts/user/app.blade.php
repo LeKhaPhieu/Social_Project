@@ -4,14 +4,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" type="image/png" href="{{ Vite::asset('resources/images/logo.png') }}" />
     <title>Home page</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
         integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdn.unpkg.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.unpkg.net/npm/swiper@11/swiper-bundle.min.js"></script>
     @vite(['resources/scss/main.scss'])
     @vite(['resources/js/header.js'])
     @vite(['resources/js/home.js'])
+    @vite(['resources/js/app.js'])
 </head>
 
 <body>
@@ -34,7 +38,7 @@
                         @else
                     </div>
                     <div class="header-user">
-                        <a class="header-btn create" href="{{ route('posts.create') }}">{{ __('home.text_btn_create') }}</a>
+                        <a class="header-btn create" href="{{ route('users.post.create') }}">{{ __('home.text_btn_create') }}</a>
                         <div class="dropdown">
                             <a class="header-user-name">{{ Auth::user()->user_name }}</a>
                             <img class="header-user-avatar"

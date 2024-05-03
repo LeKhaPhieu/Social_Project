@@ -3,10 +3,17 @@
 namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UpdatePostRequest;
 use App\Http\Requests\User\CreatePostRequest;
+use App\Models\Comment;
+use App\Models\Post;
 use App\Service\Admin\CategoryService;
 use App\Service\User\PostService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\View\View;
 
 class PostController extends Controller
@@ -39,5 +46,44 @@ class PostController extends Controller
             return redirect()->back()->with('success', __('home.create_post_success'));
         }
         return redirect()->back()->with('error', __('home.create_post_error'));
+    }
+
+    public function edit(Post $post): View|RedirectResponse
+    {
+        if (!Gate::allows('manage-post', $post)) {
+            return redirect()->route('home')->with('error', __('home.edit_post_error'));
+        }
+        $categories = $this->categoryService->getAll();
+        return view('user.post.update', [
+            'post' => $post,
+            'categories' => $categories,
+        ]);
+    }
+
+    public function update(UpdatePostRequest $request, int $id): RedirectResponse
+    {
+        $post = Post::findOrFail($id);
+        if (!Gate::allows('manage-post', $post)) {
+            return redirect()->route('home')->with('error', __('home.edit_post_error'));
+        }
+        $data = $request->only('title', 'image', 'content', 'category');
+        $result = $this->postService->update($data, $id);
+        if ($result) {
+            return redirect()->back()->with('success', __('admin.update_post_success'));
+        }
+        return redirect()->back()->with('error', __('admin.update_post_error'));
+    }
+
+    public function destroy($id): RedirectResponse
+    {
+        $post = Post::findOrFail($id);
+        if (!Gate::allows('manage-post', $post)) {
+            return redirect()->back()->with('error', __('home.delete_post_error'));
+        }
+        $result = $this->postService->destroy($id);
+        if ($result) {
+            return redirect()->back()->with('success', __('admin.delete_category_success'));
+        }
+        return redirect()->back()->with('error', __('admin.delete_category_error'));
     }
 }
