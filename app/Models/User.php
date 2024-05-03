@@ -40,6 +40,7 @@ class User extends Authenticatable
         'gender',
         'role',
         'status',
+        'avatar',
     ];
 
     /**
@@ -65,9 +66,9 @@ class User extends Authenticatable
     public static function getGenders(): array
     {
         return [
-            self::MALE,
-            self::FEMALE,
-            self::OTHER,
+            self::MALE => __('home.text_gender_male'),
+            self::FEMALE => __('home.text_gender_female'),
+            self::OTHER =>  __('home.text_gender_other'),
         ];
     }
 
@@ -115,5 +116,16 @@ class User extends Authenticatable
     public function tokens(): HasMany
     {
         return $this->hasMany(Token::class, 'user_id');
+    }
+
+    public function getNameGenders(): string
+    {
+        if ($this->gender === self::MALE) {
+            return __('home.text_gender_male');
+        }
+        if ($this->gender === self::FEMALE) {
+            return __('home.text_gender_female');
+        }
+        return __('home.text_gender_other');
     }
 }

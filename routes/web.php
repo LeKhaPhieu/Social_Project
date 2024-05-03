@@ -90,3 +90,8 @@ Route::group(['as' => 'comments.', 'prefix' => 'comments', 'middleware' => 'auth
     Route::put('update/{id}', [CommentController::class, 'update'])->name('update');
     Route::delete('destroy/{id}', [CommentController::class, 'destroy'])->name('destroy');
 });
+
+Route::group(['as' => 'user.', 'prefix' => 'user'], function () {
+    Route::get('/profile', [UserController::class, 'profile'])->name('profile');
+    Route::put('/update', [UserController::class, 'updateProfile'])->name('update.profile');
+});
