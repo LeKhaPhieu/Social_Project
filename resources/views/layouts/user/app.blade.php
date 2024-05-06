@@ -45,7 +45,6 @@
                                 src="{{ Vite::asset('resources/images/user_avatar.png') }}">
                             <div class="dropdown-content">
                                 <div class="connect-menu"></div>
-                                <a href="#">{{ __('home.text_btn_my_blog') }}</a>
                                 <a href="#">{{ __('home.text_btn_my_profile') }}</a>
                                 <a href="{{ route('passwords.edit') }}">{{ __('home.text_btn_change_password') }}</a>
                                 <form action="{{ route('logout') }}" method="POST">
