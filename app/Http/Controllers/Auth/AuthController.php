@@ -93,7 +93,7 @@ class AuthController extends Controller
             return redirect()->route('home')->with('success', __('auth.notify_login_success'));
         }
 
-        return redirect()->route('login')->with('error', $loginResult['message']);
+        return redirect()->back()->with('error', $loginResult['message']);
     }
 
     public function logout(): RedirectResponse

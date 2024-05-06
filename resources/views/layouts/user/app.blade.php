@@ -42,7 +42,7 @@
                         <div class="dropdown">
                             <a class="header-user-name">{{ Auth::user()->user_name }}</a>
                             <img class="header-user-avatar"
-                                src="{{ Vite::asset('resources/images/user_avatar.png') }}">
+                                src="{{ Storage::url(Auth::user()->avatar) }}">
                             <div class="dropdown-content">
                                 <div class="connect-menu"></div>
                                 <a href="#">{{ __('home.text_btn_my_profile') }}</a>

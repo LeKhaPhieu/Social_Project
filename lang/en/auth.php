@@ -6,6 +6,7 @@ return [
     'text_btn_register' => 'Sign up',
     'text_link_login' => 'Already have an account? Login',
     'login_title' => 'Sign in',
+    'change_password_title' => 'Change password',
     'text_remember_password' => 'Remember password',
     'text_btn_login' => 'Login',
     'text_link_register' => "Don't have an account? Sign up here",

@@ -81,10 +81,13 @@
                     }
 
                     .header-user-avatar {
-                        width: 26px;
+                        width: 30px;
+                        height: 30px;
                         margin: 0 0 0 15px;
-                        height: auto;
                         cursor: pointer;
+                        border-radius: 50%;
+                        object-fit: cover;
+                        border: 1px solid var(--background-white-1);
                     }
 
                     .dropdown-content {

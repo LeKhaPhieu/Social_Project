@@ -20,9 +20,9 @@
             <div class="auth-body">
                 <p class="auth-body-title">{{ __('auth.login_title') }}</p>
                 <div class="auth-body-item">
-                    <p>Email<span>*</span></p>
-                    <input type="email" name="email">
-                    @error('email')
+                    <p>Username or email<span>*</span></p>
+                    <input type="text" name="email_or_username">
+                    @error('email_or_username')
                         <p class="notify-error">{{ $message }}</p>
                     @enderror
                 </div>
