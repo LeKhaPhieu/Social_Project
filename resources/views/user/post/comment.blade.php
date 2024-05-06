@@ -83,7 +83,7 @@
                 <p class="comment-content"> {{ $reply->content }}</p>
                 <div class="comment-content-react">
                     <p class="comment-content-created">{{ $reply->created_at->diffForHumans() }}</p>
-                    <form id="likeFormComment{{ $reply->id }}"
+                    <form id="likeFormComment{{ $reply->id }}" data-user="{{Auth::user()}}"
                         action="{{ route('users.comment.like', ['id' => $reply]) }}" method="POST">
                         @csrf
                         <button class="btn-like-comment" type="submit" id="likeCommentButton{{ $reply->id }}">
