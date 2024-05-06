@@ -28,9 +28,9 @@ class UserController extends Controller
         $result = $this->userService->update($data);
 
         if ($result['status']) {
-            return redirect()->route('blogs.home')->with('success', __('auth.success_password_change'));
+            return redirect()->route('home')->with('success', __('auth.success_password_change'));
         }
 
-        return redirect()->route('user.password.edit')->with('error', $result['message']);
+        return redirect()->route('passwords.edit')->with('error', $result['message']);
     }
 }

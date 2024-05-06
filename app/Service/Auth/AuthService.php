@@ -72,14 +72,14 @@ class AuthService
         }
     }
 
-    public function login(array $data): array
+    public function login(array $data): array|bool
     {
         $remember = isset($data['remember']);
 
-        $fieldLogin = filter_var($data['email'], FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $fieldLogin = filter_var($data['email_or_username'], FILTER_VALIDATE_EMAIL) ? 'email' : 'user_name';
 
         $data = [
-            $fieldLogin => $data['email'],
+            $fieldLogin => $data['email_or_username'],
             'password' => $data['password'],
         ];
 
@@ -87,20 +87,22 @@ class AuthService
 
             $userStatus = Auth::user()->status;
 
-            if ($userStatus == User::ACTIVATED) {
-                return ['status' => true];
-            }
             if ($userStatus == User::INACTIVATED) {
+                Auth::logout();
                 return [
                     'status' => false,
                     'message' => __('auth.user_inactivated'),
                 ];
             }
             if ($userStatus == User::BLOCKED) {
+                Auth::logout();
                 return [
                     'status' => false,
                     'message' => __('auth.user_blocked'),
                 ];
+            }
+            if ($userStatus == User::ACTIVATED) {
+                return ['status' => true];
             }
         }
         return [

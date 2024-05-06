@@ -1,7 +1,7 @@
 @foreach ($comments as $comment)
     <div class="detail-comment-show">
         <div class="user-info">
-            <img class="user-avatar" src="{{ Vite::asset('resources/images/image_home_mobile.png') }}" alt="">
+            <img class="user-avatar" src="{{ Storage::url($comment->user->avatar) }}" alt="">
             <p class="user-name">{{ $comment->user->user_name }}</p>
         </div>
         <div class="detail-comment-first">
@@ -75,7 +75,7 @@
     @foreach ($comment->replies as $reply)
         <div class="detail-comment-reply">
             <div class="user-info">
-                <img class="user-avatar" src="{{ Vite::asset('resources/images/image_home_mobile.png') }}"
+                <img class="user-avatar" src="{{ Storage::url($reply->user->avatar) }}"
                     alt="">
                 <p class="user-name"> {{ $reply->user->user_name }}</p>
             </div>

@@ -19,7 +19,7 @@
                 <p class="auth-head-name">RT-Blogs</p>
             </div>
             <div class="auth-body">
-                <p class="auth-body-title">{{ __('auth.login_title') }}</p>
+                <p class="auth-body-title">{{ __('auth.change_password_title') }}</p>
                 <div class="auth-body-item">
                     <p>Password current<span>*</span></p>
                     <input type="password" name="password_current">
