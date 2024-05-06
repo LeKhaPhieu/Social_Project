@@ -1,0 +1,139 @@
+.profile-form {
+    padding: 15% 20%;
+    background-color: var(--background-profile);
+
+    @include mobile {
+        padding: 30% 5% 15% 5%;
+    }
+
+    .profile-body {
+        padding: 5% 20%;
+        text-align: center;
+        border-radius: 10px;
+        background-color: var(--main-white);
+
+        @include mobile {
+            padding: 5% 5%;
+        }
+
+        i {
+            cursor: pointer;
+        }
+
+        input {
+            display: none;
+        }
+
+        .profile-avatar {
+            width: 250px;
+            height: 250px;
+            margin: 0 0 0 20px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 1px solid var(--background-white-1);
+
+            @include mobile {
+                width: 150px;
+                height: 150px;
+            }
+        }
+
+        .profile-user-name {
+            @include flex-center(center, center);
+
+            p {
+                @include font-text(20px, 700);
+            }
+        }
+
+        .profile-post {
+            @include flex-center(center, center);
+            margin: 0 0 20px 0;
+
+            .total-post {
+                margin: 0;
+                padding: 0 20px;
+                border-right: 1px solid;
+
+                &.like {
+                    border-right: none;
+                    border-left: 1px solid;
+                }
+            }
+        }
+
+        .profile-list-info {
+            @include flex-center(space-between, center);
+        }
+
+        table {
+            width: 100%;
+
+            tr {
+                height: 40px;
+
+                td {
+                    max-width: 150px;
+                    text-align: left;
+                    padding: 8px;
+
+                    input {
+                        width: 150px;
+                        display: none;
+                    }
+
+                    h3 {
+                        margin: 0;
+                    }
+
+                    .btn-submit-profile {
+                        @include font-text(21px, 700);
+                        display: none;
+                        padding: 5px 10px;
+                        border-radius: 4px;
+                        cursor: pointer;
+                        color: var(--main-white);
+                        background-color: var(--text-link);
+                        border-color: var(--text-link);
+                    }
+
+                    .user-gender {
+                        display: flex;
+                        align-items: center;
+                        display: none;
+
+                        @include mobile {
+                            flex-wrap: wrap;
+                        }
+
+                        input {
+                            width: auto;
+                            display: block;
+                            margin: 0 5px 0 0;
+                        }
+
+                        label {
+                            margin: 0 10px 0 0;
+                        }
+                    }
+                }
+
+                .text-info {
+                    max-width: 150px;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
+                }
+
+                th {
+                    text-align: left;
+                    padding: 8px;
+                }
+            }
+
+            .row-notify {
+                height: 35px;
+            }
+        }
+    }
+}
