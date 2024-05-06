@@ -416,6 +416,7 @@
                                 img {
                                     width: 100%;
                                     height: 97px;
+                                    object-fit: cover;
                                 }
 
                                 .detail-related-item-created {
@@ -759,7 +760,6 @@
 
                 img {
                     width: 23%;
-                    min-height: 43px;
                     object-fit: cover;
                 }
 

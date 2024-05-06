@@ -20,7 +20,7 @@ class ImageService
         }
     }
 
-    public function updateImage($data, $post, $fileImageOld)
+    public function updateImage($data, $post, $fileImageOld): void
     {
         if (isset($data['image'])) {
             $fileImage = Storage::disk('public')->put('images', $data['image']);
@@ -29,7 +29,7 @@ class ImageService
         }
     }
 
-    public function deleteOldImage($fileImageOld)
+    public function deleteOldImage($fileImageOld): void
     {
         if ($fileImageOld) {
             unlink(storage_path('app/public/' . $fileImageOld));
