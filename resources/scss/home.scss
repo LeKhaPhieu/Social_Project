@@ -1,4 +1,9 @@
 .home-form {
+    margin: 0 0 200px 0;
+
+    @include mobile {
+        margin: 0 0 300px 0;
+    }
 
     .home-background {
         width: 100%;
