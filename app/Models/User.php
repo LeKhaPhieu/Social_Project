@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -136,5 +137,10 @@ class User extends Authenticatable
             self::ACTIVATED => __('admin.status_activated'),
             self::BLOCKED =>  __('admin.status_blocked'),
         ];
+    }
+
+    public function scopeActivated(Builder $query): Builder
+    {
+        return $query->where('status', self::ACTIVATED);
     }
 }

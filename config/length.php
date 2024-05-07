@@ -5,4 +5,5 @@ return [
     'limit_home_page' => 3,
     'limit_related_post' => 3,
     'limit_related_popular' => 4,
+    'default_time_period' => 29,
 ];

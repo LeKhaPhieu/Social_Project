@@ -45,6 +45,12 @@ Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => ['isAdmin']
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 });
 
+Route::group(['as' => 'statistics.', 'prefix' => 'admin', 'middleware' => ['isAdmin']], function () {
+    Route::get('/posts', [HomeController::class, 'statisticsPosts'])->name('posts');
+    Route::get('/users', [HomeController::class, 'statisticsUsers'])->name('users');
+    Route::post('/filter/posts', [HomeController::class, 'filterPosts'])->name('filter.posts');
+    Route::post('/filter/users', [HomeController::class, 'filterUsers'])->name('filter.users');
+});
 
 Route::group(['as' => 'categories.', 'prefix' => 'categories', 'middleware' => ['isAdmin']], function () {
     Route::get('/index', [CategoryController::class, 'index'])->name('index');
