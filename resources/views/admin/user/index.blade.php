@@ -1,3 +1,5 @@
+@vite(['resources/js/app.js'])
+@vite(['resources/js/admin.js'])
 @extends('layouts.admin.base')
 @section('admin_content')
     @include('layouts.components.notification')
@@ -8,6 +10,15 @@
             </div>
             <div class="row w3-res-tb">
                 <div class="col-sm-5 m-b-xs">
+                    <form id="status-filter-form" action="{{ route('users.index') }}" method="GET">
+                        <select id="status-filter" name="status" class="input-sm form-control w-sm inline v-middle">
+                            <option value="">All Users</option>
+                            @foreach (App\Models\User::getStatus() as $key => $status)
+                                <option value="{{ $key }}" {{ $key == request()->status ? 'selected' : '' }}>
+                                    {{ $status }}</option>
+                            @endforeach
+                        </select>
+                    </form>
                 </div>
                 <div class="col-sm-4">
                 </div>
@@ -28,6 +39,8 @@
                             <th>{{ __('admin.avatar') }}</th>
                             <th>{{ __('admin.user_name') }}</th>
                             <th>{{ __('admin.email') }}</th>
+                            <th>{{ __('admin.created_at') }}</th>
+                            <th>{{ __('admin.gender') }}</th>
                             <th>{{ __('admin.phone') }}</th>
                             <th>{{ __('admin.status') }}</th>
                             <th style="width:30px;"></th>
@@ -38,18 +51,23 @@
                         @foreach ($users as $index => $user)
                             <tr>
                                 <td>{{ ++$index }}</td>
-                                <td><img src="{{ Vite::asset('resources/images/user_avatar.png') }}" height="40" width="40"></td>
+                                <td><img src="{{ Storage::url($user->avatar) }}" height="40" width="40"></td>
                                 <td>
                                     <h4>{{ $user->user_name }}</h4>
                                 </td>
                                 <td>{{ $user->email }}</td>
+                                <td>{{ $user->created_at->format('d/m/Y') }}</td>
+                                <td>{{ $user->getNameGenders() }}</td>
                                 <td>{{ $user->phone_number }}</td>
                                 <td>
                                     <span class="text-ellipsis">
                                         <a href="{{ route('users.update.status', ['id' => $user->id]) }}">
-                                            <span class="text-approve {{ $user->status === \App\Models\User::ACTIVATED ? 'approved' 
-                                                : ($user->status === \App\Models\User::BLOCKED ? 'not-approved' : 'inactivated') }}"
-                                            >
+                                            <span
+                                                class="text-approve {{ $user->status === \App\Models\User::ACTIVATED
+                                                    ? 'approved'
+                                                    : ($user->status === \App\Models\User::BLOCKED
+                                                        ? 'not-approved'
+                                                        : 'inactivated') }}">
                                                 {{ $user->status_name }}</span>
                                         </a>
                                     </span>
@@ -71,6 +89,8 @@
                 </table>
             </div>
         </div>
-        @include('layouts.components.pagination')
+        <div class="pagine">
+            {{ $posts->withQueryString()->links('layouts.components.pagination') }}
+        </div>
     </div>
 @endsection

@@ -29,7 +29,8 @@
                                         name="category[]"
                                         {{ in_array($category->id, request('category') ?? []) ? 'checked autofocus' : '' }}
                                         value="{{ $category->id }}">
-                                    <label for="{{ $category->id }}" class="category-name-mobile">{{ $category->name }}</label>
+                                    <label for="{{ $category->id }}"
+                                        class="category-name-mobile">{{ $category->name }}</label>
                                 </div>
                             @endforeach
                         </form>
@@ -124,7 +125,9 @@
                         </div>
                     @endforeach
                 </div>
-                @include('layouts.components.pagination')
+                <div class="pagine">
+                    {{ $posts->withQueryString()->links('layouts.components.pagination') }}
+                </div>
             </div>
         </div>
     </div>

@@ -58,6 +58,8 @@
                 </table>
             </div>
         </div>
-        @include('layouts.components.pagination')
+        <div class="pagine">
+            {{ $posts->withQueryString()->links('layouts.components.pagination') }}
+        </div>
     </div>
 @endsection
