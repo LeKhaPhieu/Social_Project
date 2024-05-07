@@ -1,42 +1,42 @@
 @vite(['resources/scss/base.scss'])
 @vite(['resources/admin/css/font-awesome.css'])
 <ul class="paginate">
-    @if ($posts->lastPage() > 1)
+    @if ($paginator->lastPage() > 1)
         <li class="arrow-paginate">
-            <a href="{{ $posts->previousPageUrl() }}" rel="prev">
+            <a href="{{ $paginator->previousPageUrl() }}" rel="prev">
                 <i class="fa fa-angle-left"></i>
             </a>
         </li>
-        <li class="{{ $posts->currentPage() == 1 ? ' paginate-active' : '' }}">
-            <a href="{{ $posts->url($posts->onFirstPage()) }}">1</a>
+        <li class="{{ $paginator->currentPage() == 1 ? ' paginate-active' : '' }}">
+            <a href="{{ $paginator->url($paginator->onFirstPage()) }}">1</a>
         </li>
         <?php
-        $start = $posts->currentPage() - 2;
-        $end = $posts->currentPage() + 2;
+        $start = $paginator->currentPage() - 2;
+        $end = $paginator->currentPage() + 2;
         if ($start < 1) {
             $start = 1;
             $end += 1;
         }
-        if ($end >= $posts->lastPage()) {
-            $end = $posts->lastPage();
+        if ($end >= $paginator->lastPage()) {
+            $end = $paginator->lastPage();
         }
         ?>
-        @if ($posts->currentPage() > 3)
+        @if ($paginator->currentPage() > 3)
             <li><span>...</span></li>
         @endif
         @for ($i = $start + 1; $i < $end; $i++)
-            <li class="{{ $posts->currentPage() == $i ? ' paginate-active' : '' }}">
-                <a href="{{ $posts->url($i) }}">{{ $i }}</a>
+            <li class="{{ $paginator->currentPage() == $i ? ' paginate-active' : '' }}">
+                <a href="{{ $paginator->url($i) }}">{{ $i }}</a>
             </li>
         @endfor
-        @if ($posts->currentPage() + 2 < $posts->lastPage())
+        @if ($paginator->currentPage() + 2 < $paginator->lastPage())
             <li><span>...</span></li>
         @endif
-        <li class="{{ $posts->currentPage() == $posts->lastPage() ? ' paginate-active' : '' }}">
-            <a href="{{ $posts->url($posts->lastPage()) }}">{{ $posts->lastPage() }}</a>
+        <li class="{{ $paginator->currentPage() == $paginator->lastPage() ? ' paginate-active' : '' }}">
+            <a href="{{ $paginator->url($paginator->lastPage()) }}">{{ $paginator->lastPage() }}</a>
         </li>
         <li class="arrow-paginate">
-            <a href="{{ $posts->nextPageUrl() }}" rel="next">
+            <a href="{{ $paginator->nextPageUrl() }}" rel="next">
                 <i class="fa fa-angle-right"></i>
             </a>
         </li>

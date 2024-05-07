@@ -22,13 +22,14 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
     <script src="{{ Vite::asset('resources/admin/js/raphael-min.js')}}"></script>
     <script src="{{ Vite::asset('resources/admin/js/morris.js')}}"></script>
     @vite(['resources/scss/main.scss'])
+    @vite(['resources/js/admin.js'])
 </head>
 
 <body>
     <section id="container">
         <header class="header fixed-top clearfix">
             <div class="brand">
-                <a href="index.html" class="logo">
+                <a href="#" class="logo">
                     {{ __('admin.title_sidebar') }}
                 </a>
                 <div class="sidebar-toggle-box">
@@ -47,7 +48,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                             <b class="caret"></b>
                         </a>
                         <ul class="dropdown-menu extended logout">
-                            <li><a href="#"><i class=" fa fa-suitcase"></i>{{ __('admin.text_btn_profile') }}</a></li>
+                            <li><a href="{{ route('user.profile')}}"><i class=" fa fa-suitcase"></i>{{ __('admin.text_btn_profile') }}</a></li>
                             <li><a href="#"><i class="fa fa-cog"></i>{{ __('admin.text_btn_setting') }}</a></li>
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
@@ -64,7 +65,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                 <div class="leftside-navigation">
                     <ul class="sidebar-menu" id="nav-accordion">
                         <li>
-                            <a class="active" href="">
+                            <a class="active" href="{{ route('admin.dashboard') }}">
                                 <i class="fa fa-dashboard"></i>
                                 <span>{{ __('admin.dashboard') }}</span>
                             </a>

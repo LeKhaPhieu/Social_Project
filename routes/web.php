@@ -41,7 +41,7 @@ Route::prefix('auth')->middleware('guest')->group(function () {
 });
 
 
-Route::group(['as' => 'admin.', 'prefix' => 'isAdmin'], function () {
+Route::group(['as' => 'admin.', 'prefix' => 'admin', 'middleware' => ['isAdmin']], function () {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 });
 
@@ -63,7 +63,7 @@ Route::group(['as' => 'posts.', 'prefix' => 'posts', 'middleware' => ['isAdmin']
     Route::delete('/destroy/{id}', [PostControllerAdmin::class, 'destroy'])->name('destroy');
 });
 
-Route::group(['as' => 'users.', 'prefix' => 'users', 'middleware' => ['isAdmin']], function () {
+Route::group(['as' => 'users.', 'prefix' => 'admin', 'middleware' => ['isAdmin']], function () {
     Route::get('/index', [UserControllerAdmin::class, 'index'])->name('index');
     Route::get('/status/{id}', [UserControllerAdmin::class, 'updateStatus'])->name('update.status');
     Route::delete('/destroy/{id}', [UserControllerAdmin::class, 'destroy'])->name('destroy');

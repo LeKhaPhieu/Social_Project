@@ -17,13 +17,13 @@ class User extends Authenticatable
     const ROLE_USER = 1;
     const ROLE_ADMIN = 2;
 
-    const INACTIVATED = 0;
-    const ACTIVATED = 1;
-    const BLOCKED = 2;
+    const INACTIVATED = 1;
+    const ACTIVATED = 2;
+    const BLOCKED = 3;
 
-    const MALE = 0;
-    const FEMALE = 1;
-    const OTHER = 2;
+    const MALE = 1;
+    const FEMALE = 2;
+    const OTHER = 3;
 
     /**
      * The attributes that are mass assignable.
@@ -127,5 +127,14 @@ class User extends Authenticatable
             return __('home.text_gender_female');
         }
         return __('home.text_gender_other');
+    }
+
+    public static function getStatus(): array
+    {
+        return [
+            self::INACTIVATED => __('admin.status_inactivated'),
+            self::ACTIVATED => __('admin.status_activated'),
+            self::BLOCKED =>  __('admin.status_blocked'),
+        ];
     }
 }

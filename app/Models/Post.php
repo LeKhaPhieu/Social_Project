@@ -13,8 +13,9 @@ class Post extends Model
 {
     use HasFactory;
 
-    const NOT_APPROVED = 0;
-    const APPROVED = 1;
+    const PENDING = 1;
+    const NOT_APPROVED = 2;
+    const APPROVED = 3;
 
     protected $table = 'posts';
 
@@ -51,7 +52,19 @@ class Post extends Model
         if ($this->status === self::APPROVED) {
             return __('admin.status_approved');
         }
-        return __('admin.status_unapproved');
+        if ($this->status === self::NOT_APPROVED) {
+            return __('admin.status_blocked');
+        }
+        return __('admin.status_pending');
+    }
+
+    public static function getStatus(): array
+    {
+        return [
+            self::PENDING => __('admin.status_pending'),
+            self::NOT_APPROVED => __('admin.status_blocked'),
+            self::APPROVED =>  __('admin.status_approved'),
+        ];
     }
 
     public function scopeApproved(Builder $query): Builder

@@ -8,6 +8,15 @@
             </div>
             <div class="row w3-res-tb">
                 <div class="col-sm-5 m-b-xs">
+                    <form id="status-filter-form" action="{{ route('posts.index') }}" method="GET">
+                        <select id="status-filter" name="status" class="input-sm form-control w-sm inline v-middle">
+                            <option value="">All Posts</option>
+                            @foreach (App\Models\Post::getStatus() as $key => $status)
+                                <option value="{{ $key }}" {{ $key == request()->status ? 'selected' : '' }}>
+                                    {{ $status }}</option>
+                            @endforeach
+                        </select>
+                    </form>
                 </div>
                 <div class="col-sm-4">
                 </div>
@@ -28,7 +37,10 @@
                             <th>{{ __('admin.image') }}</th>
                             <th>{{ __('admin.title') }}</th>
                             <th>{{ __('admin.content') }}</th>
-                            <th>{{ __('admin.category') }}</th>
+                            <th>{{ __('admin.created_at') }}</th>
+                            <th>{{ __('admin.like') }}</th>
+                            <th>{{ __('admin.comment') }}</th>
+                            <th class="w-sm">{{ __('admin.category') }}</th>
                             <th>{{ __('admin.status') }}</th>
                             <th style="width:75px;"></th>
                         </tr>
@@ -38,11 +50,18 @@
                         @foreach ($posts as $index => $post)
                             <tr>
                                 <td>{{ ++$index }}</td>
-                                <td><img src="{{ Storage::url($post->image) }}" height="100" width="100"></td>
+                                <td>
+                                    <a href="{{ route('detail', ['post' => $post]) }}">
+                                        <img src="{{ Storage::url($post->image) }}" height="100" width="100">
+                                    </a>
+                                </td>
                                 <td>
                                     <h4>{{ $post->title }}</h4>
                                 </td>
                                 <td>{!! nl2br(e(Str::limit($post->content, 100))) !!}</td>
+                                <td>{{ $post->created_at->format('d/m/Y') }}</td>
+                                <td>{{ $post->likes()->count() }}</td>
+                                <td>{{ $post->comments()->count() }}</td>
                                 <td>
                                     @foreach ($post->categories as $category)
                                         {{ $category->name }},
@@ -52,19 +71,24 @@
                                 <td>
                                     <span class="text-ellipsis">
                                         <a href="{{ route('posts.update.status', ['id' => $post->id]) }}">
-                                            <span class="text-approve {{$post->status === \App\Models\Post::APPROVED ? 'approved' : 'not-approved'}}"
-                                            >
-                                            {{ $post->status_name }}</span>
+                                            <span
+                                                class="text-approve {{ $post->status === \App\Models\Post::APPROVED
+                                                    ? 'approved'
+                                                    : ($post->status === \App\Models\Post::NOT_APPROVED
+                                                        ? 'not-approved'
+                                                        : 'inactivated') }}">
+                                                {{ $post->status_name }}</span>
                                         </a>
                                     </span>
                                 </td>
                                 <td class="form-inline">
-                                    <a href="{{ route('posts.edit', ['post' => $post]) }}" class="active styling-edit form-group" ui-toggle-class="">
+                                    <a href="{{ route('posts.edit', ['post' => $post]) }}"
+                                        class="active styling-edit form-group" ui-toggle-class="">
                                         <i class="fa fa-edit text-success text-active"></i>
                                     </a>
                                     <form onclick="return confirm('Are you sure delete this category?')"
-                                        action="{{ route('posts.destroy', ['id' => $post]) }}" class="active form-group pull-right"
-                                        method="POST" ui-toggle-class="">
+                                        action="{{ route('posts.destroy', ['id' => $post]) }}"
+                                        class="active form-group pull-right" method="POST" ui-toggle-class="">
                                         @csrf
                                         @method('DELETE')
                                         <button class="btn-category">
@@ -78,6 +102,8 @@
                 </table>
             </div>
         </div>
-        @include('layouts.components.pagination')
+        <div class="pagine">
+            {{ $posts->withQueryString()->links('layouts.components.pagination') }}
+        </div>
     </div>
 @endsection

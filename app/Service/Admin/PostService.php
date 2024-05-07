@@ -13,6 +13,9 @@ class PostService
     public function index(): LengthAwarePaginator
     {
         $posts = Post::with('categories')->orderByDesc('created_at');
+        if ($status = request()->status) {
+            $posts->where('status', $status);
+        }
         if ($key = request()->key) {
             $posts->where(function ($posts) use ($key) {
                 $posts->where('title', 'like', '%' . $key . '%')
