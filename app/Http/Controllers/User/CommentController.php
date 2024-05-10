@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Events\CommentEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\CreateCommentRequest;
 use App\Service\User\CommentService;
@@ -31,6 +32,7 @@ class CommentController extends Controller
     {
         $data = $request->only('content', 'parent_id', 'user_id');
         $response = $this->commentService->store($postId, $data);
+        broadcast(new CommentEvent($response))->toOthers();
         return response()->json(['status' => $response]);
     }
 
@@ -40,6 +42,7 @@ class CommentController extends Controller
         if (Gate::allows('manage-comment', $comment)) {
             $data = $request->all();
             $response = $this->commentService->update($data, $id);
+            broadcast(new CommentEvent($comment))->toOthers();
             return response()->json(['status' => $response]);
         }
         return redirect()->back()->with('error', __('home.update_comment_error'));
@@ -50,6 +53,7 @@ class CommentController extends Controller
         $comment = $this->commentService->findComment($id);
         if (Gate::allows('manage-comment', $comment)) {
             $response = $this->commentService->destroy($id);
+            broadcast(new CommentEvent($comment))->toOthers();
             return response()->json(['status' => $response]);
         }
         return redirect()->back()->with('error', __('home.delete_comment_error'));

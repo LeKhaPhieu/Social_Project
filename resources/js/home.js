@@ -209,3 +209,18 @@ $(document).on("click", ".btn-send-comment-reply", function (event) {
         },
     });
 });
+
+window.Echo.channel('comment')
+    .listen('CommentEvent', (event) => {
+        listComments();
+    });
+
+window.Echo.channel('like-post')
+    .listen('LikeEvent', (event) => {
+        $('#likeCountPost').text(event.likesCount);
+    });
+
+window.Echo.channel('like-comment')
+    .listen('LikeEvent', (event) => {
+        listComments();
+    });

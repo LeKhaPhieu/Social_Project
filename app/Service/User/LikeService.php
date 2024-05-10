@@ -2,6 +2,7 @@
 
 namespace App\Service\User;
 
+use App\Events\LikeEvent;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,7 @@ class LikeService
                 $liked = true;
             }
             $likesCount = $post->likes()->count();
+            broadcast(new LikeEvent($likesCount, 'post'))->toOthers();
             return [
                 'liked' => $liked,
                 'likesCount' => $likesCount,
@@ -45,6 +47,7 @@ class LikeService
                 $liked = true;
             }
             $likesCount = $comment->likes()->count();
+            broadcast(new LikeEvent(0, 'comment'))->toOthers();
             return [
                 'liked' => $liked,
                 'likesCount' => $likesCount,

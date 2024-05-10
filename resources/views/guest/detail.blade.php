@@ -118,7 +118,7 @@
                                                     ? 'solid'
                                                     : 'regular' }} fa-heart"></i>
                                         </button>
-                                        <p class="info-blog heart-create">{{ $post->likes()->count() }}</p>
+                                        <p class="info-blog heart-create" id="likeCountPost">{{ $post->likes()->count() }}</p>
                                     </form>
                                 </div>
                                 <div class="item-info">
