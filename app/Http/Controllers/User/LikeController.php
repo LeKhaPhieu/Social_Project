@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Events\LikeEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use App\Service\User\LikeService;
