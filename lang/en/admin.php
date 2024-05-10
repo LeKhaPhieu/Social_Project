@@ -18,7 +18,7 @@ return [
     'approved_user_error' => 'Update user status failed!',
     'delete_user_success' => 'Delete user successfully',
     'delete_user_error' => 'Delete user failed!!',
-    
+
     'title_admin_home' => 'Admin home page',
     'title_create_category' => 'Create Category',
     'title_update_category' => 'Update Category',
@@ -31,7 +31,7 @@ return [
     'text_btn_update' => 'Save',
     'text_btn_profile' => 'Profile',
     'text_btn_setting' => 'Settings',
-    'text_btn_logout'=> 'Log out',
+    'text_btn_logout' => 'Log out',
     'image' => 'Image',
     'number' => 'Number',
     'title' => 'Title',
@@ -42,6 +42,8 @@ return [
     'categories' => 'Categories',
     'posts' => 'Posts',
     'users' => 'Users',
+    'likes' => 'Likes',
+    'comments' => 'Comments',
     'dashboard' => 'Dashboard',
     'status' => 'Status',
     'status_approved' => 'Public',
@@ -56,9 +58,13 @@ return [
     'status_activated' => 'Activated',
     'status_inactivated' => 'Inactivated',
     'status_blocked' => 'Blocked',
+    'approved' => 'Approved',
     'label_category' => 'Category',
     'label_title' => 'Title',
     'label_upload_img' => 'Upload image',
     'label_description' => 'Description',
+    'post_approved' => 'post approved',
+    'chart_name_user' => 'Users statistics',
+    'chart_name_post' => 'Posts statistics',
 
 ];
