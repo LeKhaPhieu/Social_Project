@@ -2,7 +2,6 @@
 
     .detail-background {
         width: 100%;
-        margin: 120px 0 0 0;
 
         @include mobile {
             display: none;
@@ -35,9 +34,6 @@
     .detail-overlay-mobile {
         display: none;
         position: fixed;
-        z-index: 1;
-        padding-top: 100px;
-        left: 0;
         top: 0;
         width: 100%;
         height: 100%;
@@ -49,7 +45,7 @@
             width: 80%;
 
             @include mobile {
-                position: fixed;
+                position: absolute;
                 background-color: rgba(255, 255, 255, 1);
                 padding: 30px;
                 top: 20%;
@@ -144,12 +140,12 @@
             width: 100%;
             display: block;
             box-sizing: border-box;
-            margin: 80px 0 0 0;
+            margin: 80px 0 30px 0;
             padding: 0 20px;
         }
 
         .detail-sidebar-desktop {
-            min-width: 214px;
+            min-width: 185px;
             height: fit-content;
             margin: 0 5% 0 0;
             border-right: 1px solid var(--background-footer);
@@ -164,7 +160,7 @@
 
             .detail-btn-search-desktop {
                 position: absolute;
-                margin: 2px 0 0 166.5px;
+                margin: 2px 0 0 138.5px;
                 background-color: var(--main-white);
                 border: none;
                 z-index: 1;
@@ -172,15 +168,11 @@
                 border-radius: 0 7px 7px 0;
                 border: 1px solid var(--main-white);
                 cursor: pointer;
-
-                &.author {
-                    margin: 2px 0 0 166.5px;
-                }
             }
 
             .detail-search-input {
                 @include font-text;
-                width: 203px;
+                width: 95%;
                 height: auto;
                 padding: 10px 40px 10px 15px;
                 border-radius: 8px;
@@ -270,6 +262,10 @@
                                         border: none;
                                         padding: 0;
                                         background-color: var(--main-white);
+
+                                        .fa-solid {
+                                            color: var(--main-red);
+                                        }
                                     }
                                 }
 
@@ -313,6 +309,15 @@
                                 background-color: var(--main-white);
                                 box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25),
                                     0 3px 6px 0 rgba(0, 0, 0, 0.25);
+
+                                .connect-dropdown-menu {
+                                    position: absolute;
+                                    border: 15px solid;
+                                    margin-left: 61px;
+                                    top: -14px;
+                                    filter: drop-shadow(3px -1px 2px rgba(0, 0, 0, 0.2));
+                                    border-color: transparent var(--main-white) transparent transparent;
+                                }
 
                                 .dropdown-menu-form {
                                     height: 20px;
@@ -527,6 +532,8 @@
                                     height: 48px;
                                     border-radius: 50%;
                                     margin: 0 15px 0 0;
+                                    object-fit: cover;
+                                    border: 1px solid var(--background-white-1);
                                 }
 
                                 input {
@@ -562,6 +569,8 @@
                                     height: 48px;
                                     border-radius: 50%;
                                     margin: 0 15px 0 0;
+                                    object-fit: cover;
+                                    border: 1px solid var(--background-white-1);
                                 }
 
                                 .user-name {
@@ -573,28 +582,6 @@
                             .detail-comment-first {
                                 transform: translateX(63px);
                                 padding: 0 20% 0 0;
-
-                                .form-reply-comment {
-                                    display: none;
-
-                                    .detail-input-reply {
-                                        width: 100%;
-                                        padding: 5px 15px;
-                                        margin: 0 0 20px 0;
-                                        border-radius: 4px;
-                                        border: 1px solid var(--background-white-1);
-                                    }
-
-                                    button {
-                                        @include font-text(15px, 700);
-                                        padding: 5px 10px;
-                                        border-radius: 4px;
-                                        border: 1px solid;
-                                        cursor: pointer;
-                                        background-color: var(--text-link);
-                                        color: var(--main-white);
-                                    }
-                                }
 
                                 .comment-content {
                                     margin: 0;
@@ -612,6 +599,10 @@
                                         background-color: var(--main-white);
                                     }
 
+                                    .fa-solid.fa-heart{
+                                        color: var(--main-red);
+                                    }
+
                                     .comment-content-created {
                                         font-size: 14px;
                                         color: var(--text-gray);
@@ -626,6 +617,12 @@
                                         padding: 0 5px 0 15px;
                                         cursor: pointer;
                                         color: rgba(133, 131, 131, 1);
+                                    }
+
+                                    img {
+                                        width: 16px;
+                                        padding: 0 5px 0 15px;
+                                        cursor: pointer;
                                     }
 
                                     label {
@@ -648,6 +645,8 @@
                                     height: 48px;
                                     border-radius: 50%;
                                     margin: 0 15px 0 0;
+                                    object-fit: cover;
+                                    border: 1px solid var(--background-white-1);
                                 }
 
                                 .user-name {
@@ -687,6 +686,10 @@
                                         color: var(--text-gray);
                                     }
 
+                                    .fa-solid.fa-heart{
+                                        color: var(--main-red);
+                                    }
+
                                     i {
                                         cursor: pointer;
                                         padding: 0 2px 0 15px;
@@ -698,6 +701,30 @@
                                         color: var(--main-black);
                                     }
                                 }
+                            }
+                        }
+                        
+                        .form-reply-comment {
+                            display: none;
+                            width: 78%;
+                            margin: 0 auto;
+                        
+                            .detail-input-reply {
+                                width: 100%;
+                                padding: 5px 15px;
+                                margin: 0 0 20px 0;
+                                border-radius: 4px;
+                                border: 1px solid var(--background-white-1);
+                            }
+                        
+                            button {
+                                @include font-text(15px, 700);
+                                padding: 5px 10px;
+                                border-radius: 4px;
+                                border: 1px solid;
+                                cursor: pointer;
+                                background-color: var(--text-link);
+                                color: var(--main-white);
                             }
                         }
                     }
@@ -725,7 +752,7 @@
             .popular-post-image {
                 width: 100%;
                 object-fit: cover;
-                margin: 0 0 15px 0;
+                margin: 0;
             }
 
             .popular-post-content {
@@ -825,7 +852,8 @@
                 font-weight: 700;
             }
 
-            .btn-delete,.btn-delete-comment {
+            .btn-delete,
+            .btn-delete-comment {
                 @include flex-center(space-around, center);
                 padding: 25px 35px;
 

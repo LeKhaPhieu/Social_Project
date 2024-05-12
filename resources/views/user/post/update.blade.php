@@ -1,3 +1,4 @@
+@vite(['resources/js/app.js'])
 @vite(['resources/js/post.js'])
 @extends('layouts.user.app')
 @section('content')
@@ -11,7 +12,7 @@
                 <h2>{{ __('home.text_btn_update') }}</h2>
                 <button class="btn-submit">{{ __('home.btn_update') }}</button>
             </div>
-            <label>{{ __('home.categories_label_sidebar') }}<span>*</span></label>
+            <label>{{ __('home.categories_label_sidebar') }}</label>
             <div id="list1" class="dropdown-categories" tabindex="100">
                 <span class="anchor">{{ __('home.placeholder_input_category') }}</span>
                 <ul class="items update">
@@ -27,18 +28,19 @@
                     <p class="notify-error">{{ $message }}</p>
                 @enderror
             </div>
-            <label>{{ __('home.title_label_sidebar') }}<span>*</span></label>
+            <label>{{ __('home.title_label_sidebar') }}</label>
             <input name="title" type="text" value="{{ $post->title }}" class="form-create-title update">
             @error('title')
                 <p class="notify-error">{{ $message }}</p>
             @enderror
-            <label>{{ __('home.label_upload_image') }}<span>*</span></label>
+            <label>{{ __('home.label_upload_image') }}</label>
             <p id="btnImage" class="form-create-image update">{{ __('home.label_upload_image') }}</p>
             <input type="file" name="image" id="inputImage" class="input-create-image update">
             <div id="imagePreview" class="image-create-preview update">
                 <img src="{{ Storage::url($post->image) }}" alt="">
             </div>
-            <label>{{ __('home.label_description') }}<span>*</span></label>
+            <label id="imageError" class="notify-error"></label>
+            <label>{{ __('home.label_description') }}</label>
             <textarea name="content" rows="25" cols="70" class="form-blog-content update"
                 placeholder="{{ __('home.placeholder_description') }}">{{ $post->content }}</textarea>
             @error('content')

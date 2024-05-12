@@ -27,7 +27,7 @@
                         <tr>
                             <th>{{ __('admin.number') }}</th>
                             <th>{{ __('admin.category') }}</th>
-                            <th>{{ __('admin.create_at') }}</th>
+                            <th>{{ __('admin.created_at') }}</th>
                             <th style="width:75px;"></th>
                         </tr>
                     </thead>

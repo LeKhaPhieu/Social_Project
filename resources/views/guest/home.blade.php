@@ -21,20 +21,18 @@
                         <input class="search-mobile blog" type="text" placeholder="Search blog title" name="blog">
                     </form>
                     <p class="title-list">{{ __('home.categories_label_sidebar') }}</p>
-                    <div class="category-list-mobile">
-                        <form action="{{ route('home') }}" method="GET" id="categoryFormMobile">
-                            @foreach ($categories as $category)
-                                <div class="category-list-item">
-                                    <input class="category-box-mobile" type="checkbox" id="{{ $category->id }}"
-                                        name="category[]"
-                                        {{ in_array($category->id, request('category') ?? []) ? 'checked autofocus' : '' }}
-                                        value="{{ $category->id }}">
-                                    <label for="{{ $category->id }}"
-                                        class="category-name-mobile">{{ $category->name }}</label>
-                                </div>
-                            @endforeach
-                        </form>
-                    </div>
+                    <form class="category-list-mobile" action="{{ route('home') }}" method="GET" id="categoryFormMobile">
+                        @foreach ($categories as $category)
+                            <div class="category-list-item">
+                                <input class="category-box-mobile" type="checkbox" id="{{ $category->id }}"
+                                    name="category[]"
+                                    {{ in_array($category->id, request('category') ?? []) ? 'checked autofocus' : '' }}
+                                    value="{{ $category->id }}">
+                                <label for="{{ $category->id }}"
+                                    class="category-name-mobile">{{ $category->name }}</label>
+                            </div>
+                        @endforeach
+                    </form>
                     <p class="title-list">{{ __('home.author_search_sidebar') }}</p>
                     <form action="">
                         <button class="btn-search-mobile">
@@ -89,9 +87,9 @@
                 <div class="home-blog-list-form">
                     @foreach ($posts as $post)
                         <div class="home-blog-list">
-                            <a href="">
+                            @if($post->image)
                                 <img class="home-blog-list-image" src="{{ Storage::url($post->image) }}" alt="">
-                            </a>
+                            @endif
                             <div class="home-blog-list-info">
                                 <div class="item-info">
                                     <img class="icon-info avatar"

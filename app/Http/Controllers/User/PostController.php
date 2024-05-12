@@ -38,6 +38,18 @@ class PostController extends Controller
         ]);
     }
 
+    public function myBlog(Request $request): View
+    {
+        $data = $request->all();
+        $user = auth()->user();
+        $categories = $this->categoryService->getAll();
+        $posts = $this->postService->myBlog($user->id, config('length.limit_home_page'), $data);
+        return view('guest.home')->with([
+            'categories' => $categories,
+            'posts' => $posts,
+        ]);
+    }
+
     public function store(CreatePostRequest $request): RedirectResponse
     {
         $data = $request->only('title', 'content', 'image', 'category');
@@ -50,6 +62,10 @@ class PostController extends Controller
 
     public function edit(Post $post): View|RedirectResponse
     {
+        $post = Post::findOrFail($post->id);
+        if ($post->status === Post::NOT_APPROVED) {
+            return redirect()->route('home')->with('error', __('home.edit_post_error'));
+        }
         if (!Gate::allows('manage-post', $post)) {
             return redirect()->route('home')->with('error', __('home.edit_post_error'));
         }
@@ -63,6 +79,9 @@ class PostController extends Controller
     public function update(UpdatePostRequest $request, int $id): RedirectResponse
     {
         $post = Post::findOrFail($id);
+        if ($post->status === Post::NOT_APPROVED) {
+            return redirect()->route('home')->with('error', __('admin.update_post_error'));
+        }
         if (!Gate::allows('manage-post', $post)) {
             return redirect()->route('home')->with('error', __('home.edit_post_error'));
         }
@@ -74,9 +93,12 @@ class PostController extends Controller
         return redirect()->back()->with('error', __('admin.update_post_error'));
     }
 
-    public function destroy($id): RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         $post = Post::findOrFail($id);
+        if ($post->status === Post::NOT_APPROVED) {
+            return redirect()->route('home')->with('error', __('admin.delete_category_error'));
+        }
         if (!Gate::allows('manage-post', $post)) {
             return redirect()->back()->with('error', __('home.delete_post_error'));
         }

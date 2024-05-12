@@ -6,14 +6,12 @@
         <form class="profile-body" method="POST" action="{{ route('user.update.profile') }}" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            <img class="profile-avatar" src="{{ Storage::url($user->avatar) }}">
-            <input type="file" class="avatar-input" name="image">
-            @error('image')
-                <p class="notify-error">{{ $message }}</p>
-            @enderror
+            <img id="profileAvatar" class="profile-avatar" src="{{ Storage::url($user->avatar) }}">
+            <input type="file" class="avatar-input" name="image" id="inputAvatar">
             <label for="avatar-input">
-                <i class="fa-solid fa-pencil avatar-edit"></i>
+                <i class="fa-solid fa-pencil avatar-edit" id="btnEditAvatar"></i>
             </label>
+            <p id="imageAvatar" class="notify-error"></p>
             <div class="profile-user-name">
                 <p>{{ $user->user_name }}</p>
             </div>
@@ -56,19 +54,7 @@
                     </td>
                     <td class="text-info">{{ $user->email }}</td>
                     <td></td>
-                </tr>
-                <tr class="row-notify"></tr>
-                <tr>
-                    <td>
-                        <h3>{{ __('home.text_password') }}:</h3>
-                    </td>
-                    <td class="text-info">*********</td>
-                    <td>
-                        <a href="{{ route('passwords.edit') }}">
-                            <i class="fa-solid fa-pencil"></i>
-                        </a>
-                    </td>
-                </tr>
+                </tr>       
                 <tr class="row-notify"></tr>
                 <tr>
                     <td>

@@ -2,6 +2,7 @@
 
 namespace App\Service\User;
 
+use App\Events\CommentEvent;
 use App\Models\Comment;
 use App\Models\Post;
 use Illuminate\Support\Collection;
@@ -33,7 +34,9 @@ class CommentService
             'content' => $data['content'],
             'parent_id' => $data['parent_id'] ?? null,
         ];
-        return Comment::create($commentData);
+        $comment = Comment::create($commentData);
+        broadcast(new CommentEvent($comment))->toOthers();
+        return $comment;
     }
 
     public function update(array $data, int $id): bool
@@ -43,6 +46,7 @@ class CommentService
             $comment->update([
                 'content' => $data['content'],
             ]);
+            broadcast(new CommentEvent($comment))->toOthers();
             return true;
         } catch (\Exception $e) {
             Log::error($e);
@@ -58,7 +62,9 @@ class CommentService
             DB::table('likes')->whereIn('comment_id', $repliesId)->delete();
             $comment->replies()->delete();
             $comment->likes()->detach();
-            return $comment->delete();
+            broadcast(new CommentEvent($comment))->toOthers();
+            $comment->delete();
+            return true;
         } catch (\Exception $e) {
             Log::error($e);
             throw $e;

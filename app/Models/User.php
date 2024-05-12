@@ -64,6 +64,11 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    public function isAdmin(): string
+    {
+        return $this->role == self::ROLE_ADMIN;
+    }
+
     public static function getGenders(): array
     {
         return [

@@ -1,12 +1,5 @@
-const chooseGender = document.querySelectorAll('.gender-choose');
-chooseGender.forEach(function (checkbox) {
-    checkbox.addEventListener('change', function () {
-        if (this.checked) {
-            chooseGender.forEach(function (otherCheckbox) {
-                if (otherCheckbox !== checkbox) {
-                    otherCheckbox.checked = false;
-                }
-            });
-        }
-    });
+document.getElementById('reset-token-btn').addEventListener('click', function (event) {
+    event.preventDefault();
+    let userId = document.querySelector('input[name="user_id"]').value;
+    resendToken(userId);
 });

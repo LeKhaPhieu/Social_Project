@@ -39,9 +39,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
             </div>
             <div class="top-nav clearfix">
                 <ul class="nav pull-right top-menu">
-                    <li>
-                        <input type="text" class="form-control search" placeholder=" Search">
-                    </li>
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <img alt="" src="{{ Vite::asset('resources/admin/images/logo.png') }}">
@@ -50,7 +47,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
                         </a>
                         <ul class="dropdown-menu extended logout">
                             <li><a href="{{ route('user.profile')}}"><i class=" fa fa-suitcase"></i>{{ __('admin.text_btn_profile') }}</a></li>
-                            <li><a href="#"><i class="fa fa-cog"></i>{{ __('admin.text_btn_setting') }}</a></li>
+                            <li><a href="{{ route('home')}}"><i class="fa fa-cog"></i>{{ __('admin.text_btn_user') }}</a></li>
                             <form action="{{ route('logout') }}" method="POST">
                                 @csrf
                                 <button class="btn-logout" type="submit"><i class="fa fa-key icon-btn-logout"></i>{{ __('admin.text_btn_logout') }}</button>

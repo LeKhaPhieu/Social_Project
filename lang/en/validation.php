@@ -20,4 +20,7 @@ return [
     'exists' => ' is invalid.',
     'size:6' => ' must be :size characters.',
     'in' => ' does not exist.',
+    'rule_username' => ' must be written without accents and must not contain special characters!!',
+    'mimes' => 'The file must have the extension jpeg, png, jpg, gif, or svg!!',
+    'max_2048' => 'The file must be less than 2048 KB in size!!',
 ];

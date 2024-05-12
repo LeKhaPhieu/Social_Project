@@ -24,14 +24,12 @@ class UserService
         return $users->paginate(config('length.limit_page_admin'));
     }
 
-    public function updateStatus(int $id): bool
+    public function updateStatus(int $userId, string $newStatus): bool
     {
         try {
-            $user = User::where('id', $id)->firstOrFail();
-            return $user->update([
-                'status' => $user->status == User::ACTIVATED 
-                ? User::BLOCKED : User::ACTIVATED
-            ]);
+            $user = User::findOrFail($userId);
+            $user->update(['status' => $newStatus]);
+            return true;
         } catch (\Exception $e) {
             Log::error($e);
             throw $e;

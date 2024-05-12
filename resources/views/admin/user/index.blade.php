@@ -43,7 +43,6 @@
                             <th>{{ __('admin.gender') }}</th>
                             <th>{{ __('admin.phone') }}</th>
                             <th>{{ __('admin.status') }}</th>
-                            <th style="width:30px;"></th>
                         </tr>
                     </thead>
 
@@ -51,7 +50,15 @@
                         @foreach ($users as $index => $user)
                             <tr>
                                 <td>{{ ++$index }}</td>
-                                <td><img src="{{ Storage::url($user->avatar) }}" height="40" width="40"></td>
+                                <td>
+                                    @if($user->avatar)
+                                        <img src="{{ Storage::url($user->avatar) }}" height="50" width="50"
+                                            style="border-radius: 50%; object-fit: cover;">
+                                    @else
+                                        <img src="{{ Vite::asset('resources/images/user_avatar.jpg') }}" height="50" width="50"
+                                            style="border-radius: 50%; object-fit: cover;">
+                                    @endif
+                                </td>
                                 <td>
                                     <h4>{{ $user->user_name }}</h4>
                                 </td>
@@ -61,27 +68,20 @@
                                 <td>{{ $user->phone_number }}</td>
                                 <td>
                                     <span class="text-ellipsis">
-                                        <a href="{{ route('users.update.status', ['id' => $user->id]) }}">
-                                            <span
-                                                class="text-approve {{ $user->status === \App\Models\User::ACTIVATED
-                                                    ? 'approved'
-                                                    : ($user->status === \App\Models\User::BLOCKED
-                                                        ? 'not-approved'
-                                                        : 'inactivated') }}">
-                                                {{ $user->status_name }}</span>
-                                        </a>
+                                        <form action="{{ route('users.update.status', ['id' => $user->id]) }}"
+                                            method="POST">
+                                            @csrf
+                                            @method('PUT')
+                                            <select class="form-control" style="width: 120px;" name="status" onchange="this.form.submit()">
+                                                @foreach (\App\Models\User::getStatus() as $key => $value)
+                                                    <option value="{{ $key }}"
+                                                        {{ $user->status === $key ? 'selected' : '' }}>
+                                                        {{ $value }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </form>
                                     </span>
-                                </td>
-                                <td>
-                                    <form onclick="return confirm('Are you sure delete this user?')"
-                                        action="{{ route('users.destroy', ['id' => $user]) }}" class="active"
-                                        method="POST" ui-toggle-class="">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button class="btn-category">
-                                            <i class="fa fa-trash-o text-danger text"></i>
-                                        </button>
-                                    </form>
                                 </td>
                             </tr>
                         @endforeach

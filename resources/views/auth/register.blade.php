@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="shortcut icon" type="image/png" href="{{ Vite::asset('resources/images/logo.png') }}"/>
+    <link rel="shortcut icon" type="image/png" href="{{ Vite::asset('resources/images/logo.png') }}" />
     <title>Sign up</title>
     @vite(['resources/scss/main.scss'])
     @vite(['resources/js/auth.js'])
@@ -22,14 +22,14 @@
                 <p class="auth-body-title">{{ __('auth.register_title') }}</p>
                 <div class="auth-body-item">
                     <p>Username<span>*</span></p>
-                    <input type="text" name="user_name">
+                    <input type="text" name="user_name" value="{{ old('user_name')}}">
                     @error('user_name')
                         <p class="notify-error">{{ $message }}</p>
                     @enderror
                 </div>
                 <div class="auth-body-item">
                     <p>Email<span>*</span></p>
-                    <input type="email" name="email">
+                    <input type="email" name="email" value="{{ old('email')}}">
                     @error('email')
                         <p class="notify-error">{{ $message }}</p>
                     @enderror
@@ -47,7 +47,7 @@
                 </div>
                 <div class="auth-body-item">
                     <p>Tel<span>*</span></p>
-                    <input type="number" name="phone_number">
+                    <input type="text" name="phone_number" value="{{ old('phone_number')}}">
                     @error('phone_number')
                         <p class="notify-error">{{ $message }}</p>
                     @enderror
@@ -55,18 +55,13 @@
                 <div class="auth-body-item">
                     <p>Gender<span>*</span></p>
                     <div class="gender-from">
-                        <div class="gender-item">
-                            <input class="gender-choose" type="checkbox" name="gender" value="0">
-                            <span>Male</span>
-                        </div>
-                        <div class="gender-item">
-                            <input class="gender-choose" type="checkbox" name="gender" value="1">
-                            <span>Female</span>
-                        </div>
-                        <div class="gender-item">
-                            <input class="gender-choose" type="checkbox" name="gender" value="2">
-                            <span>Other</span>
-                        </div>
+                        @foreach (\App\Models\User::getGenders() as $genderId => $genderName)
+                            <div class="gender-item">
+                                <input class="gender-choose" type="radio" name="gender" 
+                                    value="{{ $genderId }}" {{ old('gender') == $genderId ? 'checked' : '' }}>
+                                <span>{{ $genderName }}</span>
+                            </div>
+                        @endforeach
                     </div>
                     @error('gender')
                         <p class="notify-error">{{ $message }}</p>

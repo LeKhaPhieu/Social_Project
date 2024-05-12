@@ -32,6 +32,7 @@ return [
     'text_btn_profile' => 'Profile',
     'text_btn_setting' => 'Settings',
     'text_btn_logout' => 'Log out',
+    'text_btn_user' => 'User home',
     'image' => 'Image',
     'number' => 'Number',
     'title' => 'Title',
@@ -46,7 +47,7 @@ return [
     'comments' => 'Comments',
     'dashboard' => 'Dashboard',
     'status' => 'Status',
-    'status_approved' => 'Public',
+    'status_approved' => 'Approved',
     'status_unapproved' => 'Private',
     'status_pending' => 'Pending',
     'created_at' => 'Created',
@@ -64,7 +65,7 @@ return [
     'label_upload_img' => 'Upload image',
     'label_description' => 'Description',
     'post_approved' => 'post approved',
-    'chart_name_user' => 'Users statistics',
-    'chart_name_post' => 'Posts statistics',
+    'chart_name_user' => 'Users activated in the last 30 days',
+    'chart_name_post' => 'Posts approved in the last 30 days',
 
 ];

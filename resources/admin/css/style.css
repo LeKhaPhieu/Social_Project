@@ -9,6 +9,14 @@ h1, h2, h3 {margin: 0;}
 ul, ol {margin: 0;}
 p {margin: 0;}
 
+th, td {
+    text-align: center;
+}
+
+img {
+    object-fit: cover;
+}
+
 .btn-logout {
     background-color: snow;
     border: none;
@@ -856,6 +864,7 @@ ul.top-menu>li>a:hover,ul.top-menu>li>a:focus {
     text-align: center;
 }
 .panel {
+    margin-top: 40px;
     border: none ! important;
 }
 .agileinfo-grap {
@@ -949,7 +958,21 @@ span.panel-title{
     color: #45a2c9;
 }
 .alert {
+    margin-top: 28px;
     padding: 16.8px !important;
+    opacity: 1;
+    animation: fadeOut 5s forwards;
+}
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
 }
 /*-- graphs --*/
 .area-grids{

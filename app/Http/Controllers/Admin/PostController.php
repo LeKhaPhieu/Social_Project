@@ -43,14 +43,16 @@ class PostController extends Controller
         ]);
     }
 
-    public function updateStatus(int $id): RedirectResponse
+    public function updateStatus(Request $request, int $postId): RedirectResponse
     {
-        $result = $this->postService->updateStatus($id);
+        $newStatus = $request->input('status');
+        $result = $this->postService->updateStatus($postId, $newStatus);
         if ($result) {
             return redirect()->back()->with('success', __('admin.approved_post_success'));
         }
         return redirect()->back()->with('error', __('admin.approved_post_error'));
     }
+
 
     public function destroy($id): RedirectResponse
     {

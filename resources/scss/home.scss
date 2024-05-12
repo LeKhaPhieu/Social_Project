@@ -7,7 +7,6 @@
 
     .home-background {
         width: 100%;
-        margin: 120px 0 0 0;
 
         @include mobile {
             display: none;
@@ -40,9 +39,6 @@
     .overlay-mobile {
         display: none;
         position: fixed;
-        z-index: 1;
-        padding-top: 100px;
-        left: 0;
         top: 0;
         width: 100%;
         height: 100%;
@@ -54,7 +50,7 @@
             width: 80%;
 
             @include mobile {
-                position: fixed;
+                position: absolute;
                 background-color: rgba(255, 255, 255, 1);
                 padding: 30px;
                 top: 20%;
@@ -94,7 +90,7 @@
 
                     .category-list-mobile {
                         display: grid;
-                        grid-template-columns: repeat(2, 1fr);
+                        grid-template-columns: auto auto;
                         gap: 10px;
 
                         .category-list-item {
@@ -243,12 +239,6 @@
                         width: 100%;
                         height: 360px;
                         object-fit: cover;
-                        transition: transform 0.3s;
-                        cursor: pointer;
-
-                        &:hover {
-                            transform: scale(1.05);
-                        }
                     }
 
                     .home-blog-list-info {
@@ -256,7 +246,7 @@
                         margin: 10px 0;
                         padding: 0 30px;
 
-                        @include mobile {
+                        @include mobile-min {
                             @include flex-center(space-between, center);
                         }
 
@@ -271,7 +261,7 @@
                             .info-blog {
                                 margin: 0 20px 0 5px;
 
-                                @include mobile {
+                                @include mobile-min {
                                     margin: 0 5px 0 5px;
                                 }
                             }

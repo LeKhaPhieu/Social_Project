@@ -11,6 +11,7 @@ use App\Http\Requests\TokenVerifyEmailRequest;
 use App\Models\User;
 use App\Service\Auth\AuthService;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
@@ -40,7 +41,8 @@ class AuthController extends Controller
 
     public function viewTokenForm(): View
     {
-        return view('auth.token_verify_form');
+        $user = new User();
+        return view('auth.token_verify_form', compact('user'));
     }
 
     public function formForgotPassword(): View
@@ -48,14 +50,9 @@ class AuthController extends Controller
         return view('auth.forgot_password_form');
     }
 
-    public function formTokenForgot(): View
+    public function resend(): View
     {
-        return view('auth.token_verify_password');
-    }
-
-    public function formNewPassword(): View
-    {
-        return view('auth.new_password_forgot');
+        return view('auth.token_resend');
     }
 
     public function register(RegisterRequest $request): RedirectResponse
@@ -108,20 +105,19 @@ class AuthController extends Controller
         $result = $this->authService->forgotPassword($request->only('email'));
 
         if ($result['status']) {
-            return redirect()->route('token.password')->with('success', $result['message']);
+            return redirect()->route('login')->with('success', $result['message']);
         }
 
         return redirect()->route('forgot.password')->with('error', $result['message']);
     }
 
-    public function postTokenForgot(TokenPasswordRequest $request): RedirectResponse
+    public function resendToken(ForgotPasswordRequest $request): RedirectResponse
     {
-        $token = $request->input('token_reset_password');
-
-        if ($this->authService->postTokenForgot($token)) {
-            return redirect()->route('login')->with('success', __('auth.retrieve_password_success'));
-        }
-
-        return redirect()->route('forgot.password')->with('error', __('auth.retrieve_password_error'));
+        $email = $request->input('email');
+        $result = $this->authService->resendToken($email);
+        if ($result) {
+            return redirect()->route('token')->with('success', __('auth.notify_register_success'));
+        } 
+        return redirect()->back()->with('error', __('auth.notify_resend_error'));
     }
 }

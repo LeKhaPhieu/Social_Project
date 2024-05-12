@@ -51,9 +51,15 @@
                             <tr>
                                 <td>{{ ++$index }}</td>
                                 <td>
-                                    <a href="{{ route('detail', ['post' => $post]) }}">
-                                        <img src="{{ Storage::url($post->image) }}" height="100" width="100">
-                                    </a>
+                                    @if($post->image)
+                                        <a href="{{ route('detail', ['post' => $post]) }}">
+                                            <img src="{{ Storage::url($post->image) }}" height="100" width="100">
+                                        </a>
+                                    @else
+                                        <a href="{{ route('detail', ['post' => $post]) }}">
+                                            <img src="{{ Vite::asset('resources/images/image_post.png') }}" height="100" width="100">
+                                        </a>
+                                    @endif
                                 </td>
                                 <td>
                                     <h4>{{ $post->title }}</h4>
@@ -70,15 +76,18 @@
                                 </td>
                                 <td>
                                     <span class="text-ellipsis">
-                                        <a href="{{ route('posts.update.status', ['id' => $post->id]) }}">
-                                            <span
-                                                class="text-approve {{ $post->status === \App\Models\Post::APPROVED
-                                                    ? 'approved'
-                                                    : ($post->status === \App\Models\Post::NOT_APPROVED
-                                                        ? 'not-approved'
-                                                        : 'inactivated') }}">
-                                                {{ $post->status_name }}</span>
-                                        </a>
+                                        <form action="{{ route('posts.update.status', ['id' => $post->id]) }}" method="POST">
+                                            @csrf
+                                            @method('put')
+                                            <select class="form-control" style="width: 110px;" name="status" onchange="this.form.submit()">
+                                                @foreach (\App\Models\Post::getStatus() as $status => $statusName)
+                                                    <option value="{{ $status }}"
+                                                        {{ $post->status === $status ? 'selected' : '' }}>
+                                                        {{ $statusName }}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </form>
                                     </span>
                                 </td>
                                 <td class="form-inline">
@@ -86,7 +95,7 @@
                                         class="active styling-edit form-group" ui-toggle-class="">
                                         <i class="fa fa-edit text-success text-active"></i>
                                     </a>
-                                    <form onclick="return confirm('Are you sure delete this category?')"
+                                    <form onclick="return confirm('Are you sure delete this post?')"
                                         action="{{ route('posts.destroy', ['id' => $post]) }}"
                                         class="active form-group pull-right" method="POST" ui-toggle-class="">
                                         @csrf

@@ -23,11 +23,11 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_name' => 'required|min:5|max:255|unique:users,user_name',
+            'user_name' => 'required|min:5|max:255|regex:/^[a-zA-Z0-9]+$/|unique:users,user_name',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:6',
-            'phone_number' => 'required|max:11',
-            'gender' => 'required|in:' . implode(',', User::getGenders()),
+            'password' => 'required|confirmed|min:6|max:25',
+            'phone_number' => 'required|digits_between:5,10|numeric|unique:users,phone_number',
+            'gender' => 'required',
         ];
     }
 
@@ -42,6 +42,7 @@ class RegisterRequest extends FormRequest
             'confirmed' => ':attribute' . __('validation.confirmed'),
             'numeric' => ':attribute' . __('validation.numeric'),
             'in' => ':attribute' . __('validation.in'),
+            'regex' => ':attribute' . __('validation.rule_username'),
         ];
     }
     public function attributes(): array

@@ -5,6 +5,7 @@
     background-color: var(--main-white);
     position: fixed;
     z-index: 2;
+    transition: transform 1.5s ease;
     box-shadow: 0 1px 14px rgba(0, 0, 0, 0.25);
 
     @include mobile {
@@ -37,12 +38,12 @@
 
         .header-navbar-left {
             @include flex-center(space-between, center);
-            width: 31%;
+            width: 36%;
 
             .header-custom-page {
 
                 .header-btn-top {
-                    margin: 0 20px 0 0;
+                    margin: 0 30px 0 0;
                     padding: 5px 10px;
                     font-size: 15px;
                     background-color: var(--btn-header);
@@ -67,7 +68,7 @@
             .header-user {
                 @include flex-center(space-between, center);
                 @include font-text(15px, 500);
-                width: 80%;
+                width: 90%;
 
 
                 .dropdown {
@@ -83,7 +84,7 @@
                     .header-user-avatar {
                         width: 30px;
                         height: 30px;
-                        margin: 0 0 0 15px;
+                        margin: 0 0 0 10px;
                         cursor: pointer;
                         border-radius: 50%;
                         object-fit: cover;
@@ -148,21 +149,63 @@
 
     .header-mobile {
         display: none;
+        padding: 0 5%;
 
         @include mobile {
             width: 100%;
             height: 70px;
             display: block;
             @include flex-center(flex-start, center);
-            padding: 0 20px;
 
             .header-navbar-mobile {
                 width: 35px;
             }
 
+            .dropdown-menu-user {
+                position: absolute;
+                top: 67px;
+                margin-left: 3px;
+                padding: 10px;
+                background-color: var(--main-white);
+                box-shadow: 0 4px 10px 0 rgba(0, 0, 0, 0.25),
+                    0 3px 6px 0 rgba(0, 0, 0, 0.25);
+                display: none;
+
+                .dropdown-item {
+                    margin: 0 0 7px 0;
+                    text-align: center;
+                    @include font-text(14px, 400);
+
+                    &.sign-up {
+                        margin: 0;
+                    }
+                }
+
+                form {
+                    margin: 0;
+
+                    button {
+                        @include font-text(14px, 400);
+                        width: 100%;
+                        border: none;
+                        padding: 0;
+                        text-align: center;
+                        background-color: var(--main-white);
+                    }
+                }
+            }
+
+            .dropdown-menu-user {
+
+                &.active {
+                    display: inline-grid !important;
+                }
+            }
+
             .header-logo-mobile {
                 @include flex-center(flex-start, center);
-                margin-left: 23%;
+                margin-left: 45%;
+                transform: translateX(-55%);
 
                 .header-logo-image {
                     width: 47.09px;
@@ -174,4 +217,7 @@
             }
         }
     }
+}
+.header-scrolled {
+    transform: translateY(-100%);
 }
