@@ -24,20 +24,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [PostController::class, 'index'])->name('home');
+Route::get('/my-blogs', [PostControllerUser::class, 'myBlog'])->name('my.blog');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('/detail/{post}', [PostController::class, 'detail'])->name('detail');
+Route::get('/detail/{post}', [PostController::class, 'detail'])->name('detail')->middleware('checkPostStatus');
 
 Route::prefix('auth')->middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'viewRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register'])->name('post.register');
     Route::get('/token', [AuthController::class, 'viewTokenForm'])->name('token');
     Route::post('/token', [AuthController::class, 'token'])->name('post.token');
+    Route::get('/resend', [AuthController::class, 'resend'])->name('resend');
+    Route::post('/resend/token', [AuthController::class, 'resendToken'])->name('resend.token');
     Route::get('/login', [AuthController::class, 'viewLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->name('post.login');
     Route::get('/formForgotPassword', [AuthController::class, 'formForgotPassword'])->name('forgot.password');
     Route::post('/forgotPassword', [AuthController::class, 'forgotPassword'])->name('post.forgot.password');
-    Route::get('/tokenForgotPassword', [AuthController::class, 'formTokenForgot'])->name('token.password');
-    Route::post('/tokenForgotPassword', [AuthController::class, 'postTokenForgot'])->name('post.token.password');
 });
 
 
@@ -65,13 +66,13 @@ Route::group(['as' => 'posts.', 'prefix' => 'posts', 'middleware' => ['isAdmin']
     Route::get('/index', [PostControllerAdmin::class, 'index'])->name('index');
     Route::get('/edit/{post}', [PostControllerAdmin::class, 'edit'])->name('edit');
     Route::put('/update/{id}', [PostControllerAdmin::class, 'update'])->name('update');
-    Route::get('/status/{id}', [PostControllerAdmin::class, 'updateStatus'])->name('update.status');
+    Route::put('/status/{id}', [PostControllerAdmin::class, 'updateStatus'])->name('update.status');
     Route::delete('/destroy/{id}', [PostControllerAdmin::class, 'destroy'])->name('destroy');
 });
 
 Route::group(['as' => 'users.', 'prefix' => 'admin', 'middleware' => ['isAdmin']], function () {
     Route::get('/index', [UserControllerAdmin::class, 'index'])->name('index');
-    Route::get('/status/{id}', [UserControllerAdmin::class, 'updateStatus'])->name('update.status');
+    Route::put('/status/{id}', [UserControllerAdmin::class, 'updateStatus'])->name('update.status');
     Route::delete('/destroy/{id}', [UserControllerAdmin::class, 'destroy'])->name('destroy');
 });
 
@@ -92,7 +93,7 @@ Route::group(['as' => 'users.', 'prefix' => 'users', 'middleware' => 'auth'], fu
 
 Route::group(['as' => 'comments.', 'prefix' => 'comments', 'middleware' => 'auth'], function () {
     Route::get('/', [CommentController::class, 'index'])->name('index');
-    Route::post('/store/{postId}', [CommentController::class, 'store'])->name('store');
+    Route::post('/store/{postId}', [CommentController::class, 'store'])->name('store')->middleware('checkPostStatus');
     Route::put('update/{id}', [CommentController::class, 'update'])->name('update');
     Route::delete('destroy/{id}', [CommentController::class, 'destroy'])->name('destroy');
 });

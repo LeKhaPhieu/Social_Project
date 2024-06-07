@@ -3,9 +3,13 @@
 <ul class="paginate">
     @if ($paginator->lastPage() > 1)
         <li class="arrow-paginate">
-            <a href="{{ $paginator->previousPageUrl() }}" rel="prev">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            @if ($paginator->onFirstPage())
+                <i class="fa fa-angle-left disabled"></i>
+            @else
+                <a href="{{ $paginator->previousPageUrl() }}" rel="prev">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+            @endif
         </li>
         <li class="{{ $paginator->currentPage() == 1 ? ' paginate-active' : '' }}">
             <a href="{{ $paginator->url($paginator->onFirstPage()) }}">1</a>
@@ -36,9 +40,13 @@
             <a href="{{ $paginator->url($paginator->lastPage()) }}">{{ $paginator->lastPage() }}</a>
         </li>
         <li class="arrow-paginate">
-            <a href="{{ $paginator->nextPageUrl() }}" rel="next">
-                <i class="fa fa-angle-right"></i>
-            </a>
+            @if ($paginator->hasMorePages())
+                <a href="{{ $paginator->nextPageUrl() }}" rel="next">
+                    <i class="fa fa-angle-right"></i>
+                </a>
+            @else
+                <i class="fa fa-angle-right disabled"></i>
+            @endif
         </li>
     @endif
 </ul>

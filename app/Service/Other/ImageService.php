@@ -16,7 +16,7 @@ class ImageService
             $path = Storage::disk('public')->put('images', $data['image']);
             return $path;
         } catch (\Exception $e) {
-            return config('image.image_fail');
+            return '';
         }
     }
 

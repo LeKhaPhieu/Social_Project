@@ -1,22 +1,26 @@
-const modal = document.getElementById('overlayMobile');
-const btnShowSidebar = document.getElementById('btnShowSidebar');
-const boxSidebar = document.getElementById('sidebarMobile');
-const closeBoxSidebar = document.getElementsByClassName('close')[0];
+const modal = $('#overlayMobile');
+const btnShowSidebar = $('#btnShowSidebar');
+const boxSidebar = $('#sidebarMobile');
+const detail = $('#detail');
+const closeBoxSidebar = $('.close').first();
 
-btnShowSidebar.onclick = function () {
-    modal.style.display = "block";
-    boxSidebar.style.display = "block";
-}
+btnShowSidebar.on('click', function() {
+    modal.show();
+    boxSidebar.show();
+    detail.css('position', 'fixed');
+});
 
-closeBoxSidebar.onclick = function () {
-    modal.style.display = "none";
-}
+closeBoxSidebar.on('click', function() {
+    modal.hide();
+    detail.css('position', '');
+});
 
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+$(window).on('click', function(event) {
+    if ($(event.target).is(modal)) {
+        modal.hide();
+        detail.css('position', '');
     }
-}
+});
 
 document.addEventListener('DOMContentLoaded', function () {
     const checkboxes = document.querySelectorAll('.category-box');
@@ -60,6 +64,10 @@ $('#likeForm').on('submit', function (event) {
             },
             error: function (xhr, status, error) {
                 console.log(error)
+                $('.notify-detail').html('You cannot perform this operation!! <i class="fa-regular fa-circle-xmark close-notify"></i>')
+                .show() 
+                .delay(1000)  
+                .fadeOut(3000);
             },
         });
     };
@@ -90,11 +98,24 @@ $(document).on("click", "#btnComment", function (event) {
             'content': content,
         },
         success: function (data) {
-            data.status ? listComments() : alert(data.message);
+            if (data.status) {
+                listComments();
+                $('.notify-detail').hide(); 
+            } else {
+                $('.notify-detail').html('You cannot perform this operation!! <i class="fa-regular fa-circle-xmark close-notify"></i>')
+                .show() 
+                .delay(1000)  
+                .fadeOut(3000);
+            }
             commentForm[0].reset();
         },
         error: function (xhr, status, error) {
             console.log(error)
+            commentForm[0].reset();
+            $('.notify-detail').html('You cannot perform this operation!! <i class="fa-regular fa-circle-xmark close-notify"></i>')
+            .show() 
+            .delay(1000)  
+            .fadeOut(3000);
         },
     });
 });
@@ -119,6 +140,10 @@ $(document).on('submit', '[id^="likeFormComment"]', function (event) {
             },
             error: function (xhr, status, error) {
                 console.log(error)
+                $('.notify-detail').html('You cannot perform this operation!! <i class="fa-regular fa-circle-xmark close-notify"></i>')
+                .show() 
+                .delay(1000)  
+                .fadeOut(3000);
             },
         });
     };
@@ -132,6 +157,10 @@ $(document).on('click', '.btn-show-edit-comment', function () {
     });
 });
 
+$(document).on('click', '.close-notify', function() {
+    $('.notify-detail').css('display', 'none');
+});
+
 $(document).on('click', '.btn-update-comment', function (event) {
     event.preventDefault();
     const form = $(this).closest('form');
@@ -141,11 +170,24 @@ $(document).on('click', '.btn-update-comment', function (event) {
         method: 'POST',
         data: formData,
         success: function (data) {
-            data.status ? listComments() : alert(data.message);
+            if (data.status) {
+                listComments();
+                $('.notify-detail').hide(); 
+            } else {
+                $('.notify-detail').html('You cannot perform this operation!! <i class="fa-regular fa-circle-xmark close-notify"></i>')
+                .show() 
+                .delay(1000)  
+                .fadeOut(3000);
+            }
             form.closest('.form-delete.update-comment').hide();
         },
         error: function (xhr, status, error) {
             console.error(error);
+            form.closest('.form-delete.update-comment').hide();
+            $('.notify-detail').html('You cannot perform this operation!! <i class="fa-regular fa-circle-xmark close-notify"></i>')
+            .show() 
+            .delay(1000)  
+            .fadeOut(3000);
         }
     });
 });
@@ -165,24 +207,42 @@ $(document).on('click', '.btn-delete-comment', function (event) {
         type: 'DELETE',
         url: form.attr('action'),
         success: function (data) {
-            data.status ? listComments() : alert(data.message);
+            if (data.status) {
+                listComments();
+            } else {
+                $('.notify-detail').html('You cannot perform this operation!! <i class="fa-regular fa-circle-xmark close-notify"></i>')
+                .show() 
+                .delay(1000)  
+                .fadeOut(3000);
+            }
             form.closest('.form-delete').hide();
         },
         error: function (xhr, status, error) {
+            form.closest('.form-delete').hide();
             console.error(error);
+            $('.notify-detail').html('You cannot perform this operation!! <i class="fa-regular fa-circle-xmark close-notify"></i>')
+            .show() 
+            .delay(1000)  
+            .fadeOut(3000);
         }
     });
 });
 
 $(document).ready(function () {
-    $(document).on('click', '.show-input-reply-comment', function () {
+    $(document).on('click', '.show-input-reply-comment', function (e) {
+        e.stopPropagation();
         const commentId = $(this).data('comment-id');
         const user = $(this).data('user');
         if (!user) {
-            window.location.href = "/auth/login"; 
+            window.location.href = "/auth/login";
         } else {
             $('.form-reply-comment').hide();
             $('.form-reply' + commentId).toggle();
+        }
+    });
+    $(document).on('click', function (e) {
+        if (!$(e.target).closest('.form-reply-comment').length && !$(e.target).hasClass('show-input-reply-comment')) {
+            $('.form-reply-comment').hide();
         }
     });
 });
@@ -201,11 +261,39 @@ $(document).on("click", ".btn-send-comment-reply", function (event) {
             parent_id: commentId,
         },
         success: function (data) {
-            data.status ? listComments() : alert(data.message);
+            if (data.status) {
+                listComments();
+                $('.notify-detail').hide(); 
+            } else {
+                $('.notify-detail').html('You cannot perform this operation!! <i class="fa-regular fa-circle-xmark close-notify"></i>')
+                .show() 
+                .delay(1000)  
+                .fadeOut(3000);
+            }
             formReply[0].reset();
         },
         error: function (xhr, status, error) {
             console.log(error)
+            formReply[0].reset();
+            $('.notify-detail').html('You cannot perform this operation!! <i class="fa-regular fa-circle-xmark close-notify"></i>')
+            .show() 
+            .delay(1000)  
+            .fadeOut(3000);
         },
     });
 });
+
+window.Echo.channel('comment')
+    .listen('CommentEvent', (event) => {
+        listComments();
+    });
+
+window.Echo.channel('like-post')
+    .listen('LikeEvent', (event) => {
+        $('#likeCountPost').text(event.likesCount);
+    });
+
+window.Echo.channel('like-comment')
+    .listen('LikeEvent', (event) => {
+        listComments();
+    });

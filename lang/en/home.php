@@ -6,7 +6,8 @@ return [
     'update_comment_error' => 'Update comment failed!!',
     'delete_comment_error' => 'Delete comment failed!!',
     'edit_post_error' => 'You do not have editing rights',
-    'delete_post_error' => 'you are not allowed to delete',
+    'delete_post_error' => 'You are not allowed to delete',
+    'detail_post_error' => 'You cannot access the post!!',
 
     'logo_name' => 'RT-Blogs',
     'text_btn_top' => 'Top',

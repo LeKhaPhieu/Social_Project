@@ -1,3 +1,4 @@
+@vite(['resources/js/app.js'])
 @vite(['resources/js/post.js'])
 @extends('layouts.user.app')
 @section('content')
@@ -15,7 +16,8 @@
                 <ul class="items">
                     @foreach ($categories as $category)
                         <li>
-                            <input type="checkbox" name="category[]" value="{{ $category->id }}">
+                            <input type="checkbox" name="category[]" value="{{ $category->id }}"
+                                {{ in_array($category->id, old('category', [])) ? 'checked' : '' }}>
                             {{ $category->name }}
                         </li>
                     @endforeach
@@ -26,22 +28,20 @@
             </div>
             <label>{{ __('home.title_label_sidebar') }}<span>*</span></label>
             <input name="title" type="text" placeholder="{{ __('home.placeholder_title') }}"
-                class="form-create-title update">
+                class="form-create-title update" value="{{ old('title') }}">
             @error('title')
                 <p class="notify-error">{{ $message }}</p>
             @enderror
-            <label>{{ __('home.label_upload_image') }}<span>*</span></label>
+            <label>{{ __('home.label_upload_image') }}</label>
             <p id="btnImage" class="form-create-image update">{{ __('home.label_upload_image') }}</p>
             <input type="file" name="image" id="inputImage" class="input-create-image update">
-            @error('image')
-                <p class="notify-error">{{ $message }}</p>
-            @enderror
             <div id="imagePreview" class="image-create-preview">
-                <img src="jj" alt="">
+                <img src="" alt="">
             </div>
+            <label id="imageError" class="notify-error"></label>
             <label>{{ __('home.label_description') }}<span>*</span></label>
             <textarea name="content" rows="25" cols="70" class="form-blog-content update"
-                placeholder="{{ __('home.placeholder_description') }}"></textarea>
+                placeholder="{{ __('home.placeholder_description') }}">{{ old('content') }}</textarea>
             @error('content')
                 <p class="notify-error">{{ $message }}</p>
             @enderror

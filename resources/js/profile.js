@@ -30,36 +30,60 @@ $(document).ready(function () {
             $btnEdit: $("#btnEditGender"),
             $textElement: $(".gender-text"),
             $inputElement: $("#inputGender")
+        },
+        {
+            $btnEdit: $("#btnEditAvatar"),
         }
     ];
 
     editElements.forEach(function (item) {
         handleEditButton(item.$btnEdit, item.$textElement, item.$inputElement);
     });
+});
 
-    const $avatarEdit = $('.avatar-edit');
-    const $avatarInput = $('.avatar-input');
-    const $avatarImage = $('.profile-avatar');
+$(document).ready(function() {
+    const btnChooseImage = $("#btnEditAvatar");
+    const inputImage = $("#inputAvatar");
+    const imagePreview = $("#profileAvatar");
+    const errorElement = $('#imageAvatar');
+    let currentImageSrc = imagePreview.attr('src');
 
-    if ($avatarEdit.length) {
-        $avatarEdit.on('click', function () {
-            $avatarInput.click();
-            toggleDisplay($btnSubmit, "block");
-        });
-    }
+    btnChooseImage.on("click", function() {
+        inputImage.click();
+    });
 
-    if ($avatarInput.length) {
-        $avatarInput.on('change', function () {
-            const file = $avatarInput[0].files[0];
+    inputImage.on("change", function() {
+        const file = this.files[0];
+        errorElement.text(''); 
+        
+        if (file) {
+            const validExtensions = ['jpg', 'jpeg', 'png', 'gif', 'svg'];
+            const fileExtension = file.name.split('.').pop().toLowerCase();
+            
+            if (!validExtensions.includes(fileExtension)) {
+                errorElement.text('The file must have the extension jpeg, png, jpg, gif, or svg!!');
+                $(this).val('');
+                return;
+            }
+
+            if (file.size > 2048 * 1024) { 
+                errorElement.text('The file must be less than 2048 KB in size!!');
+                $(this).val('');
+                return;
+            }
             const reader = new FileReader();
-            reader.onloadend = function () {
-                $avatarImage.attr("src", reader.result);
-            }
-            if (file) {
-                reader.readAsDataURL(file);
+            reader.onload = function(e) {
+                const imageUrl = e.target.result;
+                currentImageSrc = imageUrl;
+                imagePreview.attr('src', imageUrl).show();
+            };
+            reader.readAsDataURL(file);
+        } else {
+            if (currentImageSrc) {
+                imagePreview.attr('src', currentImageSrc).show();
             } else {
-                $avatarImage.attr("src", "");
+                imagePreview.hide();
             }
-        });
-    }
+        }
+    });
 });

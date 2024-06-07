@@ -26,9 +26,10 @@ class UserController extends Controller
         ]);
     }
 
-    public function updateStatus(int $id): RedirectResponse
+    public function updateStatus(Request $request, int $userId): RedirectResponse
     {
-        $result = $this->userService->updateStatus($id);
+        $newStatus = $request->input('status');
+        $result = $this->userService->updateStatus($userId, $newStatus);
         if ($result) {
             return redirect()->back()->with('success', __('admin.approved_user_success'));
         }

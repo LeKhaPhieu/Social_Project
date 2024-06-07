@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Guest;
 
 use App\Http\Controllers\Controller;
 use App\Models\Post;
+use App\Models\User;
 use App\Service\Admin\CategoryService;
 use App\Service\Guest\PostService;
 use App\Service\User\CommentService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -39,8 +41,16 @@ class PostController extends Controller
         ]);
     }
 
-    public function detail(Post $post): View
+    public function detail(Post $post): View|RedirectResponse
     {
+        if (!$post) {
+            return redirect()->back()->with('error', __('home.detail_post_error'));
+        }
+        if ($post->status === Post::NOT_APPROVED || $post->status === Post::PENDING) {
+            if ($post->user_id !== auth()->id() && auth()->user()->role !== User::ROLE_ADMIN) {
+                return redirect()->back()->with('error', __('home.detail_post_error'));
+            }
+        }
         $categories = $this->categoryService->getAll();
         $relatedPosts = $this->postService->detailRelated($post->user_id, $post->id);
         $popularPosts = $this->postService->detailPopular($post->user_id, $post->id);

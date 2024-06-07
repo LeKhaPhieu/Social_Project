@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 
 class AuthService
 {
@@ -30,28 +31,49 @@ class AuthService
                 'status' => User::INACTIVATED,
             ]);
 
-            $listToken = Token::where('user_id', $user->id);
-            do {
-                $tokenVerify = random_int(100000, 999999);
-            } while (in_array($tokenVerify, $listToken->pluck('token_verify_email')->toArray()));
+            $token = self::createToken($user->id);
 
-            Token::create([
-                'token_verify_email' => $tokenVerify,
-                'user_id' => $user->id,
-            ]);
-            $data = [
+            $mailData = [
                 'title' => 'Regit blog',
                 'email' => $data['email'],
-                'token_verify_email' => $tokenVerify,
+                'token_verify_email' => $token->token_verify_email,
             ];
-            Mail::send(new VerifyTokenMail($data));
+            Mail::send(new VerifyTokenMail($mailData));
             DB::commit();
-
+            self::updateTokenStatus($token);
             return true;
         } catch (Exception $e) {
             DB::rollBack();
-
             return false;
+        }
+    }
+
+    public function createToken(int $userId): Token
+    {
+        $listToken = Token::where('user_id', $userId);
+        do {
+            $tokenVerify = random_int(100000, 999999);
+        } while (in_array($tokenVerify, $listToken->pluck('token_verify_email')->toArray()));
+        return Token::create([
+            'token_verify_email' => $tokenVerify,
+            'user_id' => $userId,
+            'status' => Token::EFFECT,
+        ]);
+    }
+
+    public function isTokenExpired(Token $token): bool
+    {
+        self::updateTokenStatus($token);
+        return $token->status === Token::EXPIRE;
+    }
+
+    public function updateTokenStatus(Token $token): void
+    {
+        $now = Carbon::now();
+        $tokenCreatedTime = Carbon::parse($token->created_at);
+        if ($tokenCreatedTime->diffInMinutes($now) >= 1) {
+            $token->status = Token::EXPIRE;
+            $token->save();
         }
     }
 
@@ -59,15 +81,15 @@ class AuthService
     {
         try {
             $tokenRow = Token::where('token_verify_email', $token)->firstOrFail();
+            if (self::isTokenExpired($tokenRow)) {
+                return false;
+            }
             $user = User::findOrFail($tokenRow->user_id);
-
             if ($user->status === User::INACTIVATED) {
                 $user->update(['status' => User::ACTIVATED]);
             }
             return true;
-
         } catch (Exception $e) {
-
             return false;
         }
     }
@@ -118,57 +140,40 @@ class AuthService
             $user = User::where('email', $data['email'])
                 ->where('status', User::ACTIVATED)
                 ->firstOrFail();
-
-            $tokenReset = Token::where('user_id', $user->id)
-                ->whereNotNull('token_reset_password')
-                ->firstOrFail();
-            if ($tokenReset) {
-                $tokenReset->delete();
-            }
-
-            $listToken = Token::where('user_id', $user->id);
-            do {
-                $tokenReset = random_int(100000, 999999);
-            } while (in_array($tokenReset, $listToken->pluck('token_reset_password')->toArray()));
-
-            Token::create([
-                'token_reset_password' => $tokenReset,
-                'user_id' => $user->id,
-            ]);
-
-            $data = [
-                'email' => $data['email'],
-                'token_reset_password' => $tokenReset,
-            ];
-            Mail::send(new TokenResetPassword($data));
-            DB::commit();
-
-            return [
-                'status' => true,
-                'message' => __('auth.token_forgot_success'),
-            ];
-        } catch (Exception $e) {
-            DB::rollBack();
-
-            return [
-                'status' => false,
-                'message' => __('auth.token_forgot_error'),
-            ];
-        }
-    }
-
-    public function postTokenForgot(string $token): bool
-    {
-        try {
-            $tokenPassword = Token::where('token_reset_password', $token)->firstOrFail();
-            $user = User::where('id', $tokenPassword->user_id)->firstOrFail();
             $newPassword = Str::random(6);
             $user->update(['password' => Hash::make($newPassword)]);
             $dataSendMail = ['password' => $newPassword];
             Mail::to($user->email)->send(new SendNewPassword($dataSendMail));
+            DB::commit();
+            return [
+                'status' => true,
+                'message' => __('auth.retrieve_password_success'),
+            ];
+        } catch (Exception $e) {
+            DB::rollBack();
+            return [
+                'status' => false,
+                'message' => __('auth.retrieve_password_error'),
+            ];
+        }
+    }
 
+    public function resendToken(string $email): bool
+    {
+        try {
+            $user = User::where('email', $email)->where('status', User::INACTIVATED)->firstOrFail();
+            $token = Token::where('user_id', $user->id)
+                ->where('status', Token::EXPIRE)
+                ->firstOrFail();
+            $newToken = self::createToken($user->id);
+            $mailData = [
+                'title' => 'Regit blog',
+                'email' => $email,
+                'token_verify_email' => $newToken->token_verify_email,
+            ];
+            Mail::send(new VerifyTokenMail($mailData));
+            self::updateTokenStatus($token);
             return true;
-
         } catch (Exception $e) {
             return false;
         }

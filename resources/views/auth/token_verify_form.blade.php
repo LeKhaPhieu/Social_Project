@@ -10,8 +10,8 @@
 </head>
 
 <body>
-    <div class="auth-main">
-        <form class="auth-form" action="{{ route('post.token') }}" method="POST">
+    <div class="auth-main token">
+        <form class="auth-form token" action="{{ route('post.token') }}" method="POST">
             @csrf
             <div class="auth-head">
                 <img class="auth-head-image" src="{{ Vite::asset('resources/images/logo.png') }}" alt="">
@@ -35,6 +35,9 @@
             @endif
             <div class="auth-tail">
                 <button class="btn-submit">{{ __('auth.text_btn_token') }}</button>
+            </div>
+            <div class="auth-tail">
+                <a class="link-sign-in" href="{{ route('resend') }}">Resend token</a>
             </div>
         </form>
     </div>

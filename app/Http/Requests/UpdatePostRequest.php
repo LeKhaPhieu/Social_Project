@@ -28,4 +28,12 @@ class UpdatePostRequest extends FormRequest
             'content' => 'required',
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'mimes' => __('validation.mimes'),
+            'max:2048' => __('validation.max_2048'),
+        ];
+    }
 }

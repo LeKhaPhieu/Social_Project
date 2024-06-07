@@ -12,10 +12,10 @@
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="https://cdn.unpkg.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.unpkg.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    @vite(['resources/js/app.js'])
     @vite(['resources/scss/main.scss'])
     @vite(['resources/js/header.js'])
     @vite(['resources/js/home.js'])
-    @vite(['resources/js/app.js'])
 </head>
 
 <body>
@@ -30,39 +30,66 @@
                     <div class="header-custom-page">
                         <a class="header-btn-top" href="{{ route('home') }}">{{ __('home.text_btn_top') }}</a>
                     </div>
-                    <div class="header-auth">
-                        @if (!Auth::user())
+                    @if (!Auth::user())
+                        <div class="header-auth">
                             <a class="header-btn login" href="{{ route('login') }}">{{ __('home.text_btn_login') }}</a>
                             <a class="header-btn register"
                                 href="{{ route('register') }}">{{ __('home.text_btn_register') }}</a>
-                        @else
-                    </div>
-                    <div class="header-user">
-                        <a class="header-btn create" href="{{ route('users.post.create') }}">{{ __('home.text_btn_create') }}</a>
-                        <div class="dropdown">
-                            <a class="header-user-name">{{ Auth::user()->user_name }}</a>
-                            <img class="header-user-avatar"
-                                src="{{ Storage::url(Auth::user()->avatar) }}">
-                            <div class="dropdown-content">
-                                <div class="connect-menu"></div>
-                                <a href="{{ route('user.profile')}}">{{ __('home.text_btn_my_profile') }}</a>
-                                <a href="{{ route('passwords.edit') }}">{{ __('home.text_btn_change_password') }}</a>
-                                <form action="{{ route('logout') }}" method="POST">
-                                    @csrf
-                                    <button>{{ __('home.text_btn_logout') }}</button>
-                                </form>
+                        </div>
+                    @else
+                        <div class="header-user">
+                            <a class="header-btn create"
+                                href="{{ route('users.post.create') }}">{{ __('home.text_btn_create') }}</a>
+                            <div class="dropdown">
+                                <a class="header-user-name">{{ Auth::user()->user_name }}</a>
+                                @if(Auth::user()->avatar)
+                                    <img class="header-user-avatar" src="{{ Storage::url(Auth::user()->avatar) }}">
+                                @else
+                                    <img class="header-user-avatar" src="{{ Vite::asset('resources/images/user_avatar.jpg') }}">
+                                @endif
+                                <div class="dropdown-content">
+                                    <div class="connect-menu"></div>
+                                    <a href="{{ route('user.profile') }}">{{ __('home.text_btn_my_profile') }}</a>
+                                    <a
+                                        href="{{ route('passwords.edit') }}">{{ __('home.text_btn_change_password') }}</a>
+                                    <a
+                                        href="{{ route('my.blog')}}">My blogs</a>
+                                    @if (Auth::user()->isAdmin())
+                                        <a href="{{ route('admin.dashboard') }}">{{ __('admin.title_sidebar') }}</a>
+                                    @endif
+                                    <form action="{{ route('logout') }}" method="POST">
+                                        @csrf
+                                        <button>{{ __('home.text_btn_logout') }}</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     @endif
                 </div>
             </div>
+
             <div class="header-mobile">
                 <img class="header-navbar-mobile" src="{{ Vite::asset('resources/images/icon_header_mobile.png') }}"
                     alt="">
+                <div class="dropdown-menu-user">
+                    @if (!Auth::user())
+                        <a class="dropdown-item login" href="{{ route('login') }}">{{ __('home.text_btn_login') }}</a>
+                        <a class="dropdown-item sign-up"
+                            href="{{ route('register') }}">{{ __('home.text_btn_register') }}</a>
+                    @else
+                        <a class="dropdown-item profile"
+                            href="{{ route('user.profile') }}">{{ __('home.text_btn_my_profile') }}</a>
+                        <a class="dropdown-item password-edit"
+                            href="{{ route('passwords.edit') }}">{{ __('home.text_btn_change_password') }}</a>
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button>{{ __('home.text_btn_logout') }}</button>
+                        </form>
+                    @endif
+                </div>
                 <div class="header-logo-mobile">
                     <img class="header-logo-image" src="{{ Vite::asset('resources/images/logo.png') }}">
-                    <a href="" class="header-logo-name">{{ __('home.logo_name') }}</a>
+                    <a href="{{ route('home') }}" class="header-logo-name">{{ __('home.logo_name') }}</a>
                 </div>
             </div>
         </div>

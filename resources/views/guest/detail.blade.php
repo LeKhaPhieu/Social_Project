@@ -3,6 +3,7 @@
 @extends('layouts.user.app')
 
 @section('content')
+    <div class="notify-detail"></div>
     <div id="data" data-comment_action="{{ route('comments.index', ['postId' => $post->id]) }}"></div>
     <div class="detail-form" id="detail">
         <img class="detail-background" src="{{ Vite::asset('resources/images/image_main_home.png') }}">
@@ -24,22 +25,20 @@
                         <input class="detail-search-mobile blog" type="text" placeholder="Search blog title"
                             name="blog">
                     </form>
-                    <p class="title-list">{{ __('home.categories_label_sidebar') }}</p>
-                    <div class="detail-category-list-mobile">
-                        <form action="{{ route('home') }}" method="GET" id="categoryFormMobile">
-                            @foreach ($categories as $category)
-                                <div class="detail-category-list-item">
-                                    <input class="detail-category-box-mobile" type="checkbox" id="{{ $category->id }}"
-                                        name="category[]"
-                                        {{ in_array($category->id, request('category') ?? []) ? 'checked autofocus' : '' }}
-                                        value="{{ $category->id }}">
-                                    <label for="{{ $category->id }}"
-                                        class="detail-category-name-mobile">{{ $category->name }}</label>
-                                </div>
-                            @endforeach
-                        </form>
-                    </div>
-                    <p class="title-list">{{ __('home.author_search_sidebar') }}</p>
+                    <p class="detail-title-list">{{ __('home.categories_label_sidebar') }}</p>
+                    <form class="detail-category-list-mobile" action="{{ route('home') }}" method="GET" id="categoryFormMobile">
+                        @foreach ($categories as $category)
+                            <div class="detail-category-list-item">
+                                <input class="detail-category-box-mobile" type="checkbox" id="{{ $category->id }}"
+                                    name="category[]"
+                                    {{ in_array($category->id, request('category') ?? []) ? 'checked autofocus' : '' }}
+                                    value="{{ $category->id }}">
+                                <label for="{{ $category->id }}"
+                                    class="detail-category-name-mobile">{{ $category->name }}</label>
+                            </div>
+                        @endforeach
+                    </form>
+                    <p class="detail-title-list">{{ __('home.author_search_sidebar') }}</p>
                     <form action="">
                         <button class="detail-btn-search-mobile">
                             <img class="icon-search-mobile author"
@@ -48,7 +47,7 @@
                         <input class="detail-search-mobile author" type="text" placeholder="Search author"
                             name="author">
                     </form>
-                    <form class="detail-sidebar-btn" action="">
+                    <form class="detail-sidebar-btn" action="{{ route('home') }}">
                         <p class="sidebar-btn-box close close-box">{{ __('home.btn_cancel_sidebar') }}</p>
                         <button class="sidebar-btn-box search">{{ __('home.btn_search_sidebar') }}</button>
                     </form>
@@ -58,7 +57,7 @@
 
         <div class="detail-content">
             <div class="detail-sidebar-desktop">
-                <form action="">
+                <form action="{{ route('home') }}">
                     <button class="detail-btn-search-desktop blog" type="submit">
                         <img class="icon-search blog" src="{{ Vite::asset('resources/images/icon_search.png') }}"
                             alt="">
@@ -80,7 +79,7 @@
                     </form>
                 </div>
                 <p class="detail-content-navbar-topic">{{ __('home.author_search_sidebar') }}</p>
-                <form action="" class="form-search-author">
+                <form action="{{ route('home') }}" class="form-search-author">
                     <button class="detail-btn-search-desktop author" type="submit">
                         <img class="icon-search author" src="{{ Vite::asset('resources/images/icon_search.png') }}"
                             alt="">
@@ -93,7 +92,9 @@
             <div class="detail-content-blog">
                 <div class="detail-blog-list-form">
                     <div class="detail-blog-list">
-                        <img class="detail-blog-list-image" src="{{ Storage::url($post->image) }}" alt="">
+                        @if($post->image)
+                            <img class="detail-blog-list-image" src="{{ Storage::url($post->image) }}" alt="">
+                        @endif
                         <div class="detail-blog-info">
                             <div class="detail-blog-list-info">
                                 <div class="item-info">
@@ -107,18 +108,15 @@
                                     <p class="info-blog time-create">{{ $post->created_at->format('Y-m-d H:i') }}</p>
                                 </div>
                                 <div class="item-info">
-                                    <form id="likeForm" action="{{ route('users.post.like', ['post' => $post]) }}" 
-                                        data-user="{{Auth::user()}}"
-                                        method="POST">
+                                    <form id="likeForm" action="{{ route('users.post.like', ['post' => $post]) }}"
+                                        data-user="{{ Auth::user() }}" method="POST">
                                         @csrf
                                         <button type="submit" id="likeButton">
                                             <i id="heartIcon"
-                                                class="fa-{{ Auth::check() &&
-                                                Auth::user()->checkLikePost($post->id)
-                                                    ? 'solid'
-                                                    : 'regular' }} fa-heart"></i>
+                                                class="fa-{{ Auth::check() && Auth::user()->checkLikePost($post->id) ? 'solid' : 'regular' }} fa-heart"></i>
                                         </button>
-                                        <p class="info-blog heart-create">{{ $post->likes()->count() }}</p>
+                                        <p class="info-blog heart-create" id="likeCountPost">
+                                            {{ $post->likes()->count() }}</p>
                                     </form>
                                 </div>
                                 <div class="item-info">
@@ -132,6 +130,7 @@
                                     <img class="icon-info menu" src="{{ Vite::asset('resources/images/menu_1.png') }}"
                                         alt="">
                                     <div class="dropdown-menu">
+                                        <div class="connect-dropdown-menu"></div>
                                         <div class="dropdown-menu-form">
                                             <a href="{{ route('users.post.edit', ['post' => $post]) }}">
                                                 <i class="fa-regular fa-pen-to-square"></i>
@@ -162,9 +161,15 @@
                             <div class="detail-related-list">
                                 @foreach ($relatedPosts as $relatedPost)
                                     <div class="detail-related-item">
-                                        <a href="{{ route('detail', ['post' => $relatedPost]) }}">
-                                            <img src="{{ Storage::url($relatedPost->image) }}">
-                                        </a>
+                                        @if($relatedPost->image)
+                                            <a href="{{ route('detail', ['post' => $relatedPost]) }}">
+                                                <img src="{{ Storage::url($relatedPost->image) }}">
+                                            </a>
+                                        @else
+                                            <a href="{{ route('detail', ['post' => $relatedPost]) }}">
+                                                <img src="{{ Vite::asset('resources/images/image_post.png') }}">
+                                            </a>
+                                        @endif
                                         <p class="detail-related-item-created">
                                             {{ $relatedPost->created_at->format('Y-m-d') }}
                                         </p>
@@ -184,7 +189,11 @@
                                         <div class="swiper-slide">
                                             <div class="detail-related-list">
                                                 <a href="{{ route('detail', ['post' => $relatedPost]) }}">
-                                                    <img src="{{ Storage::url($relatedPost->image) }}">
+                                                    @if($relatedPost->image)
+                                                        <img src="{{ Storage::url($relatedPost->image) }}">
+                                                    @else
+                                                        <img src="{{ Vite::asset('resources/images/image_post.png') }}">
+                                                    @endif
                                                     <p class="detail-related-item-created">
                                                         {{ $relatedPost->created_at->format('Y-m-d') }}</p>
                                                     <p class="detail-related-item-content">
@@ -202,15 +211,20 @@
                         <div class="detail-comment">
                             <p class="detail-comment-title">{{ __('home.title_comment') }}</p>
                             @unless (!Auth::check())
-                                <form class="detail-comment-input" 
-                                    action="{{ route('comments.store', $post->id) }}" method="POST">
+                                <form class="detail-comment-input" action="{{ route('comments.store', $post->id) }}"
+                                    method="POST">
                                     <div class="detail-form-input">
-                                        <img class="user-avatar"
-                                            src="{{ Vite::asset('resources/images/image_home_mobile.png') }}"
-                                            alt="">
+                                        @if(Auth::user()->avatar)
+                                            <img class="user-avatar" src="{{ Storage::url(Auth::user()->avatar) }}"
+                                                alt="">
+                                        @else
+                                            <img class="user-avatar" src="{{ Vite::asset('resources/images/user_avatar.jpg') }}"
+                                                alt="">
+                                        @endif
                                         <input type="text" name="content" id="commentContent">
                                     </div>
-                                    <button type="submit" class="comment-button" id="btnComment">{{ __('home.btn_send') }}</button>
+                                    <button type="submit" class="comment-button"
+                                        id="btnComment">{{ __('home.btn_send') }}</button>
                                 </form>
                             @endunless
 
@@ -222,40 +236,43 @@
                 </div>
             </div>
 
-            @if (count($popularPosts) > 0)
-                <div class="detail-popular-form">
-                    <div class="detail-popular-post">
-                        <p class="popular-post-user">{{ $popularPosts[0]->user->user_name }}</p>
-                        <a href="{{ route('detail', ['post' => $popularPosts[0]]) }}">
-                            <img class="popular-post-image" src="{{ Storage::url($popularPosts[0]->image) }}">
-                        </a>
-                        <a class="popular-post-content" href="{{ route('detail', ['post' => $popularPosts[0]]) }}">
-                            {{ $popularPosts[0]->content }}
-                        </a>
-                        <div class="popular-post-category">
-                            @foreach ($popularPosts[0]->categories as $category)
-                                <p>{{ $category->name }}</p>
-                            @endforeach
-                        </div>
-                        <p class="popular-post-related-head">{{ __('home.title_popular') }}</p>
-                        @foreach ($popularPosts as $key => $popularPost)
-                            @if ($key > 0)
-                                <div class="popular-post-related-list">
-                                    <img src="{{ Storage::url($popularPost->image) }}">
-                                    <div class="post-info">
-                                        <p class="post-created">{{ $popularPost->created_at->format('Y-m-d') }}</p>
-                                        <a href="{{ route('detail', ['post' => $popularPost]) }}">
-                                            <p class="post-content">{!! nl2br(e(Str::limit($popularPost->content, 200))) !!}</p>
-                                        </a>
-                                    </div>
-                                </div>
+            <div class="detail-popular-form">
+                <div class="detail-popular-post">
+                    <p class="popular-post-user">{{ $post->user->user_name }}</p>
+                    @if($post->user->avatar) 
+                        <img class="popular-post-image" src="{{ Storage::url($post->user->avatar) }}">
+                    @else
+                        <img class="popular-post-image" src="{{ Vite::asset('resources/images/user_avatar.jpg') }}">
+                    @endif
+                    <p class="popular-post-content">Gender:
+                        {{ $post->user->getNameGenders() }}
+                    </p>
+                    <p class="popular-post-content">Posts:
+                        {{ $post->user->posts()->count() }}
+                    </p>
+                    <p class="popular-post-content">Likes:
+                        {{ $post->user->postLikes()->count() }}
+                    </p>
+                    <p class="popular-post-related-head">{{ __('home.title_popular') }}</p>
+                    @foreach ($popularPosts as $popularPost)
+                        <div class="popular-post-related-list">
+                            @if($popularPost->image)
+                                <img src="{{ Storage::url($popularPost->image) }}">
+                            @else
+                                <img src="{{ Vite::asset('resources/images/image_post.png') }}">
                             @endif
-                        @endforeach
-                    </div>
+                            <div class="post-info">
+                                <p class="post-created">{{ $popularPost->created_at->format('Y-m-d') }}</p>
+                                <a href="{{ route('detail', ['post' => $popularPost]) }}">
+                                    <p class="post-content">{!! nl2br(e(Str::limit($popularPost->content, 35))) !!}</p>
+                                </a>
+                            </div>
+                        </div>
+                    @endforeach
                 </div>
-            @endif
+            </div>
         </div>
-        
+
         <div class="form-delete" id="formBox">
             <div class="box-delete">
                 <i class="fa-solid fa-circle-xmark" id="closeBox"></i>

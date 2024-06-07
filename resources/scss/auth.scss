@@ -4,6 +4,10 @@
     display: flex;
     padding: 5% 0 0 0;
 
+    &.token {
+        display: block;
+    }
+
     @include mobile {
         padding: 15% 0;
     }
@@ -11,6 +15,11 @@
     .auth-form {
         width: 35%;
         margin: auto;
+        padding: 0 0 50px 0;
+
+        &.token {
+            padding: 0 0 15px 0;
+        }
 
         @include mobile {
             width: 70%;
@@ -114,7 +123,23 @@
             .link-sign-in {
                 @include font-text(15px, 400);
                 color: var(--text-link);
+
+                &.reset-token {
+                    margin: 20px 0 0 0;
+                }
             }
+        }
+    }
+
+    .auth-form-resend {
+        text-align: center;
+
+        button {
+            @include font-text(15px, 500);
+            cursor: pointer;
+            border: none;
+            color: var(--text-link);
+            background-color: var(--main-white);
         }
     }
 }

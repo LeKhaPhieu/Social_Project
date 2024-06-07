@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers\User;
 
+use App\Events\CommentEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\User\CreateCommentRequest;
+use App\Models\Comment;
+use App\Models\Post;
 use App\Service\User\CommentService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -34,24 +37,34 @@ class CommentController extends Controller
         return response()->json(['status' => $response]);
     }
 
-    public function update(int $id, Request $request): JsonResponse|RedirectResponse
+    public function update(int $id, Request $request): JsonResponse
     {
         $comment = $this->commentService->findComment($id);
+        $postId = $comment->post_id;
+        $post = Post::findOrFail($postId);
+        if ($post->status !== Post::APPROVED) {
+            return response()->json(['error' => __('home.update_comment_error')]);
+        }
         if (Gate::allows('manage-comment', $comment)) {
             $data = $request->all();
             $response = $this->commentService->update($data, $id);
             return response()->json(['status' => $response]);
         }
-        return redirect()->back()->with('error', __('home.update_comment_error'));
+        return response()->json(['error', __('home.update_comment_error')]);
     }
 
-    public function destroy(int $id): JsonResponse|RedirectResponse
+    public function destroy(int $id): JsonResponse
     {
         $comment = $this->commentService->findComment($id);
+        $postId = $comment->post_id;
+        $post = Post::findOrFail($postId);
+        if ($post->status !== Post::APPROVED) {
+            return response()->json(['error' => __('home.delete_comment_error')]);
+        }
         if (Gate::allows('manage-comment', $comment)) {
             $response = $this->commentService->destroy($id);
             return response()->json(['status' => $response]);
         }
-        return redirect()->back()->with('error', __('home.delete_comment_error'));
+        return response()->json(['error', __('home.delete_comment_error')]);
     }
 }
